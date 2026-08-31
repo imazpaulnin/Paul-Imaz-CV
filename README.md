@@ -22,8 +22,6 @@ The goal is not to behave like a normal CV site. It is meant to feel closer to a
   Bilingual content and structured mode data.
 - `references`
   Source CVs in English and Spanish.
-- `.github/workflows/deploy-pages.yml`
-  Automatic deployment to GitHub Pages.
 
 ## Run locally
 
@@ -49,17 +47,20 @@ Stop the local server with `Ctrl + C`.
 
 ## Publish to GitHub Pages
 
-The repository is configured so the site can live on GitHub and be available from a public link whenever you want, without running anything locally.
+This project is a plain static site, so the simplest and most reliable option is to publish it directly from the repository branch instead of using GitHub Actions.
 
-### One-time GitHub setup
+### Recommended GitHub setup
 
 1. Create a GitHub repository.
 2. Push this project to the `main` branch.
 3. Open the repository on GitHub.
 4. Go to `Settings > Pages`.
-5. Set `Source` to `GitHub Actions`.
+5. Under `Build and deployment`, set `Source` to `Deploy from a branch`.
+6. Select branch `main`.
+7. Select folder `/(root)`.
+8. Click `Save`.
 
-After that, every push to `main` will trigger the deployment workflow automatically.
+GitHub will then publish the site directly from the repository contents.
 
 ### Expected public URL
 
@@ -68,6 +69,10 @@ Your site will normally be available at:
 ```text
 https://YOUR-USERNAME.github.io/YOUR-REPOSITORY-NAME/
 ```
+
+### Important note
+
+If the repository is private, GitHub Pages availability depends on your GitHub plan. GitHub documents that public repositories work on GitHub Free, while private repository Pages needs eligible paid plans.
 
 ## Suggested Git commands
 
@@ -86,35 +91,22 @@ If the repo already exists and only needs an update:
 
 ```powershell
 git add .
-git commit -m "Fix GitHub Pages deploy and improve project docs"
+git commit -m "Simplify GitHub Pages setup"
 git push
 ```
-
-## How deployment works
-
-The GitHub Actions workflow does not publish the whole repository blindly.
-
-It builds a clean `dist` folder containing only:
-
-- `index.html`
-- `styles.css`
-- `src/`
-- `references/`
-- `.nojekyll`
-
-That folder is the artifact uploaded to GitHub Pages. This is safer and clearer than deploying the repository root directly.
 
 ## If GitHub Pages fails again
 
 Check these points first:
 
 1. The default branch is `main`.
-2. In GitHub Pages settings, the source is `GitHub Actions`, not `Deploy from a branch`.
-3. The workflow has permission to run.
-4. The repository is not private on a plan that blocks the Pages configuration you want.
-5. The latest push includes `.github/workflows/deploy-pages.yml`.
+2. In `Settings > Pages`, the source is `Deploy from a branch`.
+3. The selected branch is `main`.
+4. The selected folder is `/(root)`.
+5. The repository contains `index.html` in the root.
+6. The repository visibility and your GitHub plan allow Pages for that repo.
 
-If it still fails, open the failed workflow run in `Actions` and inspect the exact error message in the failing step. The important step will usually be either `Prepare static site`, `Upload static site artifact` or `Deploy to GitHub Pages`.
+If it still fails after that, the problem is no longer the workflow, because there will be no workflow involved. In that case the next place to inspect is the repository Pages settings and any build error GitHub shows there.
 
 ## Why the app is structured this way
 
