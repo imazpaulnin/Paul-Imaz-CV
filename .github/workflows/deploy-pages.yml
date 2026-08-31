@@ -30,10 +30,19 @@ jobs:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
+      - name: Prepare static site
+        run: |
+          mkdir -p dist
+          cp index.html dist/index.html
+          cp styles.css dist/styles.css
+          cp .nojekyll dist/.nojekyll
+          cp -R src dist/src
+          cp -R references dist/references
+
       - name: Upload static site artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: ./dist
 
       - name: Deploy to GitHub Pages
         id: deployment
