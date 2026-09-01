@@ -119,7 +119,7 @@ a:focus-visible {
 }
 
 .bg-orb {
-  border-radius: 50%;
+  border-radius: 44% 56% 52% 48% / 46% 42% 58% 54%;
   background:
     radial-gradient(circle at 32% 32%, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0) 38%),
     radial-gradient(circle, rgba(13, 108, 95, 0.26) 0%, rgba(13, 108, 95, 0.18) 42%, rgba(13, 108, 95, 0.02) 74%, transparent 100%);
@@ -129,7 +129,7 @@ a:focus-visible {
 }
 
 .bg-wave {
-  border-radius: 50%;
+  border-radius: 58% 42% 46% 54% / 50% 48% 52% 50%;
   border: 1px solid rgba(13, 108, 95, 0.14);
   background:
     radial-gradient(circle, rgba(13, 108, 95, 0.12) 0, rgba(13, 108, 95, 0.05) 38%, transparent 68%);
@@ -142,7 +142,7 @@ a:focus-visible {
   left: -8%;
   width: 26rem;
   height: 26rem;
-  animation: floatOrbOne 20s ease-in-out infinite alternate;
+  animation: floatOrbOne 20s ease-in-out infinite alternate, morphOrbOne 13s ease-in-out infinite;
 }
 
 .bg-orb-2 {
@@ -153,7 +153,7 @@ a:focus-visible {
   background:
     radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0) 36%),
     radial-gradient(circle, rgba(13, 108, 95, 0.22) 0%, rgba(13, 108, 95, 0.14) 44%, rgba(13, 108, 95, 0.02) 76%, transparent 100%);
-  animation: floatOrbTwo 24s ease-in-out infinite alternate;
+  animation: floatOrbTwo 24s ease-in-out infinite alternate, morphOrbTwo 15s ease-in-out infinite;
 }
 
 .bg-orb-3 {
@@ -161,7 +161,7 @@ a:focus-visible {
   left: 18%;
   width: 18rem;
   height: 18rem;
-  animation: floatOrbThree 18s ease-in-out infinite alternate;
+  animation: floatOrbThree 18s ease-in-out infinite alternate, morphOrbThree 11s ease-in-out infinite;
 }
 
 .bg-orb-4 {
@@ -172,7 +172,7 @@ a:focus-visible {
   background:
     radial-gradient(circle at 34% 34%, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 36%),
     radial-gradient(circle, rgba(13, 108, 95, 0.2) 0%, rgba(13, 108, 95, 0.14) 48%, rgba(13, 108, 95, 0.02) 78%, transparent 100%);
-  animation: floatOrbFour 22s ease-in-out infinite alternate;
+  animation: floatOrbFour 22s ease-in-out infinite alternate, morphOrbFour 14s ease-in-out infinite;
 }
 
 .bg-orb-5 {
@@ -180,7 +180,7 @@ a:focus-visible {
   left: -4%;
   width: 22rem;
   height: 22rem;
-  animation: floatOrbFive 26s ease-in-out infinite alternate;
+  animation: floatOrbFive 26s ease-in-out infinite alternate, morphOrbFive 16s ease-in-out infinite;
 }
 
 .bg-orb-6 {
@@ -191,7 +191,7 @@ a:focus-visible {
   background:
     radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 32%),
     radial-gradient(circle, rgba(13, 108, 95, 0.24) 0%, rgba(13, 108, 95, 0.16) 42%, rgba(13, 108, 95, 0.02) 76%, transparent 100%);
-  animation: floatOrbSix 23s ease-in-out infinite alternate;
+  animation: floatOrbSix 23s ease-in-out infinite alternate, morphOrbSix 12s ease-in-out infinite;
 }
 
 .bg-wave-1 {
@@ -199,7 +199,7 @@ a:focus-visible {
   left: 28%;
   width: 42rem;
   height: 42rem;
-  animation: driftWaveOne 30s linear infinite;
+  animation: driftWaveOne 30s linear infinite, morphWaveOne 18s ease-in-out infinite;
 }
 
 .bg-wave-2 {
@@ -207,7 +207,7 @@ a:focus-visible {
   right: 22%;
   width: 38rem;
   height: 38rem;
-  animation: driftWaveTwo 34s linear infinite;
+  animation: driftWaveTwo 34s linear infinite, morphWaveTwo 20s ease-in-out infinite;
 }
 
 .topbar,
@@ -227,95 +227,175 @@ main,
 
 @keyframes floatOrbOne {
   0% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
   }
 
   100% {
-    transform: translate3d(10%, 6%, 0) scale(1.08);
+    transform: translate3d(10%, 6%, 0) scale(1.08) rotate(10deg);
   }
 }
 
 @keyframes floatOrbTwo {
   0% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
   }
 
   100% {
-    transform: translate3d(-8%, 10%, 0) scale(1.06);
+    transform: translate3d(-8%, 10%, 0) scale(1.06) rotate(-12deg);
   }
 }
 
 @keyframes floatOrbThree {
   0% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
   }
 
   100% {
-    transform: translate3d(14%, -10%, 0) scale(1.1);
+    transform: translate3d(14%, -10%, 0) scale(1.1) rotate(14deg);
   }
 }
 
 @keyframes floatOrbFour {
   0% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
   }
 
   100% {
-    transform: translate3d(-12%, 8%, 0) scale(1.08);
+    transform: translate3d(-12%, 8%, 0) scale(1.08) rotate(-8deg);
   }
 }
 
 @keyframes floatOrbFive {
   0% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
   }
 
   100% {
-    transform: translate3d(12%, -8%, 0) scale(1.05);
+    transform: translate3d(12%, -8%, 0) scale(1.05) rotate(9deg);
   }
 }
 
 @keyframes floatOrbSix {
   0% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
   }
 
   100% {
-    transform: translate3d(-10%, -8%, 0) scale(1.07);
+    transform: translate3d(-10%, -8%, 0) scale(1.07) rotate(-10deg);
   }
 }
 
 @keyframes driftWaveOne {
   0% {
-    transform: translate3d(0, 0, 0) scale(0.94);
+    transform: translate3d(0, 0, 0) scale(0.94) rotate(0deg);
     opacity: 0.38;
   }
 
   50% {
-    transform: translate3d(-4%, 2%, 0) scale(1.02);
+    transform: translate3d(-4%, 2%, 0) scale(1.02) rotate(6deg);
     opacity: 0.62;
   }
 
   100% {
-    transform: translate3d(4%, -2%, 0) scale(1.08);
+    transform: translate3d(4%, -2%, 0) scale(1.08) rotate(-6deg);
     opacity: 0.42;
   }
 }
 
 @keyframes driftWaveTwo {
   0% {
-    transform: translate3d(0, 0, 0) scale(0.92);
+    transform: translate3d(0, 0, 0) scale(0.92) rotate(0deg);
     opacity: 0.34;
   }
 
   50% {
-    transform: translate3d(3%, -4%, 0) scale(1.04);
+    transform: translate3d(3%, -4%, 0) scale(1.04) rotate(-5deg);
     opacity: 0.58;
   }
 
   100% {
-    transform: translate3d(-4%, 4%, 0) scale(1.06);
+    transform: translate3d(-4%, 4%, 0) scale(1.06) rotate(7deg);
     opacity: 0.4;
+  }
+}
+
+@keyframes morphOrbOne {
+  0%, 100% {
+    border-radius: 44% 56% 52% 48% / 46% 42% 58% 54%;
+  }
+
+  50% {
+    border-radius: 58% 42% 46% 54% / 40% 56% 44% 60%;
+  }
+}
+
+@keyframes morphOrbTwo {
+  0%, 100% {
+    border-radius: 52% 48% 40% 60% / 49% 38% 62% 51%;
+  }
+
+  50% {
+    border-radius: 40% 60% 56% 44% / 61% 45% 55% 39%;
+  }
+}
+
+@keyframes morphOrbThree {
+  0%, 100% {
+    border-radius: 48% 52% 58% 42% / 44% 54% 46% 56%;
+  }
+
+  50% {
+    border-radius: 62% 38% 45% 55% / 58% 39% 61% 42%;
+  }
+}
+
+@keyframes morphOrbFour {
+  0%, 100% {
+    border-radius: 55% 45% 50% 50% / 42% 58% 48% 52%;
+  }
+
+  50% {
+    border-radius: 41% 59% 61% 39% / 57% 40% 60% 43%;
+  }
+}
+
+@keyframes morphOrbFive {
+  0%, 100% {
+    border-radius: 46% 54% 43% 57% / 55% 41% 59% 45%;
+  }
+
+  50% {
+    border-radius: 60% 40% 55% 45% / 38% 63% 37% 62%;
+  }
+}
+
+@keyframes morphOrbSix {
+  0%, 100% {
+    border-radius: 57% 43% 48% 52% / 47% 57% 43% 53%;
+  }
+
+  50% {
+    border-radius: 39% 61% 59% 41% / 62% 36% 64% 38%;
+  }
+}
+
+@keyframes morphWaveOne {
+  0%, 100% {
+    border-radius: 58% 42% 46% 54% / 50% 48% 52% 50%;
+  }
+
+  50% {
+    border-radius: 44% 56% 59% 41% / 62% 38% 60% 40%;
+  }
+}
+
+@keyframes morphWaveTwo {
+  0%, 100% {
+    border-radius: 52% 48% 57% 43% / 45% 55% 47% 53%;
+  }
+
+  50% {
+    border-radius: 61% 39% 42% 58% / 57% 43% 54% 46%;
   }
 }
 
