@@ -46,16 +46,22 @@ export const copy = {
     experienceCardThreeText:
       "Industrial process work with traceability and data acquisition.",
     toolsLabel: "Tools",
-    toolsTitle: "A simple example of the kind of engineering tools I can build.",
+    toolsTitle: "A small selection of simpler engineering tools built from larger technical work.",
     toolsLead:
-      "A simplified gearbox and power analysis demo.",
+      "Lightweight demos adapted from larger engineering applications.",
     toolsBody:
-      "This version keeps only the clearest parts: motor selection, fixed transmission, core curves and manual shift inspection.",
+      "Each example keeps only the clearest parts, making the interface easier to understand while still showing the kind of technical tools I can develop.",
     toolsCardTitle: "Gearbox & power analyzer",
     toolsCardText:
       "Live demo with motor presets, fixed drivetrain, core charts and manual shift simulation.",
-    toolsCardNote: "First example in a small tools showcase.",
+    toolsCardNote: "Focused version of a larger gearbox and performance study tool.",
     toolsOpen: "Open tool in full page",
+    toolsCardTwoTitle: "Suspension motion ratio lab",
+    toolsCardTwoText:
+      "Single-corner pushrod suspension study with manual coordinates, preset geometry, motion ratio calculation and live kinematic visualisation.",
+    toolsCardTwoNote:
+      "Simplified from a larger suspension application into a clearer one-corner study.",
+    toolsCardTwoOpen: "Open tool in full page",
     educationLabel: "Education",
     educationTitle: "Education and motorsport specialisation.",
     timelineOneTitle: "Master's Degree in Motorsport - Competition Engineering and Mechanics",
@@ -136,16 +142,22 @@ export const copy = {
     experienceCardThreeText:
       "Trabajo industrial con trazabilidad y adquisicion de datos.",
     toolsLabel: "Herramientas",
-    toolsTitle: "Un ejemplo sencillo del tipo de herramientas de ingenieria que puedo desarrollar.",
+    toolsTitle: "Una pequena seleccion de herramientas de ingenieria simplificadas a partir de trabajo tecnico mas amplio.",
     toolsLead:
-      "Demo simplificada de analisis de caja de cambios y potencia.",
+      "Demos ligeras adaptadas desde aplicaciones de ingenieria mas grandes.",
     toolsBody:
-      "Esta version deja solo las partes mas claras: seleccion de motor, transmision fija, curvas principales y simulacion manual de cambio.",
+      "Cada ejemplo deja solo las partes mas claras para que la interfaz sea facil de entender y a la vez muestre el tipo de herramientas tecnicas que puedo desarrollar.",
     toolsCardTitle: "Analizador de caja y potencia",
     toolsCardText:
       "Demo viva con motores predefinidos, transmision fija, curvas principales y simulacion manual de cambio.",
-    toolsCardNote: "Primera pieza de una pequena muestra de herramientas.",
+    toolsCardNote: "Version centrada de una herramienta mas amplia de caja de cambios y performance.",
     toolsOpen: "Abrir herramienta en pagina completa",
+    toolsCardTwoTitle: "Laboratorio de motion ratio de suspension",
+    toolsCardTwoText:
+      "Estudio de una suspension pushrod de una sola esquina con coordenadas manuales, geometria predefinida, calculo de motion ratio y visualizacion cinematica en vivo.",
+    toolsCardTwoNote:
+      "Simplificada desde una app de suspension mas grande a un estudio mas claro de una sola esquina.",
+    toolsCardTwoOpen: "Abrir herramienta en pagina completa",
     educationLabel: "Formacion",
     educationTitle: "Formacion y especializacion en motorsport.",
     timelineOneTitle: "Master en Motorsport - Ingenieria y Mecanica de Competicion",

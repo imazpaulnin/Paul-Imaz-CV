@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Suspension Motion Ratio Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f3f5f2;
+        --surface: rgba(251, 252, 248, 0.92);
+        --surface-strong: #e6ebe3;
+        --ink: #111714;
+        --muted: #5f6b64;
+        --line: #c8d1c9;
+        --accent: #0d6c5f;
+        --accent-strong: #0a5b50;
+        --accent-soft: rgba(13, 108, 95, 0.1);
+        --signal: #b6813b;
+        --shadow: 0 24px 70px rgba(17, 23, 20, 0.08);
+        --radius-xl: 24px;
+        --radius-lg: 18px;
+        --radius-md: 12px;
+        --radius-pill: 999px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at 12% 12%, rgba(13, 108, 95, 0.12), transparent 22%),
+          radial-gradient(circle at 88% 18%, rgba(13, 108, 95, 0.08), transparent 20%),
+          linear-gradient(180deg, #f8faf7 0%, #f2f6f1 55%, #edf2ec 100%);
+        color: var(--ink);
+        font-family: "IBM Plex Sans", system-ui, sans-serif;
+      }
+
+      .app {
+        width: min(100%, 1260px);
+        margin: 0 auto;
+        padding: 24px;
+      }
+
+      .hero,
+      .workspace,
+      .metrics,
+      .point-grid {
+        display: grid;
+        gap: 18px;
+      }
+
+      .hero {
+        grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+      }
+
+      .workspace {
+        grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
+        margin-top: 20px;
+        align-items: start;
+      }
+
+      .metrics {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        margin-top: 20px;
+      }
+
+      .panel,
+      .metric-card,
+      .visual-card,
+      .curve-card,
+      .point-card {
+        border: 1px solid rgba(200, 209, 201, 0.9);
+        border-radius: var(--radius-xl);
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+
+      .panel,
+      .visual-card,
+      .curve-card,
+      .point-card {
+        padding: 22px;
+      }
+
+      .metric-card {
+        padding: 18px;
+      }
+
+      .eyebrow,
+      .kicker,
+      .metric-label,
+      .section-label,
+      .point-table th,
+      .legend-item span:last-child {
+        font-family: "IBM Plex Mono", ui-monospace, monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.76rem;
+      }
+
+      .eyebrow,
+      .kicker,
+      .metric-label,
+      .section-label {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      h1,
+      h2,
+      h3,
+      .metric-value {
+        margin: 0;
+        font-family: "Archivo Expanded", "Arial Narrow", sans-serif;
+        line-height: 1.04;
+      }
+
+      h1 {
+        margin-top: 12px;
+        font-size: clamp(2.2rem, 5vw, 4rem);
+        max-width: 12ch;
+      }
+
+      h2 {
+        font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      }
+
+      h3 {
+        font-size: 1rem;
+      }
+
+      p {
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .hero p:last-child,
+      .metric-card p:last-child,
+      .point-card p:last-child {
+        margin-bottom: 0;
+      }
+
+      .included-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .included-list div {
+        padding: 12px 14px;
+        border-radius: var(--radius-lg);
+        background: rgba(255, 255, 255, 0.66);
+        border: 1px solid rgba(200, 209, 201, 0.9);
+      }
+
+      .metric-value {
+        display: block;
+        margin-top: 10px;
+        font-size: 1.16rem;
+      }
+
+      .controls {
+        display: grid;
+        gap: 14px;
+      }
+
+      .control-group {
+        display: grid;
+        gap: 8px;
+      }
+
+      label {
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+
+      select,
+      input,
+      button {
+        width: 100%;
+        min-height: 46px;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--line);
+        font: inherit;
+      }
+
+      select,
+      input {
+        padding: 0 14px;
+        background: rgba(255, 255, 255, 0.88);
+        color: var(--ink);
+      }
+
+      input[type="range"] {
+        min-height: auto;
+        padding: 0;
+        accent-color: var(--accent);
+      }
+
+      button {
+        padding: 0 16px;
+        background: var(--accent);
+        color: #fff;
+        font-weight: 600;
+        transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease;
+      }
+
+      button:hover {
+        cursor: pointer;
+        transform: translateY(-1px);
+        background: var(--accent-strong);
+      }
+
+      button.secondary {
+        background: rgba(255, 255, 255, 0.76);
+        color: var(--ink);
+      }
+
+      button.secondary:hover {
+        background: rgba(230, 235, 227, 0.96);
+      }
+
+      button:focus-visible,
+      select:focus-visible,
+      input:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+
+      .button-row,
+      .slider-head,
+      .legend {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .button-row > * {
+        flex: 1 1 140px;
+      }
+
+      .slider-head {
+        justify-content: space-between;
+      }
+
+      .travel-value {
+        min-width: 86px;
+        padding: 10px 12px;
+        border-radius: var(--radius-pill);
+        background: rgba(255, 255, 255, 0.76);
+        border: 1px solid rgba(200, 209, 201, 0.9);
+        font-family: "IBM Plex Mono", ui-monospace, monospace;
+        text-align: center;
+      }
+
+      .status {
+        margin-top: 14px;
+        padding: 14px 16px;
+        border-radius: var(--radius-lg);
+        background: var(--accent-soft);
+        border: 1px solid rgba(13, 108, 95, 0.18);
+      }
+
+      .status strong {
+        color: var(--ink);
+      }
+
+      .visual-card,
+      .curve-card {
+        display: grid;
+        gap: 14px;
+      }
+
+      .visual-shell {
+        position: relative;
+        min-height: 520px;
+        border-radius: var(--radius-xl);
+        overflow: hidden;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.64), rgba(230, 235, 227, 0.56)),
+          linear-gradient(90deg, rgba(13, 108, 95, 0.03), rgba(13, 108, 95, 0.01));
+        border: 1px solid rgba(200, 209, 201, 0.8);
+      }
+
+      canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      .legend {
+        justify-content: flex-start;
+      }
+
+      .legend-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        border-radius: var(--radius-pill);
+        background: rgba(255, 255, 255, 0.72);
+        border: 1px solid rgba(200, 209, 201, 0.9);
+      }
+
+      .legend-swatch {
+        width: 12px;
+        height: 12px;
+        border-radius: 999px;
+      }
+
+      .curve-layout {
+        display: grid;
+        gap: 12px;
+      }
+
+      .curve-chart {
+        width: 100%;
+        height: auto;
+        overflow: visible;
+      }
+
+      .curve-chart text {
+        fill: var(--muted);
+        font-family: "IBM Plex Mono", ui-monospace, monospace;
+        font-size: 11px;
+      }
+
+      .curve-chart .axis,
+      .curve-chart .grid {
+        stroke-linecap: round;
+      }
+
+      .curve-chart .axis {
+        stroke: rgba(95, 107, 100, 0.48);
+      }
+
+      .curve-chart .grid {
+        stroke: rgba(200, 209, 201, 0.72);
+        stroke-dasharray: 4 8;
+      }
+
+      .curve-chart .compression-line {
+        fill: none;
+        stroke: var(--accent);
+        stroke-width: 3;
+      }
+
+      .curve-chart .ratio-line {
+        fill: none;
+        stroke: var(--signal);
+        stroke-width: 3;
+      }
+
+      .curve-chart .marker {
+        stroke: #fff;
+        stroke-width: 2;
+      }
+
+      .point-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin-top: 20px;
+      }
+
+      .point-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+      }
+
+      .point-table th,
+      .point-table td {
+        padding: 10px 8px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+      }
+
+      .point-table td:first-child {
+        width: 38%;
+        color: var(--ink);
+        font-weight: 600;
+      }
+
+      .point-table input {
+        min-height: 38px;
+        padding: 0 10px;
+        text-align: right;
+        font-family: "IBM Plex Mono", ui-monospace, monospace;
+      }
+
+      .note {
+        font-size: 0.92rem;
+      }
+
+      @media (max-width: 1040px) {
+        .hero,
+        .workspace,
+        .metrics,
+        .point-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .app {
+          padding: 16px;
+        }
+
+        .visual-shell {
+          min-height: 380px;
+        }
+
+        .button-row > * {
+          flex-basis: 100%;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <section class="hero">
+        <div class="panel">
+          <p class="eyebrow">Tool demo</p>
+          <h1>Single-corner suspension motion ratio lab</h1>
+          <p>
+            Compact study tool for a pushrod double-wishbone corner inspired by a Formula 4 style layout. Enter the
+            point coordinates manually, move the wheel in bump and rebound, and inspect the resulting rocker and damper
+            motion.
+          </p>
+        </div>
+
+        <div class="panel">
+          <p class="kicker">Included</p>
+          <div class="included-list">
+            <div>Manual point coordinates with ready-to-test presets</div>
+            <div>Single-corner kinematics in a clean 2D engineering view</div>
+            <div>Motion ratio evaluation as damper travel per wheel travel</div>
+            <div>Live viewer for wishbones, upright, pushrod, rocker and damper</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="metrics">
+        <article class="metric-card">
+          <p class="metric-label">Instantaneous MR</p>
+          <strong class="metric-value" id="currentMrValue">-</strong>
+          <p>Current local magnitude of <strong>ds / dzw</strong>.</p>
+        </article>
+        <article class="metric-card">
+          <p class="metric-label">Static MR</p>
+          <strong class="metric-value" id="staticMrValue">-</strong>
+          <p>Reference magnitude around static ride height.</p>
+        </article>
+        <article class="metric-card">
+          <p class="metric-label">Damper Travel</p>
+          <strong class="metric-value" id="damperCompressionValue">-</strong>
+          <p>Signed value relative to the static damper length.</p>
+        </article>
+        <article class="metric-card">
+          <p class="metric-label">Rocker Rotation</p>
+          <strong class="metric-value" id="rockerAngleValue">-</strong>
+          <p>Rotation required to close the pushrod geometry.</p>
+        </article>
+      </section>
+
+      <section class="workspace">
+        <div class="panel">
+          <p class="section-label">Setup</p>
+          <h2 style="margin-top: 10px;">Corner input and wheel travel</h2>
+          <div class="controls" style="margin-top: 18px;">
+            <div class="control-group">
+              <label for="presetSelector">Preset geometry</label>
+              <select id="presetSelector"></select>
+            </div>
+
+            <div class="slider-head">
+              <label for="travelSlider">Wheel travel</label>
+              <div class="travel-value" id="travelValue">0.0 mm</div>
+            </div>
+            <input type="range" id="travelSlider" min="-35" max="35" step="0.5" value="0" />
+
+            <div class="button-row">
+              <button type="button" id="resetTravelButton" class="secondary">Reset travel</button>
+              <button type="button" id="playButton">Play travel sweep</button>
+            </div>
+          </div>
+
+          <div class="status">
+            <strong>Status:</strong>
+            <span id="statusText">Load a preset or edit the coordinates manually to evaluate the corner.</span>
+          </div>
+        </div>
+
+        <div style="display: grid; gap: 18px;">
+          <article class="visual-card">
+            <div>
+              <p class="section-label">Visualizer</p>
+              <h2 style="margin-top: 10px;">Pushrod double-wishbone corner simulation</h2>
+              <p class="note">
+                Dashed lines show the static reference. Solid lines show the current corner position for the selected
+                wheel travel.
+              </p>
+            </div>
+            <div class="visual-shell">
+              <canvas id="suspensionCanvas"></canvas>
+            </div>
+            <div class="legend">
+              <div class="legend-item">
+                <span class="legend-swatch" style="background: #0d6c5f;"></span>
+                <span>Current geometry</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-swatch" style="background: #b6813b;"></span>
+                <span>Static reference</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-swatch" style="background: #111714;"></span>
+                <span>Chassis hard points</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="curve-card">
+            <div>
+              <p class="section-label">Curves</p>
+              <h2 style="margin-top: 10px;">Damper compression and motion ratio sweep</h2>
+            </div>
+            <div class="curve-layout">
+              <svg class="curve-chart" id="curveChart" viewBox="0 0 820 320" role="img" aria-label="Motion ratio chart"></svg>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="point-grid">
+        <article class="point-card">
+          <p class="section-label">Suspension Points</p>
+          <h2 style="margin-top: 10px;">Wishbones and upright</h2>
+          <table class="point-table">
+            <thead>
+              <tr>
+                <th>Point</th>
+                <th>X (mm)</th>
+                <th>Z (mm)</th>
+              </tr>
+            </thead>
+            <tbody id="suspensionPointTable"></tbody>
+          </table>
+        </article>
+
+        <article class="point-card">
+          <p class="section-label">Rocker Points</p>
+          <h2 style="margin-top: 10px;">Pushrod, rocker and damper</h2>
+          <table class="point-table">
+            <thead>
+              <tr>
+                <th>Point</th>
+                <th>X (mm)</th>
+                <th>Z (mm)</th>
+              </tr>
+            </thead>
+            <tbody id="rockerPointTable"></tbody>
+          </table>
+        </article>
+      </section>
+    </div>
+
+    <script>
+      const PRESETS = {
+        f4FrontCorner: {
+          label: "F4 style front corner",
+          points: {
+            lcaInner: { x: 210, z: 145 },
+            ucaInner: { x: 248, z: 425 },
+            lcaOuter: { x: 768, z: 165 },
+            ucaOuter: { x: 734, z: 394 },
+            pushrodUpright: { x: 708, z: 266 },
+            rockerPivot: { x: 420, z: 380 },
+            rockerPushrod: { x: 500, z: 240 },
+            rockerDamper: { x: 350, z: 320 },
+            damperChassis: { x: 255, z: 430 }
+          }
+        },
+        f4FrontCornerAlt: {
+          label: "F4 style front corner - alternate rocker",
+          points: {
+            lcaInner: { x: 210, z: 145 },
+            ucaInner: { x: 248, z: 425 },
+            lcaOuter: { x: 768, z: 165 },
+            ucaOuter: { x: 734, z: 394 },
+            pushrodUpright: { x: 712, z: 276 },
+            rockerPivot: { x: 420, z: 380 },
+            rockerPushrod: { x: 480, z: 260 },
+            rockerDamper: { x: 338, z: 306 },
+            damperChassis: { x: 252, z: 424 }
+          }
+        }
+      };
+
+      const SUSPENSION_ROWS = [
+        ["lcaInner", "Lower arm inner"],
+        ["ucaInner", "Upper arm inner"],
+        ["lcaOuter", "Lower upright"],
+        ["ucaOuter", "Upper upright"],
+        ["pushrodUpright", "Pushrod upright"]
+      ];
+
+      const ROCKER_ROWS = [
+        ["rockerPivot", "Rocker pivot"],
+        ["rockerPushrod", "Rocker pushrod"],
+        ["rockerDamper", "Rocker damper"],
+        ["damperChassis", "Damper chassis"]
+      ];
+
+      const presetSelector = document.getElementById("presetSelector");
+      const travelSlider = document.getElementById("travelSlider");
+      const travelValue = document.getElementById("travelValue");
+      const statusText = document.getElementById("statusText");
+      const suspensionPointTable = document.getElementById("suspensionPointTable");
+      const rockerPointTable = document.getElementById("rockerPointTable");
+      const canvas = document.getElementById("suspensionCanvas");
+      const ctx = canvas.getContext("2d");
+      const curveChart = document.getElementById("curveChart");
+      const currentMrValue = document.getElementById("currentMrValue");
+      const staticMrValue = document.getElementById("staticMrValue");
+      const damperCompressionValue = document.getElementById("damperCompressionValue");
+      const rockerAngleValue = document.getElementById("rockerAngleValue");
+      const playButton = document.getElementById("playButton");
+
+      let animationFrame = null;
+      let playDirection = 1;
+
+      function vec(x, z) {
+        return { x, z };
+      }
+
+      function add(a, b) {
+        return { x: a.x + b.x, z: a.z + b.z };
+      }
+
+      function sub(a, b) {
+        return { x: a.x - b.x, z: a.z - b.z };
+      }
+
+      function scale(a, factor) {
+        return { x: a.x * factor, z: a.z * factor };
+      }
+
+      function dot(a, b) {
+        return a.x * b.x + a.z * b.z;
+      }
+
+      function length(a) {
+        return Math.hypot(a.x, a.z);
+      }
+
+      function distance(a, b) {
+        return length(sub(a, b));
+      }
+
+      function normalize(a) {
+        const len = length(a);
+        if (len < 1e-9) {
+          throw new Error("Zero-length vector.");
+        }
+        return { x: a.x / len, z: a.z / len };
+      }
+
+      function perpendicular(a) {
+        return { x: -a.z, z: a.x };
+      }
+
+      function rotateAround(point, origin, angle) {
+        const dx = point.x - origin.x;
+        const dz = point.z - origin.z;
+        const c = Math.cos(angle);
+        const s = Math.sin(angle);
+        return {
+          x: origin.x + dx * c - dz * s,
+          z: origin.z + dx * s + dz * c
+        };
+      }
+
+      function formatSigned(value, digits = 2) {
+        return `${value >= 0 ? "+" : ""}${value.toFixed(digits)}`;
+      }
+
+      function formatMm(value, digits = 1) {
+        return `${value.toFixed(digits)} mm`;
+      }
+
+      function setStatus(message) {
+        statusText.textContent = message;
+      }
+
+      function populatePresetSelector() {
+        Object.entries(PRESETS).forEach(([key, preset]) => {
+          const option = document.createElement("option");
+          option.value = key;
+          option.textContent = preset.label;
+          presetSelector.appendChild(option);
+        });
+      }
+
+      function createPointRows(target, rows) {
+        target.innerHTML = "";
+
+        rows.forEach(([key, label]) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${label}</td>
+            <td><input type="number" step="1" data-point="${key}" data-axis="x" /></td>
+            <td><input type="number" step="1" data-point="${key}" data-axis="z" /></td>
+          `;
+          target.appendChild(tr);
+        });
+      }
+
+      function setInputsFromPreset(presetKey) {
+        const preset = PRESETS[presetKey];
+        Object.entries(preset.points).forEach(([pointKey, point]) => {
+          document.querySelector(`[data-point="${pointKey}"][data-axis="x"]`).value = point.x;
+          document.querySelector(`[data-point="${pointKey}"][data-axis="z"]`).value = point.z;
+        });
+      }
+
+      function getPointsFromInputs() {
+        const points = {};
+
+        [...SUSPENSION_ROWS, ...ROCKER_ROWS].forEach(([key]) => {
+          const x = parseFloat(document.querySelector(`[data-point="${key}"][data-axis="x"]`).value);
+          const z = parseFloat(document.querySelector(`[data-point="${key}"][data-axis="z"]`).value);
+          points[key] = vec(x, z);
+        });
+
+        return points;
+      }
+
+      function chooseNearest(candidates, target) {
+        return candidates.reduce((best, candidate) => {
+          if (!best) return candidate;
+          return distance(candidate, target) < distance(best, target) ? candidate : best;
+        }, null);
+      }
+
+      function circleIntersections(c1, r1, c2, r2) {
+        const d = distance(c1, c2);
+        if (d < 1e-9 || d > r1 + r2 || d < Math.abs(r1 - r2)) {
+          return [];
+        }
+
+        const a = (r1 * r1 - r2 * r2 + d * d) / (2 * d);
+        const hSquared = r1 * r1 - a * a;
+        if (hSquared < -1e-6) {
+          return [];
+        }
+
+        const h = Math.sqrt(Math.max(hSquared, 0));
+        const direction = normalize(sub(c2, c1));
+        const midpoint = add(c1, scale(direction, a));
+        const offset = scale(perpendicular(direction), h);
+
+        return [add(midpoint, offset), sub(midpoint, offset)];
+      }
+
+      function solveRockerAngle(points, pushrodTarget, preferredAngle = 0) {
+        const pivot = points.rockerPivot;
+        const pushrodPointStatic = points.rockerPushrod;
+        const pushrodLength = distance(points.pushrodUpright, pushrodPointStatic);
+        const tolerance = 1e-5;
+
+        const errorAt = (angle) => {
+          const rockerPushrod = rotateAround(pushrodPointStatic, pivot, angle);
+          return distance(pushrodTarget, rockerPushrod) - pushrodLength;
+        };
+
+        if (Math.abs(errorAt(preferredAngle)) < tolerance) {
+          return preferredAngle;
+        }
+
+        const minAngle = -2.2;
+        const maxAngle = 2.2;
+        const step = 0.01;
+        const roots = [];
+        let bestAngle = preferredAngle;
+        let bestError = Math.abs(errorAt(preferredAngle));
+        let previousAngle = minAngle;
+        let previousError = errorAt(previousAngle);
+
+        for (let angle = minAngle + step; angle <= maxAngle; angle += step) {
+          const currentError = errorAt(angle);
+          const absError = Math.abs(currentError);
+
+          if (absError < bestError) {
+            bestError = absError;
+            bestAngle = angle;
+          }
+
+          if (Math.abs(currentError) < 1e-4) {
+            roots.push(angle);
+          } else if (previousError === 0 || currentError === 0 || previousError * currentError < 0) {
+            let low = previousAngle;
+            let high = angle;
+            let fLow = previousError;
+
+            for (let i = 0; i < 28; i += 1) {
+              const mid = (low + high) * 0.5;
+              const fMid = errorAt(mid);
+              if (Math.abs(fMid) < 1e-7) {
+                low = mid;
+                high = mid;
+                break;
+              }
+
+              if (fLow * fMid <= 0) {
+                high = mid;
+              } else {
+                low = mid;
+                fLow = fMid;
+              }
+            }
+
+            roots.push((low + high) * 0.5);
+          }
+
+          previousAngle = angle;
+          previousError = currentError;
+        }
+
+        if (!roots.length) {
+          if (bestError < 1e-3) {
+            return bestAngle;
+          }
+          throw new Error("No rocker solution found for the selected geometry.");
+        }
+
+        return roots.reduce((best, angle) => {
+          if (best === null) return angle;
+          return Math.abs(angle - preferredAngle) < Math.abs(best - preferredAngle) ? angle : best;
+        }, null);
+      }
+
+      function solveCornerAtTravel(points, wheelTravel) {
+        const lowerLength = distance(points.lcaInner, points.lcaOuter);
+        const upperLength = distance(points.ucaInner, points.ucaOuter);
+        const uprightVectorStatic = sub(points.ucaOuter, points.lcaOuter);
+        const uprightLength = length(uprightVectorStatic);
+        const uprightDirStatic = normalize(uprightVectorStatic);
+        const uprightPerpStatic = perpendicular(uprightDirStatic);
+        const pushrodRelative = sub(points.pushrodUpright, points.lcaOuter);
+        const along = dot(pushrodRelative, uprightDirStatic);
+        const offset = dot(pushrodRelative, uprightPerpStatic);
+
+        const targetLowerZ = points.lcaOuter.z + wheelTravel;
+        const dzLower = targetLowerZ - points.lcaInner.z;
+        const lowerRadicand = lowerLength * lowerLength - dzLower * dzLower;
+
+        if (lowerRadicand < 0) {
+          throw new Error("Lower arm cannot reach the selected wheel travel.");
+        }
+
+        const lowerDx = Math.sqrt(Math.max(lowerRadicand, 0));
+        const lowerCandidates = [
+          vec(points.lcaInner.x + lowerDx, targetLowerZ),
+          vec(points.lcaInner.x - lowerDx, targetLowerZ)
+        ];
+        const lcaOuter = chooseNearest(lowerCandidates, points.lcaOuter);
+
+        const upperCandidates = circleIntersections(points.ucaInner, upperLength, lcaOuter, uprightLength);
+        if (!upperCandidates.length) {
+          throw new Error("Upper arm and upright cannot close for the selected travel.");
+        }
+
+        const ucaOuter = chooseNearest(upperCandidates, points.ucaOuter);
+        const uprightDir = normalize(sub(ucaOuter, lcaOuter));
+        const uprightPerp = perpendicular(uprightDir);
+        const pushrodUpright = add(add(lcaOuter, scale(uprightDir, along)), scale(uprightPerp, offset));
+
+        const rockerAngle = solveRockerAngle(points, pushrodUpright, 0);
+        const rockerPushrod = rotateAround(points.rockerPushrod, points.rockerPivot, rockerAngle);
+        const rockerDamper = rotateAround(points.rockerDamper, points.rockerPivot, rockerAngle);
+        const damperLength = distance(points.damperChassis, rockerDamper);
+        const staticDamperLength = distance(points.damperChassis, points.rockerDamper);
+
+        return {
+          points: {
+            ...points,
+            lcaOuter,
+            ucaOuter,
+            pushrodUpright,
+            rockerPushrod,
+            rockerDamper
+          },
+          wheelTravel,
+          rockerAngle,
+          damperLength,
+          damperCompression: staticDamperLength - damperLength
+        };
+      }
+
+      function localMotionRatio(points, wheelTravel) {
+        const delta = 0.5;
+        const low = solveCornerAtTravel(points, wheelTravel - delta);
+        const high = solveCornerAtTravel(points, wheelTravel + delta);
+        return (high.damperCompression - low.damperCompression) / (2 * delta);
+      }
+
+      function buildSweep(points) {
+        const samples = [];
+        for (let travel = -30; travel <= 30; travel += 2) {
+          const state = solveCornerAtTravel(points, travel);
+          const ratio = Math.abs(localMotionRatio(points, travel));
+          samples.push({
+            travel,
+            compression: state.damperCompression,
+            ratio
+          });
+        }
+        return samples;
+      }
+
+      function updateTravelDisplay(value) {
+        travelValue.textContent = formatMm(value, 1);
+      }
+
+      function syncCanvasSize() {
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = Math.round(rect.width * window.devicePixelRatio);
+        canvas.height = Math.round(rect.height * window.devicePixelRatio);
+        ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
+      }
+
+      function makeViewport(pointsSets) {
+        const all = pointsSets.flatMap((set) => Object.values(set));
+        const xs = all.map((point) => point.x);
+        const zs = all.map((point) => point.z);
+        const minX = Math.min(...xs) - 110;
+        const maxX = Math.max(...xs) + 110;
+        const minZ = Math.min(...zs) - 110;
+        const maxZ = Math.max(...zs) + 110;
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+        const scaleValue = Math.min(width / (maxX - minX), height / (maxZ - minZ));
+        const offsetX = (width - (maxX - minX) * scaleValue) * 0.5;
+        const offsetY = (height - (maxZ - minZ) * scaleValue) * 0.5;
+
+        return (point) => ({
+          x: offsetX + (point.x - minX) * scaleValue,
+          y: height - (offsetY + (point.z - minZ) * scaleValue)
+        });
+      }
+
+      function drawGrid(width, height) {
+        ctx.save();
+        ctx.strokeStyle = "rgba(200, 209, 201, 0.55)";
+        ctx.lineWidth = 1;
+
+        for (let x = 0; x <= width; x += 48) {
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, height);
+          ctx.stroke();
+        }
+
+        for (let y = 0; y <= height; y += 48) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(width, y);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      function drawLine(a, b, options = {}) {
+        ctx.save();
+        ctx.strokeStyle = options.color || "#111714";
+        ctx.lineWidth = options.width || 3;
+        ctx.setLineDash(options.dash || []);
+        ctx.globalAlpha = options.alpha ?? 1;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      function drawPoint(point, options = {}) {
+        ctx.save();
+        ctx.fillStyle = options.color || "#111714";
+        ctx.globalAlpha = options.alpha ?? 1;
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, options.radius || 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      function drawLabel(point, text, color) {
+        ctx.save();
+        ctx.fillStyle = color;
+        ctx.font = '11px "IBM Plex Mono", monospace';
+        ctx.fillText(text, point.x + 8, point.y - 8);
+        ctx.restore();
+      }
+
+      function drawWheel(center, uprightBottom, uprightTop) {
+        const wheelRadius = Math.max(distance(uprightBottom, uprightTop) * 0.62, 66);
+        ctx.save();
+        ctx.strokeStyle = "rgba(17, 23, 20, 0.24)";
+        ctx.lineWidth = 18;
+        ctx.beginPath();
+        ctx.arc(center.x + 34, center.y, wheelRadius, -Math.PI * 0.6, Math.PI * 0.6);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      function drawGeometry(transform, staticState, currentState) {
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+        ctx.clearRect(0, 0, width, height);
+        drawGrid(width, height);
+
+        const staticPts = Object.fromEntries(Object.entries(staticState.points).map(([key, point]) => [key, transform(point)]));
+        const currentPts = Object.fromEntries(Object.entries(currentState.points).map(([key, point]) => [key, transform(point)]));
+
+        const wheelCenter = {
+          x: (currentPts.lcaOuter.x + currentPts.ucaOuter.x) * 0.5,
+          y: (currentPts.lcaOuter.y + currentPts.ucaOuter.y) * 0.5
+        };
+
+        drawWheel(wheelCenter, currentPts.lcaOuter, currentPts.ucaOuter);
+
+        const drawCorner = (pts, color, dash, alpha) => {
+          drawLine(pts.lcaInner, pts.lcaOuter, { color, width: 4, dash, alpha });
+          drawLine(pts.ucaInner, pts.ucaOuter, { color, width: 4, dash, alpha });
+          drawLine(pts.lcaOuter, pts.ucaOuter, { color, width: 5, dash, alpha });
+          drawLine(pts.pushrodUpright, pts.rockerPushrod, { color, width: 3, dash, alpha });
+          drawLine(pts.rockerPivot, pts.rockerPushrod, { color, width: 4, dash, alpha });
+          drawLine(pts.rockerPivot, pts.rockerDamper, { color, width: 4, dash, alpha });
+          drawLine(pts.damperChassis, pts.rockerDamper, { color, width: 5, dash, alpha });
+        };
+
+        drawCorner(staticPts, "#b6813b", [8, 8], 0.62);
+        drawCorner(currentPts, "#0d6c5f", [], 1);
+
+        ["lcaInner", "ucaInner", "rockerPivot", "damperChassis"].forEach((key) => {
+          drawPoint(currentPts[key], { color: "#111714", radius: 5.5 });
+        });
+
+        ["lcaOuter", "ucaOuter", "pushrodUpright", "rockerPushrod", "rockerDamper"].forEach((key) => {
+          drawPoint(currentPts[key], { color: "#0d6c5f", radius: 5 });
+        });
+
+        drawLabel(currentPts.lcaInner, "LCA inner", "#5f6b64");
+        drawLabel(currentPts.ucaInner, "UCA inner", "#5f6b64");
+        drawLabel(currentPts.rockerPivot, "Rocker pivot", "#5f6b64");
+        drawLabel(currentPts.damperChassis, "Damper top", "#5f6b64");
+      }
+
+      function renderCurve(samples, currentTravel) {
+        const width = 820;
+        const height = 320;
+        const margin = { top: 24, right: 64, bottom: 52, left: 64 };
+        const plotWidth = width - margin.left - margin.right;
+        const plotHeight = height - margin.top - margin.bottom;
+        const minTravel = Math.min(...samples.map((sample) => sample.travel));
+        const maxTravel = Math.max(...samples.map((sample) => sample.travel));
+        const compressionValues = samples.map((sample) => sample.compression);
+        const ratioValues = samples.map((sample) => sample.ratio);
+        const minCompression = Math.min(...compressionValues);
+        const maxCompression = Math.max(...compressionValues);
+        const minRatio = Math.min(...ratioValues);
+        const maxRatio = Math.max(...ratioValues);
+
+        const xFor = (value) => margin.left + ((value - minTravel) / (maxTravel - minTravel)) * plotWidth;
+        const yCompressionFor = (value) =>
+          margin.top + plotHeight - ((value - minCompression) / Math.max(maxCompression - minCompression, 1e-6)) * plotHeight;
+        const yRatioFor = (value) =>
+          margin.top + plotHeight - ((value - minRatio) / Math.max(maxRatio - minRatio, 1e-6)) * plotHeight;
+
+        const compressionPath = samples
+          .map((sample, index) => `${index === 0 ? "M" : "L"} ${xFor(sample.travel).toFixed(2)} ${yCompressionFor(sample.compression).toFixed(2)}`)
+          .join(" ");
+        const ratioPath = samples
+          .map((sample, index) => `${index === 0 ? "M" : "L"} ${xFor(sample.travel).toFixed(2)} ${yRatioFor(sample.ratio).toFixed(2)}`)
+          .join(" ");
+        const currentSample = samples.reduce((best, sample) => {
+          if (!best) return sample;
+          return Math.abs(sample.travel - currentTravel) < Math.abs(best.travel - currentTravel) ? sample : best;
+        }, null);
+
+        const gridLines = [-30, -15, 0, 15, 30]
+          .map((travel) => {
+            const x = xFor(travel);
+            return `<line class="grid" x1="${x}" y1="${margin.top}" x2="${x}" y2="${margin.top + plotHeight}" />`;
+          })
+          .join("");
+
+        curveChart.innerHTML = `
+          <rect x="0" y="0" width="${width}" height="${height}" rx="18" fill="rgba(255,255,255,0.36)"></rect>
+          ${gridLines}
+          <line class="axis" x1="${margin.left}" y1="${margin.top + plotHeight}" x2="${margin.left + plotWidth}" y2="${margin.top + plotHeight}" />
+          <line class="axis" x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${margin.top + plotHeight}" />
+          <line class="axis" x1="${margin.left + plotWidth}" y1="${margin.top}" x2="${margin.left + plotWidth}" y2="${margin.top + plotHeight}" />
+          <path class="compression-line" d="${compressionPath}"></path>
+          <path class="ratio-line" d="${ratioPath}"></path>
+          <circle class="marker" cx="${xFor(currentSample.travel)}" cy="${yCompressionFor(currentSample.compression)}" r="5" fill="#0d6c5f"></circle>
+          <circle class="marker" cx="${xFor(currentSample.travel)}" cy="${yRatioFor(currentSample.ratio)}" r="5" fill="#b6813b"></circle>
+          <text x="${margin.left}" y="${height - 16}">Wheel travel (mm)</text>
+          <text x="${margin.left}" y="${16}">Damper compression</text>
+          <text x="${width - 124}" y="${16}">Motion ratio</text>
+          <text x="${margin.left - 44}" y="${margin.top + 8}">${maxCompression.toFixed(1)}</text>
+          <text x="${margin.left - 44}" y="${margin.top + plotHeight + 4}">${minCompression.toFixed(1)}</text>
+          <text x="${width - margin.right + 14}" y="${margin.top + 8}">${maxRatio.toFixed(2)}</text>
+          <text x="${width - margin.right + 14}" y="${margin.top + plotHeight + 4}">${minRatio.toFixed(2)}</text>
+          <text x="${xFor(0) - 12}" y="${height - 16}">0</text>
+          <text x="${xFor(-30) - 16}" y="${height - 16}">-30</text>
+          <text x="${xFor(30) - 10}" y="${height - 16}">30</text>
+        `;
+      }
+
+      function stopPlayback() {
+        if (animationFrame) {
+          cancelAnimationFrame(animationFrame);
+          animationFrame = null;
+        }
+        playButton.textContent = "Play travel sweep";
+      }
+
+      function playSweep() {
+        if (animationFrame) {
+          stopPlayback();
+          return;
+        }
+
+        playButton.textContent = "Stop sweep";
+
+        const step = () => {
+          let value = parseFloat(travelSlider.value);
+          if (value >= parseFloat(travelSlider.max)) playDirection = -1;
+          if (value <= parseFloat(travelSlider.min)) playDirection = 1;
+          value += playDirection * 0.5;
+          travelSlider.value = value.toFixed(1);
+          render();
+          animationFrame = requestAnimationFrame(step);
+        };
+
+        animationFrame = requestAnimationFrame(step);
+      }
+
+      function render() {
+        try {
+          const points = getPointsFromInputs();
+          const travel = parseFloat(travelSlider.value);
+          updateTravelDisplay(travel);
+
+          const staticState = solveCornerAtTravel(points, 0);
+          const currentState = solveCornerAtTravel(points, travel);
+          const currentMr = Math.abs(localMotionRatio(points, travel));
+          const staticMr = Math.abs(localMotionRatio(points, 0));
+          const sweep = buildSweep(points);
+
+          currentMrValue.textContent = currentMr.toFixed(3);
+          staticMrValue.textContent = staticMr.toFixed(3);
+          damperCompressionValue.textContent = formatMm(currentState.damperCompression, 2);
+          rockerAngleValue.textContent = `${formatSigned((currentState.rockerAngle * 180) / Math.PI, 2)} deg`;
+
+          syncCanvasSize();
+          const transform = makeViewport([staticState.points, currentState.points]);
+          drawGeometry(transform, staticState, currentState);
+          renderCurve(sweep, travel);
+
+          setStatus(
+            `Corner solved at ${formatMm(travel, 1)} with a current motion ratio of ${currentMr.toFixed(3)} and damper compression of ${formatMm(currentState.damperCompression, 2)}.`
+          );
+        } catch (error) {
+          currentMrValue.textContent = "-";
+          staticMrValue.textContent = "-";
+          damperCompressionValue.textContent = "-";
+          rockerAngleValue.textContent = "-";
+          ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+          curveChart.innerHTML = "";
+          setStatus(error.message);
+        }
+      }
+
+      function loadPreset(presetKey) {
+        setInputsFromPreset(presetKey);
+        travelSlider.value = "0";
+        stopPlayback();
+        render();
+      }
+
+      populatePresetSelector();
+      createPointRows(suspensionPointTable, SUSPENSION_ROWS);
+      createPointRows(rockerPointTable, ROCKER_ROWS);
+      presetSelector.addEventListener("change", () => loadPreset(presetSelector.value));
+      travelSlider.addEventListener("input", render);
+      document.getElementById("resetTravelButton").addEventListener("click", () => {
+        travelSlider.value = "0";
+        render();
+      });
+      playButton.addEventListener("click", playSweep);
+      document.querySelectorAll("input[type='number']").forEach((input) => {
+        input.addEventListener("input", () => {
+          stopPlayback();
+          render();
+        });
+      });
+      window.addEventListener("resize", render);
+
+      presetSelector.value = "f4FrontCorner";
+      loadPreset("f4FrontCorner");
+    </script>
+  </body>
+</html>
