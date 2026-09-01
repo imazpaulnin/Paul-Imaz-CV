@@ -1,71 +1,71 @@
 export const modes = {
   en: {
     remote: {
-      label: "REMOTE SUPPORT",
-      heading: "Tools, simulation and performance analysis without full-time overhead.",
+      label: "DATA",
+      heading: "Driving, timing, race-data and performance-data analysis.",
       description:
-        "Best for data workflows, report automation, lap-time studies, suspension tools and engineering utilities that need to fit around an existing race programme.",
+        "The references describe tool development for data analysis together with report preparation and performance support for F2 and F3.",
       items: [
-        "Custom reporting and engineering dashboards",
-        "Data workflows for timing, driving and race analysis",
-        "Simulation studies delivered around your schedule",
+        "Driving analysis tools",
+        "Timing and race-data workflows",
+        "Reports and performance support from factory base",
       ],
     },
     factory: {
-      label: "FACTORY INTEGRATION",
-      heading: "A technical extra pair of hands for engineering groups under pressure.",
+      label: "DYNAMICS",
+      heading: "Suspension studies, lap-time work and control-oriented engineering.",
       description:
-        "Useful when a team needs someone who can understand vehicle questions, speak the engineering language and still ship internal software and analysis tools.",
+        "The references group together suspension dynamics simulation, a virtual seven-post rig, lap-time simulation, traction control and active-aero development.",
       items: [
-        "Workflow support for performance and prep work",
-        "Tool development aligned with real engineering usage",
-        "Fast integration with existing team processes",
+        "Suspension dynamics simulation tools",
+        "Virtual seven-post rig and lap-time simulation",
+        "Slip-ratio traction control and active aerodynamics",
       ],
     },
     trackside: {
-      label: "TRACKSIDE SUPPORT",
-      heading: "On-site support when the programme benefits from direct engineering presence.",
+      label: "TRACKSIDE",
+      heading: "Track support experience across Eurocup-3 and F4 environments.",
       description:
-        "Built around selected tests and race events where data systems, support engineering or analysis work benefit from being at the circuit.",
+        "The references include race and test support in Eurocup-3 at Portimao and MotorLand, an F4 test as Data / Systems Engineer, and a full student-led Eurocup-3 test at Ricardo Tormo.",
       items: [
-        "Support-engineer and data-systems contribution",
-        "Trackside analysis and reporting continuity",
-        "Factory-to-circuit workflow alignment",
+        "Support Engineer work in Eurocup-3",
+        "Data / Systems Engineer role in F4 testing",
+        "Pre-event, circuit and post-event test operations",
       ],
     },
   },
   es: {
     remote: {
-      label: "SOPORTE REMOTO",
-      heading: "Herramientas, simulación y análisis de rendimiento sin estructura fija completa.",
+      label: "DATA",
+      heading: "Analisis de driving, timing, datos de carrera y rendimiento.",
       description:
-        "Ideal para flujos de datos, automatización de reports, estudios de lap time, herramientas de suspensión y utilidades de ingeniería que deben encajar alrededor de un programa ya en marcha.",
+        "Las referencias describen desarrollo de herramientas de analisis de datos junto con preparacion de reports y soporte de performance para F2 y F3.",
       items: [
-        "Dashboards y reporting técnico a medida",
-        "Flujos de datos para timing, driving y análisis de carrera",
-        "Estudios de simulación entregados alrededor de vuestro calendario",
+        "Herramientas de driving analysis",
+        "Flujos de timing y datos de carrera",
+        "Reports y soporte de performance desde sede",
       ],
     },
     factory: {
-      label: "INTEGRACIÓN EN NAVE",
-      heading: "Un refuerzo técnico para grupos de ingeniería con carga alta de trabajo.",
+      label: "DINAMICA",
+      heading: "Estudios de suspension, lap time e ingenieria orientada a control.",
       description:
-        "Útil cuando un equipo necesita a alguien que entienda preguntas de vehículo, hable el lenguaje del ingeniero y aun así entregue software interno y herramientas de análisis.",
+        "Las referencias agrupan simulacion de dinamica de suspension, virtual seven-post rig, lap time, control de traccion y desarrollo de aerodinamica activa.",
       items: [
-        "Soporte de procesos para performance y preparación",
-        "Desarrollo de herramientas conectado al uso real del equipo",
-        "Integración rápida con procesos existentes",
+        "Herramientas de simulacion de dinamica de suspension",
+        "Virtual seven-post rig y simulador de lap time",
+        "Control de traccion por slip ratio y aerodinamica activa",
       ],
     },
     trackside: {
-      label: "SOPORTE EN PISTA",
-      heading: "Presencia en circuito cuando el programa se beneficia de apoyo directo de ingeniería.",
+      label: "PISTA",
+      heading: "Experiencia en pista en entornos de Eurocup-3 y F4.",
       description:
-        "Pensado para tests y eventos seleccionados en los que data systems, support engineering o análisis ganan valor al hacerse en el circuito.",
+        "Las referencias incluyen apoyo en carrera y test de Eurocup-3 en Portimao y MotorLand, un test de F4 como Data / Systems Engineer y un test completo de Eurocup-3 en Ricardo Tormo.",
       items: [
-        "Contribución como support engineer y data systems",
-        "Continuidad entre análisis en pista y reporting posterior",
-        "Alineación entre el trabajo de nave y circuito",
+        "Trabajo como Support Engineer en Eurocup-3",
+        "Rol de Data / Systems Engineer en test de F4",
+        "Operacion de pre-event, circuito y post-event",
       ],
     },
   },

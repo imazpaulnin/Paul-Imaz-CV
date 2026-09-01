@@ -1,16 +1,16 @@
-# Motorsport Freelance Presentation
+# Motorsport CV Presentation
 
 ## Product
 
-Single-page interactive presentation for Paul Imaz Nin to pitch freelance motorsport engineering services to race teams and technical partners.
+Single-page interactive presentation for Paul Imaz Nin built from the CV references in English and Spanish.
 
 ## Audience
 
-Team managers, performance engineers, vehicle dynamics groups and technical directors who need immediate engineering support without hiring a full-time employee.
+Team managers, engineers, technical recruiters and collaborators reviewing Paul Imaz Nin's motorsport profile.
 
 ## Job To Be Done
 
-Show that Paul is not only a motorsport engineer with trackside credibility, but also a systems-minded builder who can ship software, simulation and reporting tools that make engineering groups faster.
+Present the profile, experience, projects, education and skills from the reference CVs in a clear, technical and visually structured way.
 
 ## Visual Direction
 
@@ -40,7 +40,7 @@ A telemetry-inspired operating panel in the hero that switches between remote, f
 
 ## Content Principles
 
-- Sell outcomes, not only tasks.
-- Emphasize the rare combination of software, vehicle dynamics and race support.
-- Keep claims specific and anchored in real work already done.
-- Frame freelance as fast deployment, flexible support and low integration friction for teams.
+- Use only information present in the reference CVs.
+- Keep the tone factual and technical rather than promotional.
+- Let the UI structure create hierarchy without inventing achievements.
+- Preserve bilingual clarity and direct access to both source PDFs.
