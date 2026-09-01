@@ -62,6 +62,12 @@ export const copy = {
     toolsCardTwoNote:
       "Simplified from a larger suspension application into a clearer one-corner study.",
     toolsCardTwoOpen: "Open tool in full page",
+    toolsCardThreeTitle: "Tyre force explorer",
+    toolsCardThreeText:
+      "Simplified Pacejka-style tyre study with slip angle, slip ratio, camber and load inputs, plus force curves and a combined-grip operating-point view.",
+    toolsCardThreeNote:
+      "Focused extraction of a larger tyre model workspace into a lighter demo for fast analysis.",
+    toolsCardThreeOpen: "Open tool in full page",
     educationLabel: "Education",
     educationTitle: "Education and motorsport specialisation.",
     timelineOneTitle: "Master's Degree in Motorsport - Competition Engineering and Mechanics",
@@ -158,6 +164,12 @@ export const copy = {
     toolsCardTwoNote:
       "Simplificada desde una app de suspension mas grande a un estudio mas claro de una sola esquina.",
     toolsCardTwoOpen: "Abrir herramienta en pagina completa",
+    toolsCardThreeTitle: "Explorador de fuerzas del neumatico",
+    toolsCardThreeText:
+      "Estudio simplificado tipo Pacejka con inputs de angulo de deriva, slip ratio, caida y carga, junto con curvas de fuerza y una vista del punto de trabajo en grip combinado.",
+    toolsCardThreeNote:
+      "Extraccion enfocada de una herramienta de modelo de neumatico mas amplia a una demo ligera para analisis rapido.",
+    toolsCardThreeOpen: "Abrir herramienta en pagina completa",
     educationLabel: "Formacion",
     educationTitle: "Formacion y especializacion en motorsport.",
     timelineOneTitle: "Master en Motorsport - Ingenieria y Mecanica de Competicion",
