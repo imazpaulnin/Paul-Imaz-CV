@@ -2,12 +2,11 @@ export const copy = {
   en: {
     navOverview: "Overview",
     navExperience: "Experience",
-    navProjects: "Projects",
     navTools: "Tools",
     navEducation: "Education",
     navContact: "Contact",
     eyebrow: "Paul Imaz Nin",
-    heroTitle: "Motorsport engineer across data, performance, systems, vehicle dynamics and software.",
+    heroTitle: "Motorsport engineer for data, performance, vehicle dynamics and software.",
     heroText:
       "Currently at Campos Racing, working on engineering tools, vehicle dynamics and competition support.",
     metricOne: "Campos Racing since March 2026",
@@ -46,40 +45,6 @@ export const copy = {
     experienceCardThreeLabel: "MIG Heat Treatments",
     experienceCardThreeText:
       "Industrial process work with traceability and data acquisition.",
-    projectsLabel: "Projects",
-    projectsTitle: "Selected projects from the CV.",
-    filterAll: "All",
-    filterSoftware: "Software",
-    filterDynamics: "Dynamics",
-    filterTrack: "Trackside",
-    caseOneTag: "Campos Racing",
-    caseOneTitle: "Gearbox Optimisation Tool",
-    caseOneText:
-      "Tool to study shift points, operating range and gear-ratio selection from engine map and gearing data.",
-    caseTwoTag: "Tecnun eRacing",
-    caseTwoTitle: "Traction Control",
-    caseTwoText:
-      "Slip-ratio traction-control logic developed in Simulink and refined with CarMaker.",
-    caseThreeTag: "Campos Racing",
-    caseThreeTitle: "Track Test Practice, Eurocup-3",
-    caseThreeText:
-      "Full test workflow at Ricardo Tormo: preparation, trackside work, data analysis and post-event reporting.",
-    caseFourTag: "Campos Racing",
-    caseFourTitle: "Trackside experience in Eurocup-3 and F4",
-    caseFourText:
-      "Support Engineer work in Eurocup-3 and Data / Systems support in F4 testing.",
-    caseFiveTag: "Final Degree Project",
-    caseFiveTitle: "Active Aerodynamics",
-    caseFiveText:
-      "Design, simulation and manufacture of an active aerodynamic braking and cornering device.",
-    caseSixTag: "Final Degree Project",
-    caseSixTitle: "Turbo Fan Wheel",
-    caseSixText:
-      "Brake cooling device developed with both thermal and aerodynamic goals.",
-    caseSevenTag: "Engineering Project",
-    caseSevenTitle: "Cooling System - Radiator",
-    caseSevenText:
-      "Design, calculation and manufacture of a water-to-air cooling system.",
     toolsLabel: "Tools",
     toolsTitle: "A simple example of the kind of engineering tools I can build.",
     toolsLead:
@@ -127,12 +92,11 @@ export const copy = {
   es: {
     navOverview: "Resumen",
     navExperience: "Experiencia",
-    navProjects: "Proyectos",
     navTools: "Herramientas",
     navEducation: "Formacion",
     navContact: "Contacto",
     eyebrow: "Paul Imaz Nin",
-    heroTitle: "Ingeniero de motorsport en data, performance, systems, vehicle dynamics y software.",
+    heroTitle: "Ingeniero de motorsport en data, performance, dinamica vehicular y software.",
     heroText:
       "Actualmente en Campos Racing, trabajando en herramientas de ingenieria, dinamica vehicular y soporte de competicion.",
     metricOne: "Campos Racing desde marzo de 2026",
@@ -171,40 +135,6 @@ export const copy = {
     experienceCardThreeLabel: "MIG Tratamientos Termicos",
     experienceCardThreeText:
       "Trabajo industrial con trazabilidad y adquisicion de datos.",
-    projectsLabel: "Proyectos",
-    projectsTitle: "Proyectos seleccionados del CV.",
-    filterAll: "Todo",
-    filterSoftware: "Software",
-    filterDynamics: "Dinamica",
-    filterTrack: "Pista",
-    caseOneTag: "Campos Racing",
-    caseOneTitle: "Herramienta de Optimizacion de Caja de Cambios",
-    caseOneText:
-      "Herramienta para estudiar punto de cambio, rango de uso y seleccion de relaciones a partir del mapa motor y el gearing.",
-    caseTwoTag: "Tecnun eRacing",
-    caseTwoTitle: "Control de Traccion",
-    caseTwoText:
-      "Logica de control de traccion por slip ratio desarrollada en Simulink y afinada con CarMaker.",
-    caseThreeTag: "Campos Racing",
-    caseThreeTitle: "Practica de test en Eurocup-3",
-    caseThreeText:
-      "Flujo completo de test en Ricardo Tormo: preparacion, pista, analisis de datos y post-event.",
-    caseFourTag: "Campos Racing",
-    caseFourTitle: "Experiencia en pista en Eurocup-3 y F4",
-    caseFourText:
-      "Trabajo como Support Engineer en Eurocup-3 y apoyo Data / Systems en test de F4.",
-    caseFiveTag: "Proyecto Fin de Grado",
-    caseFiveTitle: "Aerodinamica Activa",
-    caseFiveText:
-      "Diseno, simulacion y fabricacion de un sistema de aerodinamica activa para frenada y paso por curva.",
-    caseSixTag: "Proyecto Fin de Grado",
-    caseSixTitle: "Turbo Fan Wheel",
-    caseSixText:
-      "Dispositivo de refrigeracion de freno con objetivo termico y aerodinamico.",
-    caseSevenTag: "Proyecto de Ingenieria",
-    caseSevenTitle: "Sistema de Refrigeracion - Radiador",
-    caseSevenText:
-      "Diseno, calculo y fabricacion de un sistema de refrigeracion agua-aire.",
     toolsLabel: "Herramientas",
     toolsTitle: "Un ejemplo sencillo del tipo de herramientas de ingenieria que puedo desarrollar.",
     toolsLead:
