@@ -197,35 +197,35 @@ a:focus-visible {
 
 @keyframes heroAurora {
   0% {
-    transform: translate3d(0, 0, 0) scale(0.97) rotate(-3deg);
-    opacity: 0.76;
+    transform: translate3d(0, 0, 0) scale(0.95) rotate(-4deg);
+    opacity: 0.86;
   }
 
   50% {
-    transform: translate3d(-2%, 2%, 0) scale(1.05) rotate(1deg);
+    transform: translate3d(-3%, 2%, 0) scale(1.08) rotate(1deg);
     opacity: 1;
   }
 
   100% {
-    transform: translate3d(2%, -1%, 0) scale(1.01) rotate(4deg);
-    opacity: 0.82;
+    transform: translate3d(2%, -2%, 0) scale(1.02) rotate(5deg);
+    opacity: 0.9;
   }
 }
 
 @keyframes heroSweep {
   0% {
     background-position: -140% 0;
-    opacity: 0.46;
+    opacity: 0.62;
   }
 
   50% {
-    background-position: 18% 0;
-    opacity: 0.9;
+    background-position: 26% 0;
+    opacity: 1;
   }
 
   100% {
     background-position: 120% 0;
-    opacity: 0.54;
+    opacity: 0.66;
   }
 }
 
@@ -392,13 +392,14 @@ a:focus-visible {
   height: 560px;
   border-radius: 50%;
   background:
-    radial-gradient(ellipse at 24% 36%, rgba(13, 108, 95, 0.34), transparent 0 42%),
-    radial-gradient(ellipse at 76% 30%, rgba(255, 255, 255, 0.86), transparent 0 34%),
-    radial-gradient(ellipse at 58% 78%, rgba(13, 108, 95, 0.2), transparent 0 30%);
-  filter: blur(36px);
-  opacity: 0.98;
+    radial-gradient(ellipse at 22% 34%, rgba(13, 108, 95, 0.56), transparent 0 40%),
+    radial-gradient(ellipse at 72% 30%, rgba(13, 108, 95, 0.32), transparent 0 34%),
+    radial-gradient(ellipse at 84% 22%, rgba(255, 255, 255, 0.48), transparent 0 24%),
+    radial-gradient(ellipse at 58% 78%, rgba(13, 108, 95, 0.28), transparent 0 30%);
+  filter: blur(32px);
+  opacity: 1;
   transform-origin: center;
-  animation: heroAurora 12s ease-in-out infinite alternate;
+  animation: heroAurora 9s ease-in-out infinite alternate;
 }
 
 .hero::after {
@@ -408,12 +409,12 @@ a:focus-visible {
   height: 420px;
   border-radius: 50%;
   background:
-    linear-gradient(108deg, transparent 0%, rgba(255, 255, 255, 0.12) 24%, rgba(13, 108, 95, 0.26) 48%, rgba(255, 255, 255, 0.16) 68%, transparent 100%);
+    linear-gradient(108deg, transparent 0%, rgba(13, 108, 95, 0.14) 18%, rgba(255, 255, 255, 0.12) 28%, rgba(13, 108, 95, 0.42) 48%, rgba(255, 255, 255, 0.18) 68%, rgba(13, 108, 95, 0.14) 82%, transparent 100%);
   background-size: 220% 100%;
   background-position: -140% 0;
-  filter: blur(24px);
-  opacity: 0.84;
-  animation: heroSweep 8s ease-in-out infinite;
+  filter: blur(20px);
+  opacity: 0.94;
+  animation: heroSweep 6s ease-in-out infinite;
 }
 
 .eyebrow,
@@ -853,7 +854,7 @@ p {
     right: -18%;
     width: min(92vw, 540px);
     height: 360px;
-    opacity: 0.88;
+    opacity: 0.96;
   }
 
   .hero::after {
