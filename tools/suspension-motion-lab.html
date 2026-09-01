@@ -22,7 +22,11 @@
         --accent-strong: #0a5b50;
         --accent-soft: rgba(13, 108, 95, 0.1);
         --signal: #b6813b;
+        --blue: #3b82f6;
+        --purple: #7c3aed;
+        --orange: #ea580c;
         --shadow: 0 24px 70px rgba(17, 23, 20, 0.08);
+        --shadow-lg: 0 28px 56px rgba(17, 23, 20, 0.12);
         --radius-xl: 24px;
         --radius-lg: 18px;
         --radius-md: 12px;
@@ -36,15 +40,15 @@
       body {
         margin: 0;
         background:
-          radial-gradient(circle at 12% 12%, rgba(13, 108, 95, 0.12), transparent 22%),
-          radial-gradient(circle at 88% 18%, rgba(13, 108, 95, 0.08), transparent 20%),
+          radial-gradient(circle at 10% 8%, rgba(13, 108, 95, 0.12), transparent 24%),
+          radial-gradient(circle at 92% 16%, rgba(13, 108, 95, 0.08), transparent 18%),
           linear-gradient(180deg, #f8faf7 0%, #f2f6f1 55%, #edf2ec 100%);
         color: var(--ink);
         font-family: "IBM Plex Sans", system-ui, sans-serif;
       }
 
       .app {
-        width: min(100%, 1260px);
+        width: min(100%, 1320px);
         margin: 0 auto;
         padding: 24px;
       }
@@ -52,17 +56,22 @@
       .hero,
       .workspace,
       .metrics,
-      .point-grid {
+      .point-grid,
+      .viewer-grid,
+      .button-row,
+      .view-controls,
+      .layer-controls,
+      .legend {
         display: grid;
         gap: 18px;
       }
 
       .hero {
-        grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+        grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
       }
 
       .workspace {
-        grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
+        grid-template-columns: minmax(330px, 420px) minmax(0, 1fr);
         margin-top: 20px;
         align-items: start;
       }
@@ -72,9 +81,18 @@
         margin-top: 20px;
       }
 
+      .point-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin-top: 20px;
+      }
+
+      .viewer-grid {
+        gap: 18px;
+      }
+
       .panel,
       .metric-card,
-      .visual-card,
+      .viewer-card,
       .curve-card,
       .point-card {
         border: 1px solid rgba(200, 209, 201, 0.9);
@@ -84,7 +102,7 @@
       }
 
       .panel,
-      .visual-card,
+      .viewer-card,
       .curve-card,
       .point-card {
         padding: 22px;
@@ -126,26 +144,16 @@
       h1 {
         margin-top: 12px;
         font-size: clamp(2.2rem, 5vw, 4rem);
-        max-width: 12ch;
+        max-width: 11ch;
       }
 
       h2 {
-        font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-      }
-
-      h3 {
-        font-size: 1rem;
+        font-size: clamp(1.2rem, 2.5vw, 1.85rem);
       }
 
       p {
         color: var(--muted);
         line-height: 1.65;
-      }
-
-      .hero p:last-child,
-      .metric-card p:last-child,
-      .point-card p:last-child {
-        margin-bottom: 0;
       }
 
       .included-list {
@@ -157,14 +165,14 @@
       .included-list div {
         padding: 12px 14px;
         border-radius: var(--radius-lg);
-        background: rgba(255, 255, 255, 0.66);
+        background: rgba(255, 255, 255, 0.68);
         border: 1px solid rgba(200, 209, 201, 0.9);
       }
 
       .metric-value {
         display: block;
         margin-top: 10px;
-        font-size: 1.16rem;
+        font-size: 1.12rem;
       }
 
       .controls {
@@ -235,25 +243,20 @@
         outline-offset: 3px;
       }
 
-      .button-row,
-      .slider-head,
-      .legend {
+      .button-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .slider-head {
         display: flex;
         gap: 10px;
         flex-wrap: wrap;
         align-items: center;
-      }
-
-      .button-row > * {
-        flex: 1 1 140px;
-      }
-
-      .slider-head {
         justify-content: space-between;
       }
 
       .travel-value {
-        min-width: 86px;
+        min-width: 90px;
         padding: 10px 12px;
         border-radius: var(--radius-pill);
         background: rgba(255, 255, 255, 0.76);
@@ -274,47 +277,97 @@
         color: var(--ink);
       }
 
-      .visual-card,
-      .curve-card {
-        display: grid;
-        gap: 14px;
-      }
-
-      .visual-shell {
+      .viewer-shell {
         position: relative;
-        min-height: 520px;
+        min-height: 560px;
         border-radius: var(--radius-xl);
         overflow: hidden;
         background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.64), rgba(230, 235, 227, 0.56)),
-          linear-gradient(90deg, rgba(13, 108, 95, 0.03), rgba(13, 108, 95, 0.01));
+          linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(230, 235, 227, 0.62)),
+          radial-gradient(circle at 24% 16%, rgba(13, 108, 95, 0.06), transparent 28%),
+          linear-gradient(135deg, rgba(13, 108, 95, 0.015), rgba(13, 108, 95, 0));
         border: 1px solid rgba(200, 209, 201, 0.8);
       }
 
-      canvas {
+      #c3d {
         display: block;
         width: 100%;
-        height: 100%;
+        height: 560px;
+        cursor: grab;
+      }
+
+      #c3d:active {
+        cursor: grabbing;
+      }
+
+      .hud {
+        position: absolute;
+        inset: 14px 14px auto 14px;
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        pointer-events: none;
+      }
+
+      .hud-left,
+      .hud-right {
+        display: grid;
+        gap: 10px;
+        pointer-events: auto;
+      }
+
+      .view-controls,
+      .layer-controls,
+      .legend {
+        gap: 8px;
+      }
+
+      .view-controls {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+
+      .layer-controls {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .hud-card {
+        padding: 10px;
+        border-radius: 14px;
+        background: rgba(251, 252, 248, 0.88);
+        border: 1px solid rgba(200, 209, 201, 0.9);
+        box-shadow: var(--shadow-lg);
+        backdrop-filter: blur(14px);
+      }
+
+      .mini-button {
+        min-height: 36px;
+        padding: 0 10px;
+        border-radius: 10px;
+        font-size: 0.9rem;
+      }
+
+      .mini-button.is-active {
+        background: var(--ink);
+        color: var(--surface);
+        border-color: var(--ink);
       }
 
       .legend {
-        justify-content: flex-start;
+        grid-template-columns: 1fr;
+        min-width: 200px;
       }
 
       .legend-item {
-        display: inline-flex;
-        align-items: center;
+        display: flex;
         gap: 8px;
-        padding: 6px 10px;
-        border-radius: var(--radius-pill);
-        background: rgba(255, 255, 255, 0.72);
-        border: 1px solid rgba(200, 209, 201, 0.9);
+        align-items: center;
       }
 
       .legend-swatch {
-        width: 12px;
-        height: 12px;
+        width: 10px;
+        height: 10px;
         border-radius: 999px;
+        flex: 0 0 auto;
       }
 
       .curve-layout {
@@ -365,11 +418,6 @@
         stroke-width: 2;
       }
 
-      .point-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        margin-top: 20px;
-      }
-
       .point-table {
         width: 100%;
         border-collapse: collapse;
@@ -384,7 +432,7 @@
       }
 
       .point-table td:first-child {
-        width: 38%;
+        width: 28%;
         color: var(--ink);
         font-weight: 600;
       }
@@ -400,7 +448,12 @@
         font-size: 0.92rem;
       }
 
-      @media (max-width: 1040px) {
+      .small-note {
+        margin-top: 12px;
+        font-size: 0.86rem;
+      }
+
+      @media (max-width: 1100px) {
         .hero,
         .workspace,
         .metrics,
@@ -409,17 +462,27 @@
         }
       }
 
-      @media (max-width: 720px) {
+      @media (max-width: 760px) {
         .app {
           padding: 16px;
         }
 
-        .visual-shell {
-          min-height: 380px;
+        #c3d,
+        .viewer-shell {
+          min-height: 430px;
+          height: 430px;
         }
 
-        .button-row > * {
-          flex-basis: 100%;
+        .button-row,
+        .view-controls,
+        .layer-controls {
+          grid-template-columns: 1fr;
+        }
+
+        .hud {
+          position: static;
+          display: grid;
+          margin-top: 14px;
         }
       }
 
@@ -437,19 +500,19 @@
           <p class="eyebrow">Tool demo</p>
           <h1>Single-corner suspension motion ratio lab</h1>
           <p>
-            Compact study tool for a pushrod double-wishbone corner inspired by a Formula 4 style layout. Enter the
-            point coordinates manually, move the wheel in bump and rebound, and inspect the resulting rocker and damper
-            motion.
+            Compact suspension study based on the real point layout you shared. This version keeps one front corner,
+            manual coordinate editing, wheel-travel sweep, motion ratio calculation and a 3D viewer adapted from the
+            original Suspension Lab visualiser.
           </p>
         </div>
 
         <div class="panel">
           <p class="kicker">Included</p>
           <div class="included-list">
-            <div>Manual point coordinates with ready-to-test presets</div>
-            <div>Single-corner kinematics in a clean 2D engineering view</div>
-            <div>Motion ratio evaluation as damper travel per wheel travel</div>
-            <div>Live viewer for wishbones, upright, pushrod, rocker and damper</div>
+            <div>Default coordinates loaded from your provided front-corner point table</div>
+            <div>Wheel-center, wishbone, toe link and pushrod kinematics solved from the point set</div>
+            <div>Rocker and damper closure solved from the pushrod motion</div>
+            <div>3D viewer with camera presets and layer toggles adapted from the original app</div>
           </div>
         </div>
       </section>
@@ -458,29 +521,29 @@
         <article class="metric-card">
           <p class="metric-label">Instantaneous MR</p>
           <strong class="metric-value" id="currentMrValue">-</strong>
-          <p>Current local magnitude of <strong>ds / dzw</strong>.</p>
+          <p>Current magnitude of <strong>ds / dzw</strong>.</p>
         </article>
         <article class="metric-card">
           <p class="metric-label">Static MR</p>
           <strong class="metric-value" id="staticMrValue">-</strong>
-          <p>Reference magnitude around static ride height.</p>
+          <p>Reference magnitude near static ride height.</p>
         </article>
         <article class="metric-card">
           <p class="metric-label">Damper Travel</p>
-          <strong class="metric-value" id="damperCompressionValue">-</strong>
-          <p>Signed value relative to the static damper length.</p>
+          <strong class="metric-value" id="damperTravelValue">-</strong>
+          <p>Signed travel relative to the static damper length.</p>
         </article>
         <article class="metric-card">
           <p class="metric-label">Rocker Rotation</p>
           <strong class="metric-value" id="rockerAngleValue">-</strong>
-          <p>Rotation required to close the pushrod geometry.</p>
+          <p>Bellcrank rotation needed to close the pushrod.</p>
         </article>
       </section>
 
       <section class="workspace">
         <div class="panel">
           <p class="section-label">Setup</p>
-          <h2 style="margin-top: 10px;">Corner input and wheel travel</h2>
+          <h2 style="margin-top: 10px;">Preset and wheel travel</h2>
           <div class="controls" style="margin-top: 18px;">
             <div class="control-group">
               <label for="presetSelector">Preset geometry</label>
@@ -491,7 +554,7 @@
               <label for="travelSlider">Wheel travel</label>
               <div class="travel-value" id="travelValue">0.0 mm</div>
             </div>
-            <input type="range" id="travelSlider" min="-35" max="35" step="0.5" value="0" />
+            <input type="range" id="travelSlider" min="-25" max="25" step="0.5" value="0" />
 
             <div class="button-row">
               <button type="button" id="resetTravelButton" class="secondary">Reset travel</button>
@@ -501,35 +564,76 @@
 
           <div class="status">
             <strong>Status:</strong>
-            <span id="statusText">Load a preset or edit the coordinates manually to evaluate the corner.</span>
+            <span id="statusText">Load a preset or edit the coordinates to evaluate the corner.</span>
           </div>
+
+          <p class="small-note">
+            The current preset uses the real labelled points from your reference corner. The miniapp keeps only the
+            subset needed for one-corner motion-ratio and visualisation work.
+          </p>
         </div>
 
-        <div style="display: grid; gap: 18px;">
-          <article class="visual-card">
+        <div class="viewer-grid">
+          <article class="viewer-card">
             <div>
               <p class="section-label">Visualizer</p>
-              <h2 style="margin-top: 10px;">Pushrod double-wishbone corner simulation</h2>
+              <h2 style="margin-top: 10px;">3D corner view adapted from Suspension Lab</h2>
               <p class="note">
-                Dashed lines show the static reference. Solid lines show the current corner position for the selected
-                wheel travel.
+                The viewer reuses the same style of orbital camera and painter-style canvas renderer from the original
+                app, simplified for this single-corner study.
               </p>
             </div>
-            <div class="visual-shell">
-              <canvas id="suspensionCanvas"></canvas>
-            </div>
-            <div class="legend">
-              <div class="legend-item">
-                <span class="legend-swatch" style="background: #0d6c5f;"></span>
-                <span>Current geometry</span>
-              </div>
-              <div class="legend-item">
-                <span class="legend-swatch" style="background: #b6813b;"></span>
-                <span>Static reference</span>
-              </div>
-              <div class="legend-item">
-                <span class="legend-swatch" style="background: #111714;"></span>
-                <span>Chassis hard points</span>
+
+            <div class="viewer-shell">
+              <canvas id="c3d"></canvas>
+
+              <div class="hud">
+                <div class="hud-left">
+                  <div class="hud-card">
+                    <div class="view-controls">
+                      <button class="mini-button secondary" type="button" data-view="reset">Reset</button>
+                      <button class="mini-button secondary" type="button" data-view="iso">Iso</button>
+                      <button class="mini-button secondary" type="button" data-view="front">Front</button>
+                      <button class="mini-button secondary" type="button" data-view="side">Side</button>
+                      <button class="mini-button secondary" type="button" data-view="top">Top</button>
+                    </div>
+                  </div>
+
+                  <div class="hud-card">
+                    <div class="layer-controls">
+                      <button class="mini-button secondary is-active" type="button" data-layer="suspension">Suspension</button>
+                      <button class="mini-button secondary is-active" type="button" data-layer="wheel">Wheel</button>
+                      <button class="mini-button secondary is-active" type="button" data-layer="labels">Labels</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="hud-right">
+                  <div class="hud-card">
+                    <div class="legend">
+                      <div class="legend-item">
+                        <span class="legend-swatch" style="background: var(--blue);"></span>
+                        <span>Lower wishbone</span>
+                      </div>
+                      <div class="legend-item">
+                        <span class="legend-swatch" style="background: var(--purple);"></span>
+                        <span>Upper wishbone</span>
+                      </div>
+                      <div class="legend-item">
+                        <span class="legend-swatch" style="background: var(--orange);"></span>
+                        <span>Pushrod and rocker</span>
+                      </div>
+                      <div class="legend-item">
+                        <span class="legend-swatch" style="background: var(--accent);"></span>
+                        <span>Damper</span>
+                      </div>
+                      <div class="legend-item">
+                        <span class="legend-swatch" style="background: var(--signal);"></span>
+                        <span>Static reference</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </article>
@@ -537,7 +641,7 @@
           <article class="curve-card">
             <div>
               <p class="section-label">Curves</p>
-              <h2 style="margin-top: 10px;">Damper compression and motion ratio sweep</h2>
+              <h2 style="margin-top: 10px;">Damper travel and motion ratio sweep</h2>
             </div>
             <div class="curve-layout">
               <svg class="curve-chart" id="curveChart" viewBox="0 0 820 320" role="img" aria-label="Motion ratio chart"></svg>
@@ -548,13 +652,14 @@
 
       <section class="point-grid">
         <article class="point-card">
-          <p class="section-label">Suspension Points</p>
-          <h2 style="margin-top: 10px;">Wishbones and upright</h2>
+          <p class="section-label">Corner Points</p>
+          <h2 style="margin-top: 10px;">Suspension and upright points</h2>
           <table class="point-table">
             <thead>
               <tr>
                 <th>Point</th>
                 <th>X (mm)</th>
+                <th>Y (mm)</th>
                 <th>Z (mm)</th>
               </tr>
             </thead>
@@ -564,12 +669,13 @@
 
         <article class="point-card">
           <p class="section-label">Rocker Points</p>
-          <h2 style="margin-top: 10px;">Pushrod, rocker and damper</h2>
+          <h2 style="margin-top: 10px;">Pushrod, rocker and damper points</h2>
           <table class="point-table">
             <thead>
               <tr>
                 <th>Point</th>
                 <th>X (mm)</th>
+                <th>Y (mm)</th>
                 <th>Z (mm)</th>
               </tr>
             </thead>
@@ -581,130 +687,596 @@
 
     <script>
       const PRESETS = {
-        f4FrontCorner: {
-          label: "F4 style front corner",
+        f4ReferenceCorner: {
+          label: "Reference F4-style front corner",
+          wheelTravelLimit: 25,
+          pushrodWheelBody: "lower_wishbone",
           points: {
-            lcaInner: { x: 210, z: 145 },
-            ucaInner: { x: 248, z: 425 },
-            lcaOuter: { x: 768, z: 165 },
-            ucaOuter: { x: 734, z: 394 },
-            pushrodUpright: { x: 708, z: 266 },
-            rockerPivot: { x: 420, z: 380 },
-            rockerPushrod: { x: 500, z: 240 },
-            rockerDamper: { x: 350, z: 320 },
-            damperChassis: { x: 255, z: 430 }
+            A: [-50.0, 210.8, 243.9],
+            B: [9.0, 657.5, 225.1],
+            C: [300.0, 232.1, 246.0],
+            D: [-50.0, 210.8, 392.9],
+            E: [32.1, 628.0, 364.2],
+            F: [300.0, 232.1, 382.5],
+            S: [-64.4, 677.5, 361.6],
+            T: [-130.0, 205.9, 393.5],
+            N: [0.0, 757.5, 253.0],
+            W: [16.0, 648.6, 267.0],
+            U: [389.0, 80.0, 561.5],
+            V: [82.4, 81.3, 560.8],
+            M: [41.0, 154.4, 522.9],
+            X: [-170.0, 90.0, 420.5],
+            Y: [-170.0, 0.0, 420.5],
+            Z: [-170.0, 90.0, 550.0]
+          },
+          rocker: {
+            axisPoint: "X",
+            axisDirFrom: "X",
+            axisDirTo: "Y",
+            pushrodRocker: "M",
+            damperRocker: "V",
+            damperChassis: "U"
           }
         },
-        f4FrontCornerAlt: {
-          label: "F4 style front corner - alternate rocker",
+        f4ReferenceCornerAlt: {
+          label: "Reference corner - alternate rocker point choice",
+          wheelTravelLimit: 25,
+          pushrodWheelBody: "lower_wishbone",
           points: {
-            lcaInner: { x: 210, z: 145 },
-            ucaInner: { x: 248, z: 425 },
-            lcaOuter: { x: 768, z: 165 },
-            ucaOuter: { x: 734, z: 394 },
-            pushrodUpright: { x: 712, z: 276 },
-            rockerPivot: { x: 420, z: 380 },
-            rockerPushrod: { x: 480, z: 260 },
-            rockerDamper: { x: 338, z: 306 },
-            damperChassis: { x: 252, z: 424 }
+            A: [-50.0, 210.8, 243.9],
+            B: [9.0, 657.5, 225.1],
+            C: [300.0, 232.1, 246.0],
+            D: [-50.0, 210.8, 392.9],
+            E: [32.1, 628.0, 364.2],
+            F: [300.0, 232.1, 382.5],
+            S: [-64.4, 677.5, 361.6],
+            T: [-130.0, 205.9, 393.5],
+            N: [0.0, 757.5, 253.0],
+            W: [16.0, 648.6, 267.0],
+            U: [389.0, 80.0, 561.5],
+            V: [82.4, 81.3, 560.8],
+            P: [80.0, 156.0, 522.1],
+            Q: [80.0, 133.0, 477.7],
+            X: [-170.0, 90.0, 420.5],
+            Y: [-170.0, 0.0, 420.5],
+            Z: [-170.0, 90.0, 550.0]
+          },
+          rocker: {
+            axisPoint: "X",
+            axisDirFrom: "X",
+            axisDirTo: "Y",
+            pushrodRocker: "Q",
+            damperRocker: "P",
+            damperChassis: "U"
           }
         }
       };
 
       const SUSPENSION_ROWS = [
-        ["lcaInner", "Lower arm inner"],
-        ["ucaInner", "Upper arm inner"],
-        ["lcaOuter", "Lower upright"],
-        ["ucaOuter", "Upper upright"],
-        ["pushrodUpright", "Pushrod upright"]
+        ["A", "LWB inboard front"],
+        ["B", "LWB outboard"],
+        ["C", "LWB inboard rear"],
+        ["D", "UWB inboard front"],
+        ["E", "UWB outboard"],
+        ["F", "UWB inboard rear"],
+        ["S", "Toe link outboard"],
+        ["T", "Toe link inboard"],
+        ["N", "Wheel center"],
+        ["W", "Pushrod outboard"]
       ];
 
       const ROCKER_ROWS = [
-        ["rockerPivot", "Rocker pivot"],
-        ["rockerPushrod", "Rocker pushrod"],
-        ["rockerDamper", "Rocker damper"],
-        ["damperChassis", "Damper chassis"]
+        ["U", "Damper chassis"],
+        ["V", "Damper rocker"],
+        ["M", "Pushrod rocker"],
+        ["P", "Rocker ref P"],
+        ["Q", "Rocker ref Q"],
+        ["X", "Axis point X"],
+        ["Y", "Axis point Y"],
+        ["Z", "Support point Z"]
       ];
 
       const presetSelector = document.getElementById("presetSelector");
       const travelSlider = document.getElementById("travelSlider");
       const travelValue = document.getElementById("travelValue");
-      const statusText = document.getElementById("statusText");
       const suspensionPointTable = document.getElementById("suspensionPointTable");
       const rockerPointTable = document.getElementById("rockerPointTable");
-      const canvas = document.getElementById("suspensionCanvas");
-      const ctx = canvas.getContext("2d");
-      const curveChart = document.getElementById("curveChart");
+      const statusText = document.getElementById("statusText");
       const currentMrValue = document.getElementById("currentMrValue");
       const staticMrValue = document.getElementById("staticMrValue");
-      const damperCompressionValue = document.getElementById("damperCompressionValue");
+      const damperTravelValue = document.getElementById("damperTravelValue");
       const rockerAngleValue = document.getElementById("rockerAngleValue");
+      const curveChart = document.getElementById("curveChart");
+      const canvas = document.getElementById("c3d");
+      const ctx = canvas.getContext("2d");
       const playButton = document.getElementById("playButton");
 
       let animationFrame = null;
       let playDirection = 1;
+      let lastSolveState = [0, 0, 0];
+      let lastOmega = 0;
 
-      function vec(x, z) {
-        return { x, z };
-      }
+      const LAYERS = {
+        suspension: true,
+        wheel: true,
+        labels: true
+      };
+
+      const CAM = {
+        az: 0.6,
+        el: 0.35,
+        dist: 1450,
+        tx: 0,
+        ty: 0,
+        tz: 0,
+        fov: 52,
+        _def: null,
+        init(cx, cy, cz, dist) {
+          this.tx = cx;
+          this.ty = cy;
+          this.tz = cz;
+          this.dist = dist;
+          this.az = 0.6;
+          this.el = 0.35;
+          this._def = { az: 0.6, el: 0.35, dist, tx: cx, ty: cy, tz: cz };
+        },
+        reset() {
+          if (!this._def) return;
+          const value = this._def;
+          this.az = value.az;
+          this.el = value.el;
+          this.dist = value.dist;
+          this.tx = value.tx;
+          this.ty = value.ty;
+          this.tz = value.tz;
+        }
+      };
 
       function add(a, b) {
-        return { x: a.x + b.x, z: a.z + b.z };
+        return a.map((value, index) => value + b[index]);
       }
 
       function sub(a, b) {
-        return { x: a.x - b.x, z: a.z - b.z };
+        return a.map((value, index) => value - b[index]);
       }
 
-      function scale(a, factor) {
-        return { x: a.x * factor, z: a.z * factor };
+      function scale(a, scalar) {
+        return a.map((value) => value * scalar);
       }
 
       function dot(a, b) {
-        return a.x * b.x + a.z * b.z;
+        return a.reduce((sum, value, index) => sum + value * b[index], 0);
       }
 
-      function length(a) {
-        return Math.hypot(a.x, a.z);
+      function cross(a, b) {
+        return [
+          a[1] * b[2] - a[2] * b[1],
+          a[2] * b[0] - a[0] * b[2],
+          a[0] * b[1] - a[1] * b[0]
+        ];
+      }
+
+      function len(a) {
+        return Math.hypot(...a);
+      }
+
+      function norm(a) {
+        const length = len(a);
+        if (length < 1e-12) {
+          throw new Error("Degenerate vector.");
+        }
+        return scale(a, 1 / length);
       }
 
       function distance(a, b) {
-        return length(sub(a, b));
+        return len(sub(a, b));
       }
 
-      function normalize(a) {
-        const len = length(a);
-        if (len < 1e-9) {
-          throw new Error("Zero-length vector.");
-        }
-        return { x: a.x / len, z: a.z / len };
-      }
-
-      function perpendicular(a) {
-        return { x: -a.z, z: a.x };
-      }
-
-      function rotateAround(point, origin, angle) {
-        const dx = point.x - origin.x;
-        const dz = point.z - origin.z;
+      function rotateRodrigues(vector, axisHat, angle) {
         const c = Math.cos(angle);
         const s = Math.sin(angle);
+        const crossTerm = cross(axisHat, vector);
+        const dotTerm = dot(axisHat, vector);
+        return vector.map((value, index) => value * c + crossTerm[index] * s + axisHat[index] * dotTerm * (1 - c));
+      }
+
+      function rotatePointAboutAxis(point, origin, axisHat, angle) {
+        return add(origin, rotateRodrigues(sub(point, origin), axisHat, angle));
+      }
+
+      function orthogonalUnitVector(nHat) {
+        let ref = [1, 0, 0];
+        if (Math.abs(dot(ref, nHat)) > 0.9) {
+          ref = [0, 1, 0];
+        }
+        return norm(sub(ref, scale(nHat, dot(ref, nHat))));
+      }
+
+      function rotateVectorMinimal(vector, fromHat, toHat) {
+        const axis = cross(fromHat, toHat);
+        const axisLength = len(axis);
+        const c = Math.max(-1, Math.min(1, dot(fromHat, toHat)));
+
+        if (axisLength < 1e-10) {
+          if (c > 0) {
+            return vector.slice();
+          }
+          const orthoAxis = orthogonalUnitVector(fromHat);
+          return rotateRodrigues(vector, orthoAxis, Math.PI);
+        }
+
+        return rotateRodrigues(vector, scale(axis, 1 / axisLength), Math.atan2(axisLength, c));
+      }
+
+      function signedAngleAboutAxis(v0, v1, axisHat) {
+        const axis = norm(axisHat);
+        let p0 = sub(v0, scale(axis, dot(v0, axis)));
+        let p1 = sub(v1, scale(axis, dot(v1, axis)));
+        const n0 = len(p0);
+        const n1 = len(p1);
+        if (n0 < 1e-10 || n1 < 1e-10) {
+          return 0;
+        }
+        p0 = scale(p0, 1 / n0);
+        p1 = scale(p1, 1 / n1);
+        const c = Math.max(-1, Math.min(1, dot(p0, p1)));
+        const s = dot(axis, cross(p0, p1));
+        return Math.atan2(s, c);
+      }
+
+      function solveLinear3x3(matrix, rhs) {
+        const m = matrix.map((row, index) => [...row, rhs[index]]);
+
+        for (let col = 0; col < 3; col += 1) {
+          let pivot = col;
+          for (let row = col + 1; row < 3; row += 1) {
+            if (Math.abs(m[row][col]) > Math.abs(m[pivot][col])) {
+              pivot = row;
+            }
+          }
+
+          if (Math.abs(m[pivot][col]) < 1e-12) {
+            return [0, 0, 0];
+          }
+
+          if (pivot !== col) {
+            [m[pivot], m[col]] = [m[col], m[pivot]];
+          }
+
+          const divisor = m[col][col];
+          for (let j = col; j < 4; j += 1) {
+            m[col][j] /= divisor;
+          }
+
+          for (let row = 0; row < 3; row += 1) {
+            if (row === col) continue;
+            const factor = m[row][col];
+            for (let j = col; j < 4; j += 1) {
+              m[row][j] -= factor * m[col][j];
+            }
+          }
+        }
+
+        return [m[0][3], m[1][3], m[2][3]];
+      }
+
+      function circleFromTwoSpheres(P1, P2, R1, R2, P0) {
+        const dVec = sub(P2, P1);
+        const d = len(dVec);
+        if (d < 1e-10) {
+          throw new Error("Coincident sphere centers.");
+        }
+
+        const nHat = scale(dVec, 1 / d);
+        const a = (R1 * R1 - R2 * R2 + d * d) / (2 * d);
+        const center = add(P1, scale(nHat, a));
+        let rhoSq = R1 * R1 - a * a;
+        if (rhoSq < -1e-6) {
+          throw new Error("No real sphere intersection.");
+        }
+        rhoSq = Math.max(rhoSq, 0);
+        const radius = Math.sqrt(rhoSq);
+        let u = sub(P0, center);
+        u = sub(u, scale(nHat, dot(u, nHat)));
+        const uHat = len(u) < 1e-10 ? orthogonalUnitVector(nHat) : norm(u);
+        const vHat = norm(cross(nHat, uHat));
+
         return {
-          x: origin.x + dx * c - dz * s,
-          z: origin.z + dx * s + dz * c
+          center,
+          normalHat: nHat,
+          radius,
+          uHat,
+          vHat,
+          point(angle) {
+            return add(center, add(scale(uHat, radius * Math.cos(angle)), scale(vHat, radius * Math.sin(angle))));
+          }
         };
       }
 
-      function formatSigned(value, digits = 2) {
-        return `${value >= 0 ? "+" : ""}${value.toFixed(digits)}`;
+      function buildLowerWishboneFrame(A, C, B) {
+        const axisHat = norm(sub(C, A));
+        const r = sub(B, A);
+        const proj = scale(axisHat, dot(r, axisHat));
+        const lcaR = sub(r, proj);
+        if (len(lcaR) < 1e-10) {
+          throw new Error("Lower wishbone frame is degenerate.");
+        }
+        const e1 = norm(lcaR);
+        const e2 = norm(cross(axisHat, e1));
+        const e3 = axisHat;
+        return [e1, e2, e3];
       }
 
-      function formatMm(value, digits = 1) {
-        return `${value.toFixed(digits)} mm`;
+      function computeLowerWishboneLocalOffset(A, C, B0, W0) {
+        const [e1, e2, e3] = buildLowerWishboneFrame(A, C, B0);
+        const r = sub(W0, B0);
+        return [dot(r, e1), dot(r, e2), dot(r, e3)];
       }
 
-      function setStatus(message) {
-        statusText.textContent = message;
+      function buildInput(data) {
+        const points = data.points;
+        const input = {
+          A: points.A,
+          C: points.C,
+          D: points.D,
+          F: points.F,
+          T: points.T,
+          B0: points.B,
+          E0: points.E,
+          S0: points.S,
+          W0: points.W,
+          N0: points.N,
+          pushrodWheelBody: data.pushrodWheelBody || "lower_wishbone"
+        };
+
+        input.L_AB = distance(input.B0, input.A);
+        input.L_CB = distance(input.B0, input.C);
+        input.L_DE = distance(input.E0, input.D);
+        input.L_FE = distance(input.E0, input.F);
+        input.L_BE = distance(input.E0, input.B0);
+        input.L_ST = distance(input.S0, input.T);
+        input.lowerCircle = circleFromTwoSpheres(input.A, input.C, input.L_AB, input.L_CB, input.B0);
+        input.upperCircle = circleFromTwoSpheres(input.D, input.F, input.L_DE, input.L_FE, input.E0);
+        input.e1_0 = norm(sub(input.E0, input.B0));
+        let s0Perp = sub(sub(input.S0, input.B0), scale(input.e1_0, dot(sub(input.S0, input.B0), input.e1_0)));
+        input.e2_0 = norm(s0Perp);
+        input.e3_0 = norm(cross(input.e1_0, input.e2_0));
+        input.toLocal = (point) => {
+          const r = sub(point, input.B0);
+          return [dot(r, input.e1_0), dot(r, input.e2_0), dot(r, input.e3_0)];
+        };
+        input.S_local = input.toLocal(input.S0);
+        input.W_local = input.toLocal(input.W0);
+        input.N_local = input.toLocal(input.N0);
+        input.lcaAxisHat = norm(sub(input.C, input.A));
+        input.W_lca_offset_local = computeLowerWishboneLocalOffset(input.A, input.C, input.B0, input.W0);
+        return input;
+      }
+
+      function buildUprightPositionsFromState(input, state) {
+        const [theta, phi, psi] = state;
+        const B = input.lowerCircle.point(theta);
+        const E = input.upperCircle.point(phi);
+        const e1 = norm(sub(E, B));
+        let e2Base = rotateVectorMinimal(input.e2_0, input.e1_0, e1);
+        e2Base = sub(e2Base, scale(e1, dot(e2Base, e1)));
+        e2Base = norm(e2Base);
+        let e2 = rotateRodrigues(e2Base, e1, psi);
+        e2 = sub(e2, scale(e1, dot(e2, e1)));
+        e2 = norm(e2);
+        const e3 = norm(cross(e1, e2));
+        const fromLocal = (local) => add(B, add(scale(e1, local[0]), add(scale(e2, local[1]), scale(e3, local[2]))));
+        const S = fromLocal(input.S_local);
+        const N = fromLocal(input.N_local);
+
+        let W;
+        if (input.pushrodWheelBody === "lower_wishbone") {
+          const thetaLca = signedAngleAboutAxis(sub(input.B0, input.A), sub(B, input.A), input.lcaAxisHat);
+          const WBase = rotatePointAboutAxis(input.W0, input.A, input.lcaAxisHat, thetaLca);
+          const [lcaE1, lcaE2, lcaE3] = buildLowerWishboneFrame(input.A, input.C, B);
+          const offsetGlobal = add(
+            scale(lcaE1, input.W_lca_offset_local[0]),
+            add(scale(lcaE2, input.W_lca_offset_local[1]), scale(lcaE3, input.W_lca_offset_local[2]))
+          );
+          W = add(WBase, offsetGlobal);
+        } else {
+          W = fromLocal(input.W_local);
+        }
+
+        return { B, E, S, W, N, frameE1: e1, frameE2: e2, frameE3: e3 };
+      }
+
+      function residualsForState(input, state, wheelTravel) {
+        const pos = buildUprightPositionsFromState(input, state);
+        return [
+          distance(pos.E, pos.B) - input.L_BE,
+          distance(pos.S, input.T) - input.L_ST,
+          pos.N[2] - (input.N0[2] + wheelTravel)
+        ];
+      }
+
+      function solveUprightForWheelTravel(input, wheelTravel, guess = [0, 0, 0]) {
+        let state = guess.slice();
+        let best = state.slice();
+        let bestNorm = Infinity;
+
+        for (let iter = 0; iter < 36; iter += 1) {
+          const r = residualsForState(input, state, wheelTravel);
+          const rNorm = len(r);
+          if (rNorm < bestNorm) {
+            bestNorm = rNorm;
+            best = state.slice();
+          }
+          if (rNorm < 1e-4) {
+            return { positions: buildUprightPositionsFromState(input, state), state, residualNorm: rNorm };
+          }
+
+          const h = 1e-4;
+          const J = [0, 1, 2].map(() => [0, 0, 0]);
+          for (let col = 0; col < 3; col += 1) {
+            const perturbed = state.slice();
+            perturbed[col] += h;
+            const rp = residualsForState(input, perturbed, wheelTravel);
+            for (let row = 0; row < 3; row += 1) {
+              J[row][col] = (rp[row] - r[row]) / h;
+            }
+          }
+
+          let delta = solveLinear3x3(J, r.map((value) => -value));
+          const deltaNorm = len(delta);
+          if (!Number.isFinite(deltaNorm)) break;
+          if (deltaNorm > 0.3) {
+            delta = scale(delta, 0.3 / deltaNorm);
+          }
+          state = add(state, scale(delta, 0.85));
+        }
+
+        if (bestNorm > 1.5) {
+          throw new Error("The selected wheel travel cannot be solved cleanly with the current coordinates.");
+        }
+
+        return { positions: buildUprightPositionsFromState(input, best), state: best, residualNorm: bestNorm };
+      }
+
+      function buildRockerGeometry(points, rockerConfig) {
+        const axisPoint = points[rockerConfig.axisPoint];
+        const axisDir = norm(sub(points[rockerConfig.axisDirTo], points[rockerConfig.axisDirFrom]));
+        return {
+          axisPoint,
+          axisDir,
+          pushrodPointRocker0: points[rockerConfig.pushrodRocker],
+          damperPointRocker0: points[rockerConfig.damperRocker],
+          damperPointChassis: points[rockerConfig.damperChassis]
+        };
+      }
+
+      function reachabilityIntervalForPb(geom, Pu) {
+        const O = geom.axisPoint;
+        const kHat = geom.axisDir;
+        const Pb0 = geom.pushrodPointRocker0;
+        const w = sub(Pb0, O);
+        const C = add(O, scale(kHat, dot(kHat, w)));
+        const r = distance(Pb0, C);
+        const u = sub(Pu, C);
+        const uPar = scale(kHat, dot(kHat, u));
+        const uPerp = sub(u, uPar);
+        const dmin = Math.sqrt(len(uPar) ** 2 + (len(uPerp) - r) ** 2);
+        const dmax = Math.sqrt(len(uPar) ** 2 + (len(uPerp) + r) ** 2);
+        return { dmin, dmax, r, C };
+      }
+
+      function pointOnRocker(geom, point0, omega) {
+        return rotatePointAboutAxis(point0, geom.axisPoint, geom.axisDir, omega);
+      }
+
+      function pushrodLengthError(omega, geom, Pu) {
+        return distance(Pu, pointOnRocker(geom, geom.pushrodPointRocker0, omega)) - distance(geom.pushrodPointRocker0, geom.pushrodPointUpright0);
+      }
+
+      function wrapNear(target, angle) {
+        const twoPi = Math.PI * 2;
+        return angle + twoPi * Math.round((target - angle) / twoPi);
+      }
+
+      function instantaneousPushrodTangent(geom, omega) {
+        return cross(geom.axisDir, sub(pointOnRocker(geom, geom.pushrodPointRocker0, omega), geom.axisPoint));
+      }
+
+      function solveOmegaAnalytic(geom, Pu, omegaGuess = 0, previousPu = null, previousOmega = null) {
+        const O = geom.axisPoint;
+        const kHat = geom.axisDir;
+        const Pb0 = geom.pushrodPointRocker0;
+        const Lp = distance(geom.pushrodPointRocker0, geom.pushrodPointUpright0);
+        const { dmin, dmax, r, C } = reachabilityIntervalForPb(geom, Pu);
+
+        if (Lp < dmin - 1e-4 || Lp > dmax + 1e-4) {
+          throw new Error("Pushrod length is outside the rocker reachable range.");
+        }
+
+        if (r < 1e-8) {
+          return omegaGuess;
+        }
+
+        const e1 = scale(sub(Pb0, C), 1 / r);
+        const e2 = norm(cross(kHat, e1));
+        const u = sub(Pu, C);
+        const a = dot(u, e1);
+        const b = dot(u, e2);
+        const R = Math.hypot(a, b);
+        if (R < 1e-10) {
+          return omegaGuess;
+        }
+
+        const s = (len(u) ** 2 + r ** 2 - Lp ** 2) / (2 * r);
+        const x = Math.max(-1, Math.min(1, s / R));
+        const phi = Math.atan2(b, a);
+        const delta = Math.acos(x);
+        const candidates = [wrapNear(omegaGuess, phi + delta), wrapNear(omegaGuess, phi - delta)];
+
+        let chosen = candidates[0];
+        let bestScore = Infinity;
+
+        candidates.forEach((candidate) => {
+          const err = Math.abs(distance(Pu, pointOnRocker(geom, geom.pushrodPointRocker0, candidate)) - Lp);
+          let score = err * 1000 + Math.abs(candidate - omegaGuess);
+          if (previousPu && previousOmega !== null) {
+            const deltaPu = sub(Pu, previousPu);
+            const tangent = instantaneousPushrodTangent(geom, previousOmega);
+            const signMetric = dot(deltaPu, tangent);
+            const expectedSign = Math.abs(signMetric) > 1e-10 ? Math.sign(signMetric) : 0;
+            const candidateSign = Math.abs(candidate - previousOmega) > 1e-10 ? Math.sign(candidate - previousOmega) : 0;
+            if (expectedSign !== 0 && candidateSign !== 0 && expectedSign !== candidateSign) {
+              score += 10;
+            }
+          }
+          if (score < bestScore) {
+            bestScore = score;
+            chosen = candidate;
+          }
+        });
+
+        return chosen;
+      }
+
+      function damperLength(geom, omega) {
+        return distance(geom.damperPointChassis, pointOnRocker(geom, geom.damperPointRocker0, omega));
+      }
+
+      function readPointsFromInputs() {
+        const points = {};
+        const allRows = [...SUSPENSION_ROWS, ...ROCKER_ROWS];
+        allRows.forEach(([key]) => {
+          const x = parseFloat(document.querySelector(`[data-point="${key}"][data-axis="x"]`).value);
+          const y = parseFloat(document.querySelector(`[data-point="${key}"][data-axis="y"]`).value);
+          const z = parseFloat(document.querySelector(`[data-point="${key}"][data-axis="z"]`).value);
+          if (Number.isFinite(x) && Number.isFinite(y) && Number.isFinite(z)) {
+            points[key] = [x, y, z];
+          }
+        });
+        return points;
+      }
+
+      function setInputsFromPreset(preset) {
+        Object.entries(preset.points).forEach(([key, point]) => {
+          ["x", "y", "z"].forEach((axis, index) => {
+            const input = document.querySelector(`[data-point="${key}"][data-axis="${axis}"]`);
+            if (input) input.value = point[index];
+          });
+        });
+      }
+
+      function createPointRows(target, rows) {
+        target.innerHTML = "";
+        rows.forEach(([key, label]) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${label}</td>
+            <td><input type="number" step="0.1" data-point="${key}" data-axis="x" /></td>
+            <td><input type="number" step="0.1" data-point="${key}" data-axis="y" /></td>
+            <td><input type="number" step="0.1" data-point="${key}" data-axis="z" /></td>
+          `;
+          target.appendChild(tr);
+        });
       }
 
       function populatePresetSelector() {
@@ -716,358 +1288,177 @@
         });
       }
 
-      function createPointRows(target, rows) {
-        target.innerHTML = "";
-
-        rows.forEach(([key, label]) => {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${label}</td>
-            <td><input type="number" step="1" data-point="${key}" data-axis="x" /></td>
-            <td><input type="number" step="1" data-point="${key}" data-axis="z" /></td>
-          `;
-          target.appendChild(tr);
-        });
+      function formatMm(value, digits = 2) {
+        return `${value.toFixed(digits)} mm`;
       }
 
-      function setInputsFromPreset(presetKey) {
-        const preset = PRESETS[presetKey];
-        Object.entries(preset.points).forEach(([pointKey, point]) => {
-          document.querySelector(`[data-point="${pointKey}"][data-axis="x"]`).value = point.x;
-          document.querySelector(`[data-point="${pointKey}"][data-axis="z"]`).value = point.z;
-        });
+      function formatTravel(value) {
+        return `${value.toFixed(1)} mm`;
       }
 
-      function getPointsFromInputs() {
-        const points = {};
-
-        [...SUSPENSION_ROWS, ...ROCKER_ROWS].forEach(([key]) => {
-          const x = parseFloat(document.querySelector(`[data-point="${key}"][data-axis="x"]`).value);
-          const z = parseFloat(document.querySelector(`[data-point="${key}"][data-axis="z"]`).value);
-          points[key] = vec(x, z);
-        });
-
-        return points;
-      }
-
-      function chooseNearest(candidates, target) {
-        return candidates.reduce((best, candidate) => {
-          if (!best) return candidate;
-          return distance(candidate, target) < distance(best, target) ? candidate : best;
-        }, null);
-      }
-
-      function circleIntersections(c1, r1, c2, r2) {
-        const d = distance(c1, c2);
-        if (d < 1e-9 || d > r1 + r2 || d < Math.abs(r1 - r2)) {
-          return [];
-        }
-
-        const a = (r1 * r1 - r2 * r2 + d * d) / (2 * d);
-        const hSquared = r1 * r1 - a * a;
-        if (hSquared < -1e-6) {
-          return [];
-        }
-
-        const h = Math.sqrt(Math.max(hSquared, 0));
-        const direction = normalize(sub(c2, c1));
-        const midpoint = add(c1, scale(direction, a));
-        const offset = scale(perpendicular(direction), h);
-
-        return [add(midpoint, offset), sub(midpoint, offset)];
-      }
-
-      function solveRockerAngle(points, pushrodTarget, preferredAngle = 0) {
-        const pivot = points.rockerPivot;
-        const pushrodPointStatic = points.rockerPushrod;
-        const pushrodLength = distance(points.pushrodUpright, pushrodPointStatic);
-        const tolerance = 1e-5;
-
-        const errorAt = (angle) => {
-          const rockerPushrod = rotateAround(pushrodPointStatic, pivot, angle);
-          return distance(pushrodTarget, rockerPushrod) - pushrodLength;
-        };
-
-        if (Math.abs(errorAt(preferredAngle)) < tolerance) {
-          return preferredAngle;
-        }
-
-        const minAngle = -2.2;
-        const maxAngle = 2.2;
-        const step = 0.01;
-        const roots = [];
-        let bestAngle = preferredAngle;
-        let bestError = Math.abs(errorAt(preferredAngle));
-        let previousAngle = minAngle;
-        let previousError = errorAt(previousAngle);
-
-        for (let angle = minAngle + step; angle <= maxAngle; angle += step) {
-          const currentError = errorAt(angle);
-          const absError = Math.abs(currentError);
-
-          if (absError < bestError) {
-            bestError = absError;
-            bestAngle = angle;
-          }
-
-          if (Math.abs(currentError) < 1e-4) {
-            roots.push(angle);
-          } else if (previousError === 0 || currentError === 0 || previousError * currentError < 0) {
-            let low = previousAngle;
-            let high = angle;
-            let fLow = previousError;
-
-            for (let i = 0; i < 28; i += 1) {
-              const mid = (low + high) * 0.5;
-              const fMid = errorAt(mid);
-              if (Math.abs(fMid) < 1e-7) {
-                low = mid;
-                high = mid;
-                break;
-              }
-
-              if (fLow * fMid <= 0) {
-                high = mid;
-              } else {
-                low = mid;
-                fLow = fMid;
-              }
-            }
-
-            roots.push((low + high) * 0.5);
-          }
-
-          previousAngle = angle;
-          previousError = currentError;
-        }
-
-        if (!roots.length) {
-          if (bestError < 1e-3) {
-            return bestAngle;
-          }
-          throw new Error("No rocker solution found for the selected geometry.");
-        }
-
-        return roots.reduce((best, angle) => {
-          if (best === null) return angle;
-          return Math.abs(angle - preferredAngle) < Math.abs(best - preferredAngle) ? angle : best;
-        }, null);
-      }
-
-      function solveCornerAtTravel(points, wheelTravel) {
-        const lowerLength = distance(points.lcaInner, points.lcaOuter);
-        const upperLength = distance(points.ucaInner, points.ucaOuter);
-        const uprightVectorStatic = sub(points.ucaOuter, points.lcaOuter);
-        const uprightLength = length(uprightVectorStatic);
-        const uprightDirStatic = normalize(uprightVectorStatic);
-        const uprightPerpStatic = perpendicular(uprightDirStatic);
-        const pushrodRelative = sub(points.pushrodUpright, points.lcaOuter);
-        const along = dot(pushrodRelative, uprightDirStatic);
-        const offset = dot(pushrodRelative, uprightPerpStatic);
-
-        const targetLowerZ = points.lcaOuter.z + wheelTravel;
-        const dzLower = targetLowerZ - points.lcaInner.z;
-        const lowerRadicand = lowerLength * lowerLength - dzLower * dzLower;
-
-        if (lowerRadicand < 0) {
-          throw new Error("Lower arm cannot reach the selected wheel travel.");
-        }
-
-        const lowerDx = Math.sqrt(Math.max(lowerRadicand, 0));
-        const lowerCandidates = [
-          vec(points.lcaInner.x + lowerDx, targetLowerZ),
-          vec(points.lcaInner.x - lowerDx, targetLowerZ)
-        ];
-        const lcaOuter = chooseNearest(lowerCandidates, points.lcaOuter);
-
-        const upperCandidates = circleIntersections(points.ucaInner, upperLength, lcaOuter, uprightLength);
-        if (!upperCandidates.length) {
-          throw new Error("Upper arm and upright cannot close for the selected travel.");
-        }
-
-        const ucaOuter = chooseNearest(upperCandidates, points.ucaOuter);
-        const uprightDir = normalize(sub(ucaOuter, lcaOuter));
-        const uprightPerp = perpendicular(uprightDir);
-        const pushrodUpright = add(add(lcaOuter, scale(uprightDir, along)), scale(uprightPerp, offset));
-
-        const rockerAngle = solveRockerAngle(points, pushrodUpright, 0);
-        const rockerPushrod = rotateAround(points.rockerPushrod, points.rockerPivot, rockerAngle);
-        const rockerDamper = rotateAround(points.rockerDamper, points.rockerPivot, rockerAngle);
-        const damperLength = distance(points.damperChassis, rockerDamper);
-        const staticDamperLength = distance(points.damperChassis, points.rockerDamper);
-
-        return {
-          points: {
-            ...points,
-            lcaOuter,
-            ucaOuter,
-            pushrodUpright,
-            rockerPushrod,
-            rockerDamper
-          },
-          wheelTravel,
-          rockerAngle,
-          damperLength,
-          damperCompression: staticDamperLength - damperLength
-        };
-      }
-
-      function localMotionRatio(points, wheelTravel) {
-        const delta = 0.5;
-        const low = solveCornerAtTravel(points, wheelTravel - delta);
-        const high = solveCornerAtTravel(points, wheelTravel + delta);
-        return (high.damperCompression - low.damperCompression) / (2 * delta);
-      }
-
-      function buildSweep(points) {
-        const samples = [];
-        for (let travel = -30; travel <= 30; travel += 2) {
-          const state = solveCornerAtTravel(points, travel);
-          const ratio = Math.abs(localMotionRatio(points, travel));
-          samples.push({
-            travel,
-            compression: state.damperCompression,
-            ratio
-          });
-        }
-        return samples;
-      }
-
-      function updateTravelDisplay(value) {
-        travelValue.textContent = formatMm(value, 1);
+      function setStatus(message) {
+        statusText.textContent = message;
       }
 
       function syncCanvasSize() {
-        const rect = canvas.getBoundingClientRect();
-        canvas.width = Math.round(rect.width * window.devicePixelRatio);
-        canvas.height = Math.round(rect.height * window.devicePixelRatio);
-        ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
-      }
-
-      function makeViewport(pointsSets) {
-        const all = pointsSets.flatMap((set) => Object.values(set));
-        const xs = all.map((point) => point.x);
-        const zs = all.map((point) => point.z);
-        const minX = Math.min(...xs) - 110;
-        const maxX = Math.max(...xs) + 110;
-        const minZ = Math.min(...zs) - 110;
-        const maxZ = Math.max(...zs) + 110;
+        const dpr = window.devicePixelRatio || 1;
         const width = canvas.clientWidth;
         const height = canvas.clientHeight;
-        const scaleValue = Math.min(width / (maxX - minX), height / (maxZ - minZ));
-        const offsetX = (width - (maxX - minX) * scaleValue) * 0.5;
-        const offsetY = (height - (maxZ - minZ) * scaleValue) * 0.5;
-
-        return (point) => ({
-          x: offsetX + (point.x - minX) * scaleValue,
-          y: height - (offsetY + (point.z - minZ) * scaleValue)
-        });
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       }
 
-      function drawGrid(width, height) {
-        ctx.save();
-        ctx.strokeStyle = "rgba(200, 209, 201, 0.55)";
-        ctx.lineWidth = 1;
-
-        for (let x = 0; x <= width; x += 48) {
-          ctx.beginPath();
-          ctx.moveTo(x, 0);
-          ctx.lineTo(x, height);
-          ctx.stroke();
+      function project(point) {
+        const { az, el, dist, tx, ty, tz, fov } = CAM;
+        const rx = point[0] - tx;
+        const ry = point[1] - ty;
+        const rz = point[2] - tz;
+        const cA = Math.cos(az);
+        const sA = Math.sin(az);
+        const x1 = rx * cA + rz * sA;
+        const y1 = ry;
+        const z1 = -rx * sA + rz * cA;
+        const cE = Math.cos(el);
+        const sE = Math.sin(el);
+        const x2 = x1;
+        const y2 = y1 * cE - z1 * sE;
+        const z2 = y1 * sE + z1 * cE;
+        const zc = z2 - dist;
+        if (zc >= -1e-3) {
+          return null;
         }
-
-        for (let y = 0; y <= height; y += 48) {
-          ctx.beginPath();
-          ctx.moveTo(0, y);
-          ctx.lineTo(width, y);
-          ctx.stroke();
-        }
-        ctx.restore();
-      }
-
-      function drawLine(a, b, options = {}) {
-        ctx.save();
-        ctx.strokeStyle = options.color || "#111714";
-        ctx.lineWidth = options.width || 3;
-        ctx.setLineDash(options.dash || []);
-        ctx.globalAlpha = options.alpha ?? 1;
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.stroke();
-        ctx.restore();
-      }
-
-      function drawPoint(point, options = {}) {
-        ctx.save();
-        ctx.fillStyle = options.color || "#111714";
-        ctx.globalAlpha = options.alpha ?? 1;
-        ctx.beginPath();
-        ctx.arc(point.x, point.y, options.radius || 5, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      }
-
-      function drawLabel(point, text, color) {
-        ctx.save();
-        ctx.fillStyle = color;
-        ctx.font = '11px "IBM Plex Mono", monospace';
-        ctx.fillText(text, point.x + 8, point.y - 8);
-        ctx.restore();
-      }
-
-      function drawWheel(center, uprightBottom, uprightTop) {
-        const wheelRadius = Math.max(distance(uprightBottom, uprightTop) * 0.62, 66);
-        ctx.save();
-        ctx.strokeStyle = "rgba(17, 23, 20, 0.24)";
-        ctx.lineWidth = 18;
-        ctx.beginPath();
-        ctx.arc(center.x + 34, center.y, wheelRadius, -Math.PI * 0.6, Math.PI * 0.6);
-        ctx.stroke();
-        ctx.restore();
-      }
-
-      function drawGeometry(transform, staticState, currentState) {
-        const width = canvas.clientWidth;
         const height = canvas.clientHeight;
-        ctx.clearRect(0, 0, width, height);
-        drawGrid(width, height);
-
-        const staticPts = Object.fromEntries(Object.entries(staticState.points).map(([key, point]) => [key, transform(point)]));
-        const currentPts = Object.fromEntries(Object.entries(currentState.points).map(([key, point]) => [key, transform(point)]));
-
-        const wheelCenter = {
-          x: (currentPts.lcaOuter.x + currentPts.ucaOuter.x) * 0.5,
-          y: (currentPts.lcaOuter.y + currentPts.ucaOuter.y) * 0.5
+        const width = canvas.clientWidth;
+        const scaleFactor = (height / 2) / Math.tan((fov * Math.PI) / 360);
+        return {
+          x: width * 0.5 + (x2 * scaleFactor) / -zc,
+          y: height * 0.5 - (y2 * scaleFactor) / -zc,
+          z: -zc
         };
+      }
 
-        drawWheel(wheelCenter, currentPts.lcaOuter, currentPts.ucaOuter);
+      function drawLine3D(segments, p1, p2, color, width, dash = []) {
+        const a = project(p1);
+        const b = project(p2);
+        if (!a || !b) return;
+        segments.push({ type: "line", a, b, color, width, dash, depth: (a.z + b.z) * 0.5 });
+      }
 
-        const drawCorner = (pts, color, dash, alpha) => {
-          drawLine(pts.lcaInner, pts.lcaOuter, { color, width: 4, dash, alpha });
-          drawLine(pts.ucaInner, pts.ucaOuter, { color, width: 4, dash, alpha });
-          drawLine(pts.lcaOuter, pts.ucaOuter, { color, width: 5, dash, alpha });
-          drawLine(pts.pushrodUpright, pts.rockerPushrod, { color, width: 3, dash, alpha });
-          drawLine(pts.rockerPivot, pts.rockerPushrod, { color, width: 4, dash, alpha });
-          drawLine(pts.rockerPivot, pts.rockerDamper, { color, width: 4, dash, alpha });
-          drawLine(pts.damperChassis, pts.rockerDamper, { color, width: 5, dash, alpha });
-        };
+      function drawPoint3D(items, point, color, radius, label = null) {
+        const p = project(point);
+        if (!p) return;
+        items.push({ type: "point", p, color, radius, depth: p.z, label });
+      }
 
-        drawCorner(staticPts, "#b6813b", [8, 8], 0.62);
-        drawCorner(currentPts, "#0d6c5f", [], 1);
+      function drawWheel(items, center, radius, width) {
+        const offsets = [-width * 0.5, width * 0.5];
+        offsets.forEach((offset) => {
+          const ring = [];
+          for (let i = 0; i <= 44; i += 1) {
+            const angle = (i / 44) * Math.PI * 2;
+            ring.push([center[0] + radius * Math.cos(angle), center[1] + offset, center[2] + radius * Math.sin(angle)]);
+          }
+          for (let i = 0; i < ring.length - 1; i += 1) {
+            drawLine3D(items, ring[i], ring[i + 1], "rgba(17, 23, 20, 0.18)", 1.6);
+          }
+        });
+      }
 
-        ["lcaInner", "ucaInner", "rockerPivot", "damperChassis"].forEach((key) => {
-          drawPoint(currentPts[key], { color: "#111714", radius: 5.5 });
+      function render3D(scene) {
+        syncCanvasSize();
+        ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+
+        const allPoints = Object.values(scene.currentPoints).concat(Object.values(scene.staticPoints));
+        const center = [0, 0, 0];
+        allPoints.forEach((point) => {
+          center[0] += point[0];
+          center[1] += point[1];
+          center[2] += point[2];
+        });
+        center[0] /= allPoints.length;
+        center[1] /= allPoints.length;
+        center[2] /= allPoints.length;
+        if (!CAM._def) {
+          CAM.init(center[0], center[1], center[2], 1450);
+        } else {
+          CAM.tx = center[0];
+          CAM.ty = center[1];
+          CAM.tz = center[2];
+        }
+
+        const drawables = [];
+        const pointItems = [];
+
+        const staticColor = "rgba(182, 129, 59, 0.55)";
+        const lowerColor = "#3b82f6";
+        const upperColor = "#7c3aed";
+        const pushrodColor = "#ea580c";
+        const damperColor = "#0d6c5f";
+
+        if (LAYERS.suspension) {
+          const s = scene.staticPoints;
+          const c = scene.currentPoints;
+
+          const staticSegments = [
+            ["A", "B"], ["C", "B"], ["D", "E"], ["F", "E"], ["T", "S"], ["B", "E"], ["W", "M"], ["M", "V"], ["U", "V"], ["X", "Y"], ["X", "Z"]
+          ];
+          staticSegments.forEach(([a, b]) => {
+            if (s[a] && s[b]) drawLine3D(drawables, s[a], s[b], staticColor, 2.2, [6, 6]);
+          });
+
+          [["A", "B"], ["C", "B"]].forEach(([a, b]) => drawLine3D(drawables, c[a], c[b], lowerColor, 3.4));
+          [["D", "E"], ["F", "E"]].forEach(([a, b]) => drawLine3D(drawables, c[a], c[b], upperColor, 3.4));
+          drawLine3D(drawables, c.T, c.S, "#22c55e", 2.8);
+          drawLine3D(drawables, c.B, c.E, "#f59e0b", 3.8);
+          drawLine3D(drawables, c.W, c.M, pushrodColor, 3.2);
+          drawLine3D(drawables, c.M, c.V, pushrodColor, 3.2);
+          drawLine3D(drawables, c.U, c.V, damperColor, 4);
+          drawLine3D(drawables, c.X, c.Y, "rgba(17, 23, 20, 0.45)", 2.4);
+          drawLine3D(drawables, c.X, c.Z, "rgba(17, 23, 20, 0.45)", 2.4);
+        }
+
+        if (LAYERS.wheel) {
+          drawWheel(drawables, scene.currentPoints.N, scene.wheelRadius, 86);
+        }
+
+        Object.entries(scene.currentPoints).forEach(([key, point]) => {
+          const chassisKeys = new Set(["A", "C", "D", "F", "T", "U", "X", "Y", "Z"]);
+          const color = chassisKeys.has(key) ? "#111714" : key === "N" ? "#b6813b" : "#0d6c5f";
+          const label = LAYERS.labels ? key : null;
+          drawPoint3D(pointItems, point, color, key === "N" ? 5.4 : 4.4, label);
         });
 
-        ["lcaOuter", "ucaOuter", "pushrodUpright", "rockerPushrod", "rockerDamper"].forEach((key) => {
-          drawPoint(currentPts[key], { color: "#0d6c5f", radius: 5 });
+        drawables.sort((a, b) => b.depth - a.depth);
+        pointItems.sort((a, b) => b.depth - a.depth);
+
+        drawables.forEach((item) => {
+          if (item.type !== "line") return;
+          ctx.save();
+          ctx.strokeStyle = item.color;
+          ctx.lineWidth = item.width;
+          ctx.setLineDash(item.dash || []);
+          ctx.lineCap = "round";
+          ctx.beginPath();
+          ctx.moveTo(item.a.x, item.a.y);
+          ctx.lineTo(item.b.x, item.b.y);
+          ctx.stroke();
+          ctx.restore();
         });
 
-        drawLabel(currentPts.lcaInner, "LCA inner", "#5f6b64");
-        drawLabel(currentPts.ucaInner, "UCA inner", "#5f6b64");
-        drawLabel(currentPts.rockerPivot, "Rocker pivot", "#5f6b64");
-        drawLabel(currentPts.damperChassis, "Damper top", "#5f6b64");
+        pointItems.forEach((item) => {
+          ctx.save();
+          ctx.fillStyle = item.color;
+          ctx.beginPath();
+          ctx.arc(item.p.x, item.p.y, item.radius, 0, Math.PI * 2);
+          ctx.fill();
+          if (item.label) {
+            ctx.fillStyle = "#5f6b64";
+            ctx.font = '11px "IBM Plex Mono", monospace';
+            ctx.fillText(item.label, item.p.x + 8, item.p.y - 8);
+          }
+          ctx.restore();
+        });
       }
 
       function renderCurve(samples, currentTravel) {
@@ -1078,31 +1469,27 @@
         const plotHeight = height - margin.top - margin.bottom;
         const minTravel = Math.min(...samples.map((sample) => sample.travel));
         const maxTravel = Math.max(...samples.map((sample) => sample.travel));
-        const compressionValues = samples.map((sample) => sample.compression);
-        const ratioValues = samples.map((sample) => sample.ratio);
-        const minCompression = Math.min(...compressionValues);
-        const maxCompression = Math.max(...compressionValues);
+        const damperValues = samples.map((sample) => sample.damperTravel);
+        const ratioValues = samples.map((sample) => sample.mr);
+        const minDamper = Math.min(...damperValues);
+        const maxDamper = Math.max(...damperValues);
         const minRatio = Math.min(...ratioValues);
         const maxRatio = Math.max(...ratioValues);
-
         const xFor = (value) => margin.left + ((value - minTravel) / (maxTravel - minTravel)) * plotWidth;
-        const yCompressionFor = (value) =>
-          margin.top + plotHeight - ((value - minCompression) / Math.max(maxCompression - minCompression, 1e-6)) * plotHeight;
-        const yRatioFor = (value) =>
-          margin.top + plotHeight - ((value - minRatio) / Math.max(maxRatio - minRatio, 1e-6)) * plotHeight;
-
-        const compressionPath = samples
-          .map((sample, index) => `${index === 0 ? "M" : "L"} ${xFor(sample.travel).toFixed(2)} ${yCompressionFor(sample.compression).toFixed(2)}`)
+        const yDamperFor = (value) => margin.top + plotHeight - ((value - minDamper) / Math.max(maxDamper - minDamper, 1e-6)) * plotHeight;
+        const yRatioFor = (value) => margin.top + plotHeight - ((value - minRatio) / Math.max(maxRatio - minRatio, 1e-6)) * plotHeight;
+        const damperPath = samples
+          .map((sample, index) => `${index === 0 ? "M" : "L"} ${xFor(sample.travel).toFixed(2)} ${yDamperFor(sample.damperTravel).toFixed(2)}`)
           .join(" ");
         const ratioPath = samples
-          .map((sample, index) => `${index === 0 ? "M" : "L"} ${xFor(sample.travel).toFixed(2)} ${yRatioFor(sample.ratio).toFixed(2)}`)
+          .map((sample, index) => `${index === 0 ? "M" : "L"} ${xFor(sample.travel).toFixed(2)} ${yRatioFor(sample.mr).toFixed(2)}`)
           .join(" ");
         const currentSample = samples.reduce((best, sample) => {
           if (!best) return sample;
           return Math.abs(sample.travel - currentTravel) < Math.abs(best.travel - currentTravel) ? sample : best;
         }, null);
 
-        const gridLines = [-30, -15, 0, 15, 30]
+        const gridLines = [minTravel, minTravel / 2, 0, maxTravel / 2, maxTravel]
           .map((travel) => {
             const x = xFor(travel);
             return `<line class="grid" x1="${x}" y1="${margin.top}" x2="${x}" y2="${margin.top + plotHeight}" />`;
@@ -1115,21 +1502,80 @@
           <line class="axis" x1="${margin.left}" y1="${margin.top + plotHeight}" x2="${margin.left + plotWidth}" y2="${margin.top + plotHeight}" />
           <line class="axis" x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${margin.top + plotHeight}" />
           <line class="axis" x1="${margin.left + plotWidth}" y1="${margin.top}" x2="${margin.left + plotWidth}" y2="${margin.top + plotHeight}" />
-          <path class="compression-line" d="${compressionPath}"></path>
+          <path class="compression-line" d="${damperPath}"></path>
           <path class="ratio-line" d="${ratioPath}"></path>
-          <circle class="marker" cx="${xFor(currentSample.travel)}" cy="${yCompressionFor(currentSample.compression)}" r="5" fill="#0d6c5f"></circle>
-          <circle class="marker" cx="${xFor(currentSample.travel)}" cy="${yRatioFor(currentSample.ratio)}" r="5" fill="#b6813b"></circle>
+          <circle class="marker" cx="${xFor(currentSample.travel)}" cy="${yDamperFor(currentSample.damperTravel)}" r="5" fill="#0d6c5f"></circle>
+          <circle class="marker" cx="${xFor(currentSample.travel)}" cy="${yRatioFor(currentSample.mr)}" r="5" fill="#b6813b"></circle>
           <text x="${margin.left}" y="${height - 16}">Wheel travel (mm)</text>
-          <text x="${margin.left}" y="${16}">Damper compression</text>
-          <text x="${width - 124}" y="${16}">Motion ratio</text>
-          <text x="${margin.left - 44}" y="${margin.top + 8}">${maxCompression.toFixed(1)}</text>
-          <text x="${margin.left - 44}" y="${margin.top + plotHeight + 4}">${minCompression.toFixed(1)}</text>
-          <text x="${width - margin.right + 14}" y="${margin.top + 8}">${maxRatio.toFixed(2)}</text>
-          <text x="${width - margin.right + 14}" y="${margin.top + plotHeight + 4}">${minRatio.toFixed(2)}</text>
-          <text x="${xFor(0) - 12}" y="${height - 16}">0</text>
-          <text x="${xFor(-30) - 16}" y="${height - 16}">-30</text>
-          <text x="${xFor(30) - 10}" y="${height - 16}">30</text>
+          <text x="${margin.left}" y="${16}">Damper travel</text>
+          <text x="${width - 118}" y="${16}">Motion ratio</text>
+          <text x="${margin.left - 44}" y="${margin.top + 8}">${maxDamper.toFixed(1)}</text>
+          <text x="${margin.left - 44}" y="${margin.top + plotHeight + 4}">${minDamper.toFixed(1)}</text>
+          <text x="${width - margin.right + 12}" y="${margin.top + 8}">${maxRatio.toFixed(2)}</text>
+          <text x="${width - margin.right + 12}" y="${margin.top + plotHeight + 4}">${minRatio.toFixed(2)}</text>
         `;
+      }
+
+      function buildDataFromInputs() {
+        const preset = PRESETS[presetSelector.value];
+        return {
+          points: readPointsFromInputs(),
+          pushrodWheelBody: preset.pushrodWheelBody,
+          rocker: preset.rocker,
+          wheelTravelLimit: preset.wheelTravelLimit
+        };
+      }
+
+      function evaluateCornerAtTravel(data, wheelTravel, guessState, omegaGuess, previousPu = null, previousOmega = null) {
+        const input = buildInput(data);
+        const upright = solveUprightForWheelTravel(input, wheelTravel, guessState);
+        const points = { ...data.points, B: upright.positions.B, E: upright.positions.E, S: upright.positions.S, W: upright.positions.W, N: upright.positions.N };
+        const rockerGeom = buildRockerGeometry(points, data.rocker);
+        rockerGeom.pushrodPointUpright0 = data.points.W;
+        const omega = solveOmegaAnalytic(rockerGeom, points.W, omegaGuess, previousPu, previousOmega);
+        const damperRocker = pointOnRocker(rockerGeom, rockerGeom.damperPointRocker0, omega);
+        const pushrodRocker = pointOnRocker(rockerGeom, rockerGeom.pushrodPointRocker0, omega);
+        const staticDamperLength = damperLength({ ...rockerGeom, pushrodPointUpright0: data.points.W }, 0);
+        const currentDamperLength = distance(rockerGeom.damperPointChassis, damperRocker);
+
+        return {
+          input,
+          upright,
+          omega,
+          points: {
+            ...points,
+            M: pushrodRocker,
+            P: data.rocker.damperRocker === "P" ? damperRocker : points.P,
+            Q: data.rocker.pushrodRocker === "Q" ? pushrodRocker : points.Q,
+            V: damperRocker,
+            pushrodRocker,
+            damperRocker
+          },
+          damperTravel: staticDamperLength - currentDamperLength,
+          rockerAngle: omega
+        };
+      }
+
+      function buildSweep(data, limit) {
+        const samples = [];
+        let guessState = [0, 0, 0];
+        let omegaGuess = 0;
+        let prevW = null;
+        let prevOmega = null;
+
+        for (let travel = -limit; travel <= limit; travel += 2.5) {
+          const state = evaluateCornerAtTravel(data, travel, guessState, omegaGuess, prevW, prevOmega);
+          const low = evaluateCornerAtTravel(data, travel - 0.5, state.upright.state, state.rockerAngle, state.points.W, state.rockerAngle);
+          const high = evaluateCornerAtTravel(data, travel + 0.5, state.upright.state, state.rockerAngle, state.points.W, state.rockerAngle);
+          const mr = Math.abs((high.damperTravel - low.damperTravel) / 1.0);
+          samples.push({ travel, damperTravel: state.damperTravel, mr });
+          guessState = state.upright.state.slice();
+          omegaGuess = state.rockerAngle;
+          prevW = state.points.W;
+          prevOmega = state.rockerAngle;
+        }
+
+        return samples;
       }
 
       function stopPlayback() {
@@ -1161,35 +1607,82 @@
         animationFrame = requestAnimationFrame(step);
       }
 
+      function bindCameraButtons() {
+        document.querySelectorAll("[data-view]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const view = button.dataset.view;
+            if (view === "reset") {
+              CAM.reset();
+            } else {
+              const views = {
+                iso: { az: 0.6, el: 0.35 },
+                front: { az: 0, el: 0 },
+                side: { az: Math.PI / 2, el: 0 },
+                top: { az: 0, el: 1.55 }
+              };
+              const target = views[view];
+              if (target) {
+                CAM.az = target.az;
+                CAM.el = target.el;
+              }
+            }
+            render();
+          });
+        });
+      }
+
+      function bindLayerButtons() {
+        document.querySelectorAll("[data-layer]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const layer = button.dataset.layer;
+            LAYERS[layer] = !LAYERS[layer];
+            button.classList.toggle("is-active", LAYERS[layer]);
+            render();
+          });
+        });
+      }
+
       function render() {
         try {
-          const points = getPointsFromInputs();
+          const preset = PRESETS[presetSelector.value];
+          const data = buildDataFromInputs();
+          const limit = preset.wheelTravelLimit || 25;
           const travel = parseFloat(travelSlider.value);
-          updateTravelDisplay(travel);
+          travelValue.textContent = formatTravel(travel);
 
-          const staticState = solveCornerAtTravel(points, 0);
-          const currentState = solveCornerAtTravel(points, travel);
-          const currentMr = Math.abs(localMotionRatio(points, travel));
-          const staticMr = Math.abs(localMotionRatio(points, 0));
-          const sweep = buildSweep(points);
+          const staticState = evaluateCornerAtTravel(data, 0, [0, 0, 0], 0);
+          const currentState = evaluateCornerAtTravel(data, travel, lastSolveState, lastOmega, staticState.points.W, 0);
+          const low = evaluateCornerAtTravel(data, travel - 0.5, currentState.upright.state, currentState.rockerAngle, currentState.points.W, currentState.rockerAngle);
+          const high = evaluateCornerAtTravel(data, travel + 0.5, currentState.upright.state, currentState.rockerAngle, currentState.points.W, currentState.rockerAngle);
+          const currentMr = Math.abs((high.damperTravel - low.damperTravel) / 1.0);
+          const staticLow = evaluateCornerAtTravel(data, -0.5, staticState.upright.state, staticState.rockerAngle, staticState.points.W, staticState.rockerAngle);
+          const staticHigh = evaluateCornerAtTravel(data, 0.5, staticState.upright.state, staticState.rockerAngle, staticState.points.W, staticState.rockerAngle);
+          const staticMr = Math.abs((staticHigh.damperTravel - staticLow.damperTravel) / 1.0);
+          const wheelRadius = Math.max(distance(currentState.points.B, currentState.points.N), distance(currentState.points.E, currentState.points.N));
+          const sweep = buildSweep(data, limit);
+
+          lastSolveState = currentState.upright.state.slice();
+          lastOmega = currentState.rockerAngle;
 
           currentMrValue.textContent = currentMr.toFixed(3);
           staticMrValue.textContent = staticMr.toFixed(3);
-          damperCompressionValue.textContent = formatMm(currentState.damperCompression, 2);
-          rockerAngleValue.textContent = `${formatSigned((currentState.rockerAngle * 180) / Math.PI, 2)} deg`;
+          damperTravelValue.textContent = formatMm(currentState.damperTravel, 2);
+          rockerAngleValue.textContent = `${(currentState.rockerAngle * 180 / Math.PI).toFixed(2)} deg`;
 
-          syncCanvasSize();
-          const transform = makeViewport([staticState.points, currentState.points]);
-          drawGeometry(transform, staticState, currentState);
+          render3D({
+            staticPoints: staticState.points,
+            currentPoints: currentState.points,
+            wheelRadius
+          });
           renderCurve(sweep, travel);
 
           setStatus(
-            `Corner solved at ${formatMm(travel, 1)} with a current motion ratio of ${currentMr.toFixed(3)} and damper compression of ${formatMm(currentState.damperCompression, 2)}.`
+            `Corner solved at ${formatTravel(travel)}. Motion ratio ${currentMr.toFixed(3)}, damper travel ${formatMm(currentState.damperTravel, 2)} and rocker rotation ${(currentState.rockerAngle * 180 / Math.PI).toFixed(2)} deg.`
           );
         } catch (error) {
           currentMrValue.textContent = "-";
           staticMrValue.textContent = "-";
-          damperCompressionValue.textContent = "-";
+          damperTravelValue.textContent = "-";
           rockerAngleValue.textContent = "-";
           ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
           curveChart.innerHTML = "";
@@ -1197,9 +1690,16 @@
         }
       }
 
-      function loadPreset(presetKey) {
-        setInputsFromPreset(presetKey);
+      function loadPreset(key) {
+        const preset = PRESETS[key];
+        setInputsFromPreset(preset);
+        travelSlider.min = String(-preset.wheelTravelLimit);
+        travelSlider.max = String(preset.wheelTravelLimit);
         travelSlider.value = "0";
+        travelValue.textContent = formatTravel(0);
+        lastSolveState = [0, 0, 0];
+        lastOmega = 0;
+        CAM._def = null;
         stopPlayback();
         render();
       }
@@ -1207,23 +1707,52 @@
       populatePresetSelector();
       createPointRows(suspensionPointTable, SUSPENSION_ROWS);
       createPointRows(rockerPointTable, ROCKER_ROWS);
+      bindCameraButtons();
+      bindLayerButtons();
+
       presetSelector.addEventListener("change", () => loadPreset(presetSelector.value));
       travelSlider.addEventListener("input", render);
       document.getElementById("resetTravelButton").addEventListener("click", () => {
         travelSlider.value = "0";
+        stopPlayback();
         render();
       });
       playButton.addEventListener("click", playSweep);
       document.querySelectorAll("input[type='number']").forEach((input) => {
         input.addEventListener("input", () => {
           stopPlayback();
+          lastSolveState = [0, 0, 0];
+          lastOmega = 0;
+          CAM._def = null;
           render();
         });
       });
       window.addEventListener("resize", render);
 
-      presetSelector.value = "f4FrontCorner";
-      loadPreset("f4FrontCorner");
+      let drag = null;
+      canvas.addEventListener("pointerdown", (event) => {
+        drag = { x: event.clientX, y: event.clientY, az: CAM.az, el: CAM.el };
+        canvas.setPointerCapture(event.pointerId);
+      });
+      canvas.addEventListener("pointermove", (event) => {
+        if (!drag) return;
+        const dx = event.clientX - drag.x;
+        const dy = event.clientY - drag.y;
+        CAM.az = drag.az - dx * 0.008;
+        CAM.el = Math.max(-1.35, Math.min(1.45, drag.el - dy * 0.008));
+        render();
+      });
+      canvas.addEventListener("pointerup", () => {
+        drag = null;
+      });
+      canvas.addEventListener("wheel", (event) => {
+        event.preventDefault();
+        CAM.dist = Math.max(700, Math.min(2600, CAM.dist + event.deltaY * 0.8));
+        render();
+      }, { passive: false });
+
+      presetSelector.value = "f4ReferenceCorner";
+      loadPreset("f4ReferenceCorner");
     </script>
   </body>
 </html>
