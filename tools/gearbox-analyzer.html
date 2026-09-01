@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gearbox & Power Analyzer</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      :root {
+        --bg: #f3f5f2;
+        --surface: #fbfcf8;
+        --surface-strong: #e6ebe3;
+        --ink: #111714;
+        --muted: #5f6b64;
+        --line: #c8d1c9;
+        --accent: #0d6c5f;
+        --accent-strong: #0a5b50;
+        --signal: #b6813b;
+        --shadow: 0 24px 70px rgba(17, 23, 20, 0.08);
+        --radius-xl: 24px;
+        --radius-lg: 18px;
+        --radius-md: 12px;
+        --radius-pill: 999px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at top left, rgba(13, 108, 95, 0.08), transparent 25%),
+          linear-gradient(180deg, #f7f8f5 0%, var(--bg) 55%, #eef2ed 100%);
+        color: var(--ink);
+        font-family: "IBM Plex Sans", system-ui, sans-serif;
+      }
+
+      .app {
+        width: min(100%, 1220px);
+        margin: 0 auto;
+        padding: 24px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .panel,
+      .chart-card,
+      .table-card,
+      .status,
+      .summary-card {
+        border: 1px solid rgba(200, 209, 201, 0.9);
+        border-radius: var(--radius-xl);
+        background: rgba(251, 252, 248, 0.92);
+        box-shadow: var(--shadow);
+      }
+
+      .panel,
+      .summary-card {
+        padding: 22px;
+      }
+
+      .eyebrow,
+      .kicker,
+      .stat-label,
+      th {
+        font-family: "IBM Plex Mono", ui-monospace, monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.76rem;
+      }
+
+      .eyebrow,
+      .kicker,
+      .stat-label {
+        color: var(--muted);
+        margin: 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        font-family: "Archivo Expanded", "Arial Narrow", sans-serif;
+        line-height: 1.05;
+      }
+
+      h1 {
+        margin-top: 12px;
+        font-size: clamp(2.1rem, 5vw, 3.6rem);
+      }
+
+      h2 {
+        font-size: clamp(1.25rem, 2.6vw, 2rem);
+      }
+
+      p {
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .hero p:last-child {
+        margin-bottom: 0;
+      }
+
+      .summary-grid,
+      .controls-grid,
+      .stats-grid,
+      .chart-grid {
+        display: grid;
+        gap: 16px;
+      }
+
+      .summary-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        margin-top: 18px;
+      }
+
+      .summary-card strong {
+        display: block;
+        margin-top: 10px;
+        font-size: 1.15rem;
+      }
+
+      .controls-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin-bottom: 18px;
+      }
+
+      .panel-wide {
+        grid-column: 1 / -1;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 0.94rem;
+        font-weight: 600;
+      }
+
+      select,
+      input,
+      button {
+        width: 100%;
+        min-height: 48px;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--line);
+        font: inherit;
+      }
+
+      select,
+      input {
+        padding: 0 14px;
+        background: rgba(255, 255, 255, 0.85);
+        color: var(--ink);
+      }
+
+      button {
+        padding: 0 16px;
+        background: var(--accent);
+        color: #fff;
+        font-weight: 600;
+        transition: background-color 180ms ease, transform 180ms ease;
+      }
+
+      button:hover {
+        cursor: pointer;
+        transform: translateY(-1px);
+        background: var(--accent-strong);
+      }
+
+      button.secondary {
+        background: rgba(255, 255, 255, 0.72);
+        color: var(--ink);
+      }
+
+      button.secondary:hover {
+        background: rgba(230, 235, 227, 0.9);
+      }
+
+      button:focus-visible,
+      select:focus-visible,
+      input:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+
+      .actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: end;
+      }
+
+      .actions > * {
+        flex: 1 1 220px;
+      }
+
+      .status {
+        padding: 16px 18px;
+        margin-bottom: 18px;
+      }
+
+      .status strong {
+        color: var(--ink);
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        margin-bottom: 18px;
+      }
+
+      .stat {
+        padding: 18px;
+        border-radius: var(--radius-lg);
+        border: 1px solid rgba(200, 209, 201, 0.9);
+        background: rgba(255, 255, 255, 0.68);
+      }
+
+      .stat-value {
+        display: block;
+        margin-top: 10px;
+        font-family: "Archivo Expanded", "Arial Narrow", sans-serif;
+        font-size: 1.1rem;
+      }
+
+      .chart-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .chart-card,
+      .table-card {
+        padding: 18px;
+      }
+
+      canvas {
+        width: 100%;
+        max-width: 100%;
+        margin-top: 14px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 10px 8px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        font-size: 0.92rem;
+      }
+
+      th {
+        color: var(--muted);
+      }
+
+      .manual-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+        align-items: end;
+      }
+
+      .sim-result {
+        margin-top: 18px;
+        padding: 18px;
+        border-radius: var(--radius-lg);
+        background: rgba(230, 235, 227, 0.64);
+      }
+
+      .sim-result p {
+        margin: 6px 0;
+      }
+
+      @media (max-width: 960px) {
+        .hero,
+        .chart-grid,
+        .controls-grid,
+        .manual-grid,
+        .summary-grid,
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <section class="hero">
+        <div class="panel">
+          <p class="eyebrow">Tool demo</p>
+          <h1>Gearbox & power analyzer</h1>
+          <p>
+            A simplified live demo adapted from a previous engineering tool. This version keeps the clearest parts:
+            motor selection, fixed transmission loading, core charts, acceleration estimates and manual shift checks.
+          </p>
+        </div>
+        <div class="panel">
+          <p class="kicker">Included</p>
+          <p>Two preset motors</p>
+          <p>Fixed drivetrain setup</p>
+          <p>Power and optimal-force charts</p>
+          <p>Estimated acceleration times</p>
+          <p>Manual shift simulator</p>
+        </div>
+      </section>
+
+      <section class="summary-grid">
+        <article class="summary-card">
+          <p class="kicker">Vehicle</p>
+          <strong>603 kg</strong>
+          <p>Configured with a fixed mass value from the original setup.</p>
+        </article>
+        <article class="summary-card">
+          <p class="kicker">Tyre</p>
+          <strong>637 mm</strong>
+          <p>Dynamic diameter used for speed and gearing calculations.</p>
+        </article>
+        <article class="summary-card">
+          <p class="kicker">Traction cap</p>
+          <strong>16000 N</strong>
+          <p>Wheel force is limited to a maximum admissible traction value.</p>
+        </article>
+      </section>
+
+      <section class="panel" style="margin-top: 20px;">
+        <div class="controls-grid">
+          <div>
+            <label for="motorSelector">Select motor</label>
+            <select id="motorSelector">
+              <option value="motor1">Motor 1</option>
+              <option value="motor2">Motor 2</option>
+            </select>
+          </div>
+          <div>
+            <label for="simSpeed">Manual shift speed (km/h)</label>
+            <input type="number" id="simSpeed" value="100" min="1" step="1" />
+          </div>
+          <div>
+            <label for="simGearA">Current gear</label>
+            <select id="simGearA">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+          </div>
+          <div>
+            <label for="simGearB">Next gear</label>
+            <select id="simGearB">
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="button" id="loadMotorButton">Load motor</button>
+          <button type="button" id="loadGearboxButton" class="secondary">Load fixed gearbox</button>
+          <button type="button" id="runButton">Calculate curves</button>
+          <button type="button" id="simulateButton" class="secondary">Simulate shift</button>
+        </div>
+      </section>
+
+      <section class="status" style="margin-top: 20px;">
+        <strong>Status:</strong> <span id="statusText">Load a motor and the fixed gearbox, then calculate the curves.</span>
+      </section>
+
+      <section class="stats-grid">
+        <article class="stat">
+          <span class="stat-label">0-100 km/h</span>
+          <strong class="stat-value" id="t100">-</strong>
+        </article>
+        <article class="stat">
+          <span class="stat-label">0-200 km/h</span>
+          <strong class="stat-value" id="t200">-</strong>
+        </article>
+        <article class="stat">
+          <span class="stat-label">0-300 km/h</span>
+          <strong class="stat-value" id="t300">-</strong>
+        </article>
+        <article class="stat">
+          <span class="stat-label">Vmax</span>
+          <strong class="stat-value" id="vmax">-</strong>
+        </article>
+        <article class="stat">
+          <span class="stat-label">Time to vmax</span>
+          <strong class="stat-value" id="tTotal">-</strong>
+        </article>
+      </section>
+
+      <section class="chart-grid">
+        <article class="chart-card">
+          <h2>Motor power curve</h2>
+          <p>Power in kW across the RPM range for the selected motor.</p>
+          <canvas id="powerChart" height="280"></canvas>
+        </article>
+        <article class="chart-card">
+          <h2>Optimal force curve</h2>
+          <p>Maximum available wheel force across speed using the best gear at each point.</p>
+          <canvas id="optimalChart" height="280"></canvas>
+        </article>
+        <article class="table-card">
+          <h2>Shift table</h2>
+          <p>Calculated crossover points between consecutive gears.</p>
+          <div id="shiftTableContainer"></div>
+        </article>
+        <article class="table-card">
+          <h2>Manual shift result</h2>
+          <p>Check RPM and power before and after a chosen shift speed.</p>
+          <div id="simResult" class="sim-result">
+            <p>Run the main calculation first, then simulate a shift.</p>
+          </div>
+          <canvas id="simChart" height="250"></canvas>
+        </article>
+      </section>
+    </div>
+
+    <script>
+      const MOTORS = {
+        motor1: {
+          name: "Motor 1",
+          limiter1st: 9000,
+          limiterRest: 9750,
+          curve: [
+            [1, 15], [500, 25], [1000, 35], [1500, 45], [2000, 55], [2500, 90], [3000, 135],
+            [3500, 195], [4000, 235], [4500, 290], [5000, 323], [5500, 353], [6000, 419],
+            [6500, 465], [7000, 510], [7500, 558], [8000, 580], [8500, 608], [9000, 613],
+            [9500, 608], [10000, 304]
+          ]
+        },
+        motor2: {
+          name: "Motor 2",
+          limiter1st: 9000,
+          limiterRest: 9750,
+          curve: [
+            [1, 15], [500, 15], [1000, 26.1], [1500, 20], [2000, 28], [2500, 36], [3000, 44],
+            [3500, 72], [4000, 108], [4500, 156], [5000, 188], [5500, 232], [6000, 258],
+            [6500, 280], [7000, 314], [7500, 348], [8000, 382], [8500, 300], [9000, 280],
+            [9500, 220], [10000, 200]
+          ]
+        }
+      };
+
+      let motorData = null;
+      let gearboxData = null;
+      let calcResults = null;
+      let powerChart = null;
+      let optimalChart = null;
+      let simChart = null;
+
+      const statusText = document.getElementById("statusText");
+
+      function setStatus(message) {
+        statusText.textContent = message;
+      }
+
+      function parseRatio(str) {
+        const [a, b] = str.split("/").map((value) => parseFloat(value));
+        return { ratio: b / a };
+      }
+
+      function interpLinear(x, xs, ys) {
+        if (xs.length === 0) return null;
+        if (x <= xs[0]) return ys[0];
+        if (x >= xs[xs.length - 1]) return ys[ys.length - 1];
+
+        for (let i = 0; i < xs.length - 1; i += 1) {
+          if (x >= xs[i] && x <= xs[i + 1]) {
+            const t = (x - xs[i]) / (xs[i + 1] - xs[i]);
+            return ys[i] + t * (ys[i + 1] - ys[i]);
+          }
+        }
+
+        return ys[ys.length - 1];
+      }
+
+      function loadMotor() {
+        const id = document.getElementById("motorSelector").value;
+        const selected = MOTORS[id];
+
+        motorData = {
+          name: selected.name,
+          limiter1st: selected.limiter1st,
+          limiterRest: selected.limiterRest,
+          efficiency: 1,
+          table: selected.curve
+        };
+
+        setStatus(`${motorData.name} loaded. The next step is loading the fixed gearbox or running the calculation if it is already loaded.`);
+      }
+
+      function loadGearbox() {
+        gearboxData = {
+          dynDiameter: 637,
+          mass: 603,
+          tractionLimit: 16000,
+          bevel: parseRatio("19/22"),
+          cp: parseRatio("15/46"),
+          gears: [
+            parseRatio("14/37"),
+            parseRatio("18/35"),
+            parseRatio("18/30"),
+            parseRatio("21/30"),
+            parseRatio("23/29"),
+            parseRatio("23/26")
+          ]
+        };
+
+        gearboxData.ratios = gearboxData.gears.map(
+          (gear) => gearboxData.bevel.ratio * gearboxData.cp.ratio * gear.ratio
+        );
+        gearboxData.tyreCirc = Math.PI * (gearboxData.dynDiameter / 1000);
+
+        setStatus("Fixed gearbox loaded. You can now calculate curves.");
+      }
+
+      function computeTimes(speedOpt, forceOpt, mass) {
+        let t = 0;
+        let vmax = 0;
+        let t100 = null;
+        let t200 = null;
+        let t300 = null;
+
+        for (let i = 1; i < speedOpt.length; i += 1) {
+          const force = forceOpt[i];
+          const acceleration = force / mass;
+          if (acceleration < 0.001) break;
+
+          const dv = 1 / 3.6;
+          const dt = dv / acceleration;
+
+          t += dt;
+          vmax = speedOpt[i];
+
+          if (!t100 && speedOpt[i] >= 100) t100 = t;
+          if (!t200 && speedOpt[i] >= 200) t200 = t;
+          if (!t300 && speedOpt[i] >= 300) t300 = t;
+        }
+
+        return { t100, t200, t300, tTotal: t, vmax };
+      }
+
+      function computeEverything() {
+        if (!motorData || !gearboxData) {
+          setStatus("Load both a motor and the fixed gearbox before running calculations.");
+          return;
+        }
+
+        const { table, limiter1st, limiterRest, efficiency } = motorData;
+        const { ratios, tyreCirc, mass, tractionLimit } = gearboxData;
+
+        const rpmTable = table.map((row) => row[0]);
+        const hpTable = table.map((row) => row[1]);
+        const rpmGrid = [];
+
+        for (let rpm = rpmTable[0]; rpm <= 10000; rpm += 50) {
+          rpmGrid.push(rpm);
+        }
+
+        const powerKW = rpmGrid.map((rpm) => interpLinear(rpm, rpmTable, hpTable) * 0.7355 * efficiency);
+        const powerW = powerKW.map((value) => value * 1000);
+        const gearCurves = [];
+        let maxSpeed = 0;
+
+        for (let g = 0; g < ratios.length; g += 1) {
+          const ratio = ratios[g];
+          const limiter = g === 0 ? limiter1st : limiterRest;
+          const speed = [];
+          const force = [];
+
+          for (let i = 0; i < rpmGrid.length; i += 1) {
+            const rpm = rpmGrid[i];
+            if (rpm > limiter) break;
+
+            const power = powerW[i];
+            const speedKph = (rpm / ratio) * tyreCirc * 60 / 1000;
+            const speedMps = speedKph / 3.6;
+
+            if (speedMps < 0.1) continue;
+
+            let wheelForce = power / speedMps;
+            if (wheelForce > tractionLimit) wheelForce = tractionLimit;
+
+            speed.push(speedKph);
+            force.push(wheelForce);
+            if (speedKph > maxSpeed) maxSpeed = speedKph;
+          }
+
+          gearCurves.push({ speed, force, ratio });
+        }
+
+        const speedOpt = [];
+        const forceOpt = [];
+
+        for (let v = 0; v <= maxSpeed; v += 1) {
+          let fMax = 0;
+
+          for (let g = 0; g < gearCurves.length; g += 1) {
+            const curve = gearCurves[g];
+            if (v < curve.speed[0] || v > curve.speed[curve.speed.length - 1]) continue;
+
+            const force = interpLinear(v, curve.speed, curve.force);
+            if (force > fMax) fMax = force;
+          }
+
+          speedOpt.push(v);
+          forceOpt.push(fMax);
+        }
+
+        calcResults = {
+          rpmGrid,
+          powerKW,
+          gearCurves,
+          speedOpt,
+          forceOpt,
+          times: computeTimes(speedOpt, forceOpt, mass)
+        };
+
+        drawCharts();
+        updateTimes(calcResults.times);
+        buildShiftTable();
+        setStatus(`Curves calculated for ${motorData.name}. You can now inspect the charts or run a manual shift simulation.`);
+      }
+
+      function drawCharts() {
+        const { rpmGrid, powerKW, speedOpt, forceOpt } = calcResults;
+
+        if (powerChart) powerChart.destroy();
+        powerChart = new Chart(document.getElementById("powerChart"), {
+          type: "line",
+          data: {
+            labels: rpmGrid,
+            datasets: [
+              {
+                label: "Power (kW)",
+                data: powerKW,
+                borderColor: "#b6813b",
+                backgroundColor: "rgba(182, 129, 59, 0.12)",
+                tension: 0.14,
+                fill: true
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: { title: { display: true, text: "RPM" } },
+              y: { title: { display: true, text: "Power (kW)" } }
+            }
+          }
+        });
+
+        if (optimalChart) optimalChart.destroy();
+        optimalChart = new Chart(document.getElementById("optimalChart"), {
+          type: "line",
+          data: {
+            labels: speedOpt,
+            datasets: [
+              {
+                label: "Optimal force (N)",
+                data: forceOpt,
+                borderColor: "#0d6c5f",
+                backgroundColor: "rgba(13, 108, 95, 0.12)",
+                tension: 0.14,
+                fill: true
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: { title: { display: true, text: "Speed (km/h)" } },
+              y: { title: { display: true, text: "Force (N)" } }
+            }
+          }
+        });
+      }
+
+      function buildShiftTable() {
+        const container = document.getElementById("shiftTableContainer");
+        const { gearCurves } = calcResults;
+        const { tyreCirc } = gearboxData;
+        const limiter1 = motorData.limiter1st;
+
+        let html = `
+          <table>
+            <thead>
+              <tr>
+                <th>Shift</th>
+                <th>Speed</th>
+                <th>RPM before</th>
+                <th>RPM after</th>
+                <th>RPM drop</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+
+        for (let g = 0; g < gearCurves.length - 1; g += 1) {
+          const current = gearCurves[g];
+          const next = gearCurves[g + 1];
+          const vStart = Math.max(current.speed[0], next.speed[0], 50);
+          const vEnd = Math.min(current.speed[current.speed.length - 1], next.speed[next.speed.length - 1]);
+          let vShift = null;
+
+          for (let v = vStart; v <= vEnd; v += 0.1) {
+            const fA = interpLinear(v, current.speed, current.force);
+            const fB = interpLinear(v, next.speed, next.force);
+            if (fA == null || fB == null) continue;
+            if (fB >= fA) {
+              vShift = v;
+              break;
+            }
+          }
+
+          if (g === 0 && vShift === null) {
+            vShift = limiter1 * tyreCirc * 60 / (1000 * current.ratio);
+          }
+
+          if (!vShift) continue;
+
+          const rpmBefore = vShift * current.ratio * 16.6667 / tyreCirc;
+          const rpmAfter = vShift * next.ratio * 16.6667 / tyreCirc;
+
+          html += `
+            <tr>
+              <td>${g + 1} -> ${g + 2}</td>
+              <td>${vShift.toFixed(2)} km/h</td>
+              <td>${rpmBefore.toFixed(0)}</td>
+              <td>${rpmAfter.toFixed(0)}</td>
+              <td>${(rpmBefore - rpmAfter).toFixed(0)}</td>
+            </tr>
+          `;
+        }
+
+        html += "</tbody></table>";
+        container.innerHTML = html;
+      }
+
+      function updateTimes(times) {
+        document.getElementById("t100").textContent = times.t100 ? `${times.t100.toFixed(2)} s` : "-";
+        document.getElementById("t200").textContent = times.t200 ? `${times.t200.toFixed(2)} s` : "-";
+        document.getElementById("t300").textContent = times.t300 ? `${times.t300.toFixed(2)} s` : "-";
+        document.getElementById("vmax").textContent = `${times.vmax.toFixed(1)} km/h`;
+        document.getElementById("tTotal").textContent = `${times.tTotal.toFixed(2)} s`;
+      }
+
+      function simulateShift() {
+        if (!motorData || !gearboxData || !calcResults) {
+          setStatus("Run the main calculation before using the manual shift simulator.");
+          return;
+        }
+
+        const gearA = parseInt(document.getElementById("simGearA").value, 10);
+        const gearB = parseInt(document.getElementById("simGearB").value, 10);
+        const speed = parseFloat(document.getElementById("simSpeed").value);
+
+        if (gearB <= gearA) {
+          setStatus("The next gear must be higher than the current gear.");
+          return;
+        }
+
+        const ratioA = gearboxData.ratios[gearA - 1];
+        const ratioB = gearboxData.ratios[gearB - 1];
+        const circumference = gearboxData.tyreCirc;
+        const rpmBefore = speed * ratioA * 16.6667 / circumference;
+        const rpmAfter = speed * ratioB * 16.6667 / circumference;
+        const { rpmGrid, powerKW } = calcResults;
+        const powerBefore = interpLinear(rpmBefore, rpmGrid, powerKW);
+        const powerAfter = interpLinear(rpmAfter, rpmGrid, powerKW);
+
+        document.getElementById("simResult").innerHTML = `
+          <p><strong>Speed:</strong> ${speed.toFixed(1)} km/h</p>
+          <p><strong>RPM before shift:</strong> ${rpmBefore.toFixed(0)}</p>
+          <p><strong>RPM after shift:</strong> ${rpmAfter.toFixed(0)}</p>
+          <p><strong>RPM drop:</strong> ${(rpmBefore - rpmAfter).toFixed(0)}</p>
+          <p><strong>Power before shift:</strong> ${powerBefore.toFixed(1)} kW</p>
+          <p><strong>Power after shift:</strong> ${powerAfter.toFixed(1)} kW</p>
+        `;
+
+        drawSimChart(rpmBefore, rpmAfter, powerBefore, powerAfter);
+        setStatus(`Manual shift simulated at ${speed.toFixed(1)} km/h.`);
+      }
+
+      function drawSimChart(rpmBefore, rpmAfter, powerBefore, powerAfter) {
+        const { rpmGrid, powerKW } = calcResults;
+
+        if (simChart) simChart.destroy();
+        simChart = new Chart(document.getElementById("simChart"), {
+          type: "line",
+          data: {
+            labels: rpmGrid,
+            datasets: [
+              {
+                label: "Power curve",
+                data: powerKW,
+                borderColor: "#7d867f",
+                tension: 0.12
+              },
+              {
+                label: "Before shift",
+                type: "scatter",
+                data: [{ x: rpmBefore, y: powerBefore }],
+                pointRadius: 7,
+                backgroundColor: "#b6813b",
+                borderColor: "#b6813b"
+              },
+              {
+                label: "After shift",
+                type: "scatter",
+                data: [{ x: rpmAfter, y: powerAfter }],
+                pointRadius: 7,
+                backgroundColor: "#0d6c5f",
+                borderColor: "#0d6c5f"
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: {
+                type: "linear",
+                title: { display: true, text: "RPM" }
+              },
+              y: {
+                title: { display: true, text: "Power (kW)" }
+              }
+            }
+          }
+        });
+      }
+
+      document.getElementById("loadMotorButton").addEventListener("click", loadMotor);
+      document.getElementById("loadGearboxButton").addEventListener("click", loadGearbox);
+      document.getElementById("runButton").addEventListener("click", computeEverything);
+      document.getElementById("simulateButton").addEventListener("click", simulateShift);
+    </script>
+  </body>
+</html>

@@ -3,6 +3,7 @@ export const copy = {
     navOverview: "Overview",
     navExperience: "Experience",
     navProjects: "Projects",
+    navTools: "Tools",
     navEducation: "Education",
     navContact: "Contact",
     eyebrow: "Paul Imaz Nin",
@@ -79,6 +80,17 @@ export const copy = {
     caseSevenTitle: "Cooling System - Radiator",
     caseSevenText:
       "Design, calculation and manufacture of a water-to-air convection cooling device.",
+    toolsLabel: "Tools",
+    toolsTitle: "A simpler live example of the kind of engineering tools I can build.",
+    toolsLead:
+      "This section starts with a simplified gearbox and power analysis demo adapted from an earlier internal-style tool.",
+    toolsBody:
+      "The full original version included more comparison and analysis layers. Here the interface stays focused on the clearest parts: motor selection, fixed transmission loading, curve calculation and manual shift inspection.",
+    toolsCardTitle: "Gearbox & power analyzer",
+    toolsCardText:
+      "Live demo with motor presets, drivetrain loading, force and power charts, acceleration estimates and manual shift simulation.",
+    toolsCardNote: "Prepared as the first entry in a tools showcase that can grow with more examples.",
+    toolsOpen: "Open tool in full page",
     educationLabel: "Education",
     educationTitle: "Academic formation from secondary school through motorsport specialisation.",
     timelineOneTitle: "Master's Degree in Motorsport - Competition Engineering and Mechanics",
@@ -116,6 +128,7 @@ export const copy = {
     navOverview: "Resumen",
     navExperience: "Experiencia",
     navProjects: "Proyectos",
+    navTools: "Herramientas",
     navEducation: "Formacion",
     navContact: "Contacto",
     eyebrow: "Paul Imaz Nin",
@@ -192,6 +205,17 @@ export const copy = {
     caseSevenTitle: "Sistema de Refrigeracion - Radiador",
     caseSevenText:
       "Diseno, calculo y fabricacion de un dispositivo de refrigeracion mediante conveccion entre agua y aire.",
+    toolsLabel: "Herramientas",
+    toolsTitle: "Un ejemplo en vivo mas sencillo del tipo de herramientas de ingenieria que puedo desarrollar.",
+    toolsLead:
+      "Esta seccion empieza con una demo simplificada de analisis de caja de cambios y potencia adaptada de una herramienta anterior.",
+    toolsBody:
+      "La version original tenia mas capas de comparacion y analisis. Aqui la interfaz se queda con las partes mas claras: seleccion de motor, carga de transmision fija, calculo de curvas y simulacion manual de cambio.",
+    toolsCardTitle: "Analizador de caja y potencia",
+    toolsCardText:
+      "Demo viva con motores predefinidos, carga de transmision, curvas de fuerza y potencia, estimacion de aceleracion y simulacion manual de cambio.",
+    toolsCardNote: "Preparado como la primera pieza de un escaparate de herramientas al que se pueden sumar mas ejemplos.",
+    toolsOpen: "Abrir herramienta en pagina completa",
     educationLabel: "Formacion",
     educationTitle: "Recorrido academico desde secundaria hasta la especializacion en motorsport.",
     timelineOneTitle: "Master en Motorsport - Ingenieria y Mecanica de Competicion",
