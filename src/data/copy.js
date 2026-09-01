@@ -9,9 +9,9 @@ export const copy = {
     eyebrow: "Paul Imaz Nin",
     heroTitle: "Motorsport engineer across data, performance, systems, vehicle dynamics and software.",
     heroText:
-      "Motorsport engineer currently working at Campos Racing, combining engineering tool development, vehicle dynamics and competition support.",
-    metricOne: "Software & Vehicle Dynamics Engineer at Campos Racing since March 2026",
-    metricTwo: "Factory-based support for F2 and F3, plus trackside work in Eurocup-3 and F4",
+      "Currently at Campos Racing, working on engineering tools, vehicle dynamics and competition support.",
+    metricOne: "Campos Racing since March 2026",
+    metricTwo: "Factory support for F2 and F3, plus trackside work in Eurocup-3 and F4",
     metricThree: "Spanish native, English C1, Basque B2, German A2",
     primaryCta: "Go to contact",
     secondaryCta: "Open CV",
@@ -21,33 +21,33 @@ export const copy = {
     modeDynamics: "Dynamics",
     modeTrackside: "Trackside",
     overviewLabel: "Overview",
-    overviewTitle: "Current role, background and working areas.",
+    overviewTitle: "Current role and main areas of work.",
     serviceOneTitle: "Campos Racing",
     serviceOneText:
-      "Development of suspension dynamics simulation tools, a virtual seven-post rig, lap-time simulation, and tools for driving, timing, race-data and performance-data analysis.",
+      "Development of simulation, lap-time and data-analysis tools, plus factory support work for F2 and F3.",
     serviceTwoTitle: "Tecnun eRacing",
     serviceTwoText:
-      "Cooling-system design, CAD drivetrain work, dynamometer operation, torque-vectoring logic, FEM/CFD simulation, data analysis and system validation.",
+      "Formula Student work in cooling, drivetrain CAD, torque vectoring, simulation and validation.",
     serviceThreeTitle: "Working areas",
     serviceThreeText:
-      "Available profile areas in the references: Data, Performance, Systems, Vehicle Dynamics and Software.",
+      "Main areas in the CV: Data, Performance, Systems, Vehicle Dynamics and Software.",
     experienceLabel: "Experience",
-    experienceTitle: "Practical motorsport and engineering experience across factory, track and technical operations.",
+    experienceTitle: "Experience across factory support, trackside work and engineering development.",
     experienceLead:
-      "Experience providing factory-based support for F2 and F3 and trackside experience in Eurocup-3 and F4.",
+      "Factory support for F2 and F3, with trackside experience in Eurocup-3 and F4.",
     experienceBody:
-      "The references describe a profile combining engineering tool development, vehicle dynamics, competition support and earlier industrial work with process data acquisition.",
+      "The CV combines software tools, vehicle work and race-support exposure.",
     experienceCardOneLabel: "Campos Racing",
     experienceCardOneText:
-      "Factory-based support for F2 and F3, preparing reports and supporting performance work.",
+      "Reports, performance support and engineering tools.",
     experienceCardTwoLabel: "Tecnun eRacing Formula Student",
     experienceCardTwoText:
-      "Electric single-seater development with cooling, drivetrain CAD, torque vectoring, simulations and validation.",
+      "Electric single-seater development, simulation and validation.",
     experienceCardThreeLabel: "MIG Heat Treatments",
     experienceCardThreeText:
-      "Heavy machinery operation, shot blasting, induction hardening and part traceability with process data acquisition.",
+      "Industrial process work with traceability and data acquisition.",
     projectsLabel: "Projects",
-    projectsTitle: "Selected projects and motorsport work listed in the CV references.",
+    projectsTitle: "Selected projects from the CV.",
     filterAll: "All",
     filterSoftware: "Software",
     filterDynamics: "Dynamics",
@@ -55,44 +55,44 @@ export const copy = {
     caseOneTag: "Campos Racing",
     caseOneTitle: "Gearbox Optimisation Tool",
     caseOneText:
-      "Application built from engine map, efficiency and gear ratios to define optimum shift points, engine operating range, power use and gear-ratio selection data.",
+      "Tool to study shift points, operating range and gear-ratio selection from engine map and gearing data.",
     caseTwoTag: "Tecnun eRacing",
     caseTwoTitle: "Traction Control",
     caseTwoText:
-      "Slip-ratio-based traction-control system developed in Simulink and optimised with CarMaker and MATLAB/Simulink.",
+      "Slip-ratio traction-control logic developed in Simulink and refined with CarMaker.",
     caseThreeTag: "Campos Racing",
     caseThreeTitle: "Track Test Practice, Eurocup-3",
     caseThreeText:
-      "Student-led test at Circuit Ricardo Tormo covering pre-event preparation, truck loading, trackside engineering, performance work, data analysis, mechanical tasks and post-event reporting.",
+      "Full test workflow at Ricardo Tormo: preparation, trackside work, data analysis and post-event reporting.",
     caseFourTag: "Campos Racing",
     caseFourTitle: "Trackside experience in Eurocup-3 and F4",
     caseFourText:
-      "Race and test support during the 2026 Eurocup-3 season at Portimao and MotorLand as Support Engineer, plus an F4 test as Data / Systems Engineer.",
+      "Support Engineer work in Eurocup-3 and Data / Systems support in F4 testing.",
     caseFiveTag: "Final Degree Project",
     caseFiveTitle: "Active Aerodynamics",
     caseFiveText:
-      "Design, simulation and manufacture of an active aerodynamic device to assist braking and cornering through automatically controlled aerodynamic drag.",
+      "Design, simulation and manufacture of an active aerodynamic braking and cornering device.",
     caseSixTag: "Final Degree Project",
     caseSixTitle: "Turbo Fan Wheel",
     caseSixText:
-      "Study, design, validation and implementation of a brake-disc cooling device that also improves aerodynamics by reducing drag through lower wheel-wake separation.",
+      "Brake cooling device developed with both thermal and aerodynamic goals.",
     caseSevenTag: "Engineering Project",
     caseSevenTitle: "Cooling System - Radiator",
     caseSevenText:
-      "Design, calculation and manufacture of a water-to-air convection cooling device.",
+      "Design, calculation and manufacture of a water-to-air cooling system.",
     toolsLabel: "Tools",
-    toolsTitle: "A simpler live example of the kind of engineering tools I can build.",
+    toolsTitle: "A simple example of the kind of engineering tools I can build.",
     toolsLead:
-      "This section starts with a simplified gearbox and power analysis demo adapted from an earlier internal-style tool.",
+      "A simplified gearbox and power analysis demo adapted from an earlier tool.",
     toolsBody:
-      "The full original version included more comparison and analysis layers. Here the interface stays focused on the clearest parts: motor selection, fixed transmission loading, curve calculation and manual shift inspection.",
+      "This version keeps only the clearest parts: motor selection, fixed transmission, core curves and manual shift inspection.",
     toolsCardTitle: "Gearbox & power analyzer",
     toolsCardText:
-      "Live demo with motor presets, drivetrain loading, force and power charts, acceleration estimates and manual shift simulation.",
-    toolsCardNote: "Prepared as the first entry in a tools showcase that can grow with more examples.",
+      "Live demo with motor presets, fixed drivetrain, core charts and manual shift simulation.",
+    toolsCardNote: "First example in a small tools showcase.",
     toolsOpen: "Open tool in full page",
     educationLabel: "Education",
-    educationTitle: "Academic formation from secondary school through motorsport specialisation.",
+    educationTitle: "Education and motorsport specialisation.",
     timelineOneTitle: "Master's Degree in Motorsport - Competition Engineering and Mechanics",
     timelineOneText:
       "Campos Racing and Florida Universitaria, September 2025 to March 2026.",
@@ -107,20 +107,20 @@ export const copy = {
     timelineFourText:
       "St Patrick's English School, September 2004 to July 2020.",
     skillsLabel: "Skills",
-    skillsTitle: "Technical skills, personal skills and other information from the references.",
+    skillsTitle: "Technical skills and additional background.",
     skillsTechTitle: "Technical skills",
     skillsTechText:
-      "CAD & 3D Rendering, MATLAB, Simulink, Python, HTML, ANSYS (FEM / CFD), CarMaker, KISSsoft, Advanced Excel and Microsoft tools.",
-    skillsSoftTitle: "Personal skills",
+      "CAD, MATLAB, Simulink, Python, HTML, ANSYS, CarMaker, KISSsoft, Excel and Microsoft tools.",
+    skillsSoftTitle: "Working style",
     skillsSoftText:
-      "Teamwork, leadership, active listening, flexibility, commitment and high motivation.",
+      "Teamwork, leadership, listening, flexibility and commitment.",
     skillsExtraTitle: "Other information",
     skillsExtraText:
-      "Driving licence and own vehicle, Master's Degree in Personal Training and Nutrition, and First Aid Certification.",
+      "Driving licence, own vehicle and First Aid Certification.",
     contactLabel: "Contact",
     contactTitle: "Donostia-San Sebastian, Spain.",
     contactText:
-      "Contact details and both CV files are kept available directly from the references.",
+      "Direct contact details and both CV versions are available below.",
     downloadSpanish: "Open Spanish CV",
     downloadEnglish: "Open English CV",
   },
@@ -134,9 +134,9 @@ export const copy = {
     eyebrow: "Paul Imaz Nin",
     heroTitle: "Ingeniero de motorsport en data, performance, systems, vehicle dynamics y software.",
     heroText:
-      "Ingeniero de motorsport actualmente en Campos Racing, combinando desarrollo de herramientas de ingenieria, dinamica vehicular y soporte de competicion.",
-    metricOne: "Ingeniero de Software y Dinamica Vehicular en Campos Racing desde marzo de 2026",
-    metricTwo: "Soporte desde sede para F2 y F3, y experiencia en pista en Eurocup-3 y F4",
+      "Actualmente en Campos Racing, trabajando en herramientas de ingenieria, dinamica vehicular y soporte de competicion.",
+    metricOne: "Campos Racing desde marzo de 2026",
+    metricTwo: "Soporte de sede para F2 y F3, y experiencia en pista en Eurocup-3 y F4",
     metricThree: "Espanol nativo, ingles C1, euskera B2, aleman A2",
     primaryCta: "Ir al contacto",
     secondaryCta: "Abrir CV",
@@ -146,33 +146,33 @@ export const copy = {
     modeDynamics: "Dinamica",
     modeTrackside: "Pista",
     overviewLabel: "Resumen",
-    overviewTitle: "Rol actual, trayectoria y areas de trabajo.",
+    overviewTitle: "Rol actual y areas principales de trabajo.",
     serviceOneTitle: "Campos Racing",
     serviceOneText:
-      "Desarrollo de herramientas de simulacion de dinamica de suspension, virtual seven post rig, lap time y analisis de driving, timing, datos de carrera y rendimiento.",
+      "Desarrollo de herramientas de simulacion, lap time y analisis de datos, junto con soporte de sede para F2 y F3.",
     serviceTwoTitle: "Tecnun eRacing",
     serviceTwoText:
-      "Diseno y dimensionamiento de sistemas de refrigeracion, CAD de transmision, uso de banco de potencia, logica de torque vectoring, simulacion FEM/CFD, analisis de datos y validacion.",
+      "Trabajo en Formula Student en refrigeracion, CAD de transmision, torque vectoring, simulacion y validacion.",
     serviceThreeTitle: "Areas de trabajo",
     serviceThreeText:
-      "Areas de perfil recogidas en las referencias: Data, Performance, Systems, Vehicle Dynamics y Software.",
+      "Areas principales del CV: Data, Performance, Systems, Vehicle Dynamics y Software.",
     experienceLabel: "Experiencia",
-    experienceTitle: "Experiencia practica de motorsport e ingenieria entre sede, pista y operaciones tecnicas.",
+    experienceTitle: "Experiencia entre soporte de sede, trabajo en pista y desarrollo de ingenieria.",
     experienceLead:
-      "Experiencia de soporte desde sede para F2 y F3 y experiencia en pista en Eurocup-3 y F4.",
+      "Soporte de sede para F2 y F3, con experiencia en pista en Eurocup-3 y F4.",
     experienceBody:
-      "Las referencias describen un perfil que combina desarrollo de herramientas de ingenieria, dinamica vehicular, soporte de competicion y una etapa industrial previa con adquisicion de datos de proceso.",
+      "El CV combina herramientas de software, trabajo de vehiculo y exposicion a entorno de carrera.",
     experienceCardOneLabel: "Campos Racing",
     experienceCardOneText:
-      "Apoyo desde nave para F2 y F3 preparando reports y dando soporte de performance.",
+      "Reports, soporte de performance y herramientas de ingenieria.",
     experienceCardTwoLabel: "Tecnun eRacing Formula Student",
     experienceCardTwoText:
-      "Desarrollo de monoplaza electrico con refrigeracion, CAD de transmision, torque vectoring, simulaciones y validacion.",
+      "Desarrollo de monoplaza electrico, simulacion y validacion.",
     experienceCardThreeLabel: "MIG Tratamientos Termicos",
     experienceCardThreeText:
-      "Manejo de maquinaria pesada, granallado, temple por induccion y trazabilidad de piezas con adquisicion de datos de proceso.",
+      "Trabajo industrial con trazabilidad y adquisicion de datos.",
     projectsLabel: "Proyectos",
-    projectsTitle: "Proyectos y trabajo de motorsport seleccionados a partir de los CVs de referencia.",
+    projectsTitle: "Proyectos seleccionados del CV.",
     filterAll: "Todo",
     filterSoftware: "Software",
     filterDynamics: "Dinamica",
@@ -180,44 +180,44 @@ export const copy = {
     caseOneTag: "Campos Racing",
     caseOneTitle: "Herramienta de Optimizacion de Caja de Cambios",
     caseOneText:
-      "Aplicacion desarrollada a partir del mapa motor, la eficiencia y la relacion de marchas para obtener punto optimo de cambio, regimen de funcionamiento, potencia y datos utiles para definir el gearing.",
+      "Herramienta para estudiar punto de cambio, rango de uso y seleccion de relaciones a partir del mapa motor y el gearing.",
     caseTwoTag: "Tecnun eRacing",
     caseTwoTitle: "Control de Traccion",
     caseTwoText:
-      "Sistema de control de traccion mediante slip ratio desarrollado en Simulink y optimizado con CarMaker y MATLAB/Simulink.",
+      "Logica de control de traccion por slip ratio desarrollada en Simulink y afinada con CarMaker.",
     caseThreeTag: "Campos Racing",
     caseThreeTitle: "Practica de test en Eurocup-3",
     caseThreeText:
-      "Test en Circuit Ricardo Tormo desarrollado por los alumnos cubriendo pre-event, carga del camion, ingenieria de pista, performance, analisis de datos, mecanica y post-event.",
+      "Flujo completo de test en Ricardo Tormo: preparacion, pista, analisis de datos y post-event.",
     caseFourTag: "Campos Racing",
     caseFourTitle: "Experiencia en pista en Eurocup-3 y F4",
     caseFourText:
-      "Apoyo en carrera y test en la temporada 2026 de Eurocup-3 en Portimao y MotorLand como Support Engineer, y test de F4 como Data / Systems Engineer.",
+      "Trabajo como Support Engineer en Eurocup-3 y apoyo Data / Systems en test de F4.",
     caseFiveTag: "Proyecto Fin de Grado",
     caseFiveTitle: "Aerodinamica Activa",
     caseFiveText:
-      "Diseno, simulacion y fabricacion de un dispositivo de aerodinamica activa de asistencia en frenada y paso por curva mediante arrastre aerodinamico controlado automaticamente.",
+      "Diseno, simulacion y fabricacion de un sistema de aerodinamica activa para frenada y paso por curva.",
     caseSixTag: "Proyecto Fin de Grado",
     caseSixTitle: "Turbo Fan Wheel",
     caseSixText:
-      "Estudio, diseno, validacion e implementacion de un dispositivo de refrigeracion del disco de freno que ademas mejora la aerodinamica reduciendo el arrastre.",
+      "Dispositivo de refrigeracion de freno con objetivo termico y aerodinamico.",
     caseSevenTag: "Proyecto de Ingenieria",
     caseSevenTitle: "Sistema de Refrigeracion - Radiador",
     caseSevenText:
-      "Diseno, calculo y fabricacion de un dispositivo de refrigeracion mediante conveccion entre agua y aire.",
+      "Diseno, calculo y fabricacion de un sistema de refrigeracion agua-aire.",
     toolsLabel: "Herramientas",
-    toolsTitle: "Un ejemplo en vivo mas sencillo del tipo de herramientas de ingenieria que puedo desarrollar.",
+    toolsTitle: "Un ejemplo sencillo del tipo de herramientas de ingenieria que puedo desarrollar.",
     toolsLead:
-      "Esta seccion empieza con una demo simplificada de analisis de caja de cambios y potencia adaptada de una herramienta anterior.",
+      "Demo simplificada de analisis de caja de cambios y potencia adaptada de una herramienta anterior.",
     toolsBody:
-      "La version original tenia mas capas de comparacion y analisis. Aqui la interfaz se queda con las partes mas claras: seleccion de motor, carga de transmision fija, calculo de curvas y simulacion manual de cambio.",
+      "Esta version deja solo las partes mas claras: seleccion de motor, transmision fija, curvas principales y simulacion manual de cambio.",
     toolsCardTitle: "Analizador de caja y potencia",
     toolsCardText:
-      "Demo viva con motores predefinidos, carga de transmision, curvas de fuerza y potencia, estimacion de aceleracion y simulacion manual de cambio.",
-    toolsCardNote: "Preparado como la primera pieza de un escaparate de herramientas al que se pueden sumar mas ejemplos.",
+      "Demo viva con motores predefinidos, transmision fija, curvas principales y simulacion manual de cambio.",
+    toolsCardNote: "Primera pieza de una pequena muestra de herramientas.",
     toolsOpen: "Abrir herramienta en pagina completa",
     educationLabel: "Formacion",
-    educationTitle: "Recorrido academico desde secundaria hasta la especializacion en motorsport.",
+    educationTitle: "Formacion y especializacion en motorsport.",
     timelineOneTitle: "Master en Motorsport - Ingenieria y Mecanica de Competicion",
     timelineOneText:
       "Campos Racing y Florida Universitaria, septiembre de 2025 a marzo de 2026.",
@@ -232,20 +232,20 @@ export const copy = {
     timelineFourText:
       "St Patrick's English School, septiembre de 2004 a julio de 2020.",
     skillsLabel: "Habilidades",
-    skillsTitle: "Habilidades tecnicas, habilidades personales y otros datos sacados de las referencias.",
+    skillsTitle: "Habilidades tecnicas y base adicional.",
     skillsTechTitle: "Habilidades tecnicas",
     skillsTechText:
-      "CAD & Renderizado 3D, MATLAB, Simulink, Python, HTML, ANSYS (FEM / CFD), CarMaker, KISSsoft, Excel avanzado y herramientas Microsoft.",
-    skillsSoftTitle: "Habilidades personales",
+      "CAD, MATLAB, Simulink, Python, HTML, ANSYS, CarMaker, KISSsoft, Excel y herramientas Microsoft.",
+    skillsSoftTitle: "Forma de trabajo",
     skillsSoftText:
-      "Trabajo en equipo, liderazgo, capacidad de escucha, flexibilidad, compromiso y alta motivacion.",
+      "Trabajo en equipo, liderazgo, escucha, flexibilidad y compromiso.",
     skillsExtraTitle: "Otros datos",
     skillsExtraText:
-      "Carne de conducir y vehiculo propio, Master en entrenamiento personal y nutricion, y titulo en primeros auxilios.",
+      "Carne de conducir, vehiculo propio y titulo en primeros auxilios.",
     contactLabel: "Contacto",
     contactTitle: "Donostia-San Sebastian, Espana.",
     contactText:
-      "Los datos de contacto y ambos CVs siguen disponibles directamente desde las referencias.",
+      "Debajo tienes el contacto directo y las dos versiones del CV.",
     downloadSpanish: "Abrir CV en espanol",
     downloadEnglish: "Abrir CV en ingles",
   },
