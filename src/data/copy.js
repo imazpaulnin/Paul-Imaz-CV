@@ -15,7 +15,7 @@ export const copy = {
     primaryCta: "Go to contact",
     secondaryCta: "Open CV",
     panelTitle: "Focus areas",
-    panelStatus: "Profile from references",
+    panelStatus: "Available for collaboration",
     modeData: "Data",
     modeDynamics: "Dynamics",
     modeTrackside: "Trackside",
@@ -29,13 +29,13 @@ export const copy = {
       "Formula Student work in cooling, drivetrain CAD, torque vectoring, simulation and validation.",
     serviceThreeTitle: "Working areas",
     serviceThreeText:
-      "Main areas in the CV: Data, Performance, Systems, Vehicle Dynamics and Software.",
+      "Data, Performance, Systems, Vehicle Dynamics and Software.",
     experienceLabel: "Experience",
     experienceTitle: "Experience across factory support, trackside work and engineering development.",
     experienceLead:
       "Factory support for F2 and F3, with trackside experience in Eurocup-3 and F4.",
     experienceBody:
-      "The CV combines software tools, vehicle work and race-support exposure.",
+      "Combining software tools, vehicle work and race-support exposure.",
     experienceCardOneLabel: "Campos Racing",
     experienceCardOneText:
       "Reports, performance support and engineering tools.",
@@ -48,7 +48,7 @@ export const copy = {
     toolsLabel: "Tools",
     toolsTitle: "A simple example of the kind of engineering tools I can build.",
     toolsLead:
-      "A simplified gearbox and power analysis demo adapted from an earlier tool.",
+      "A simplified gearbox and power analysis demo.",
     toolsBody:
       "This version keeps only the clearest parts: motor selection, fixed transmission, core curves and manual shift inspection.",
     toolsCardTitle: "Gearbox & power analyzer",
@@ -85,7 +85,7 @@ export const copy = {
     contactLabel: "Contact",
     contactTitle: "Donostia-San Sebastian, Spain.",
     contactText:
-      "Direct contact details and both CV versions are available below.",
+      "Direct contact details and both CV versions below.",
     downloadSpanish: "Open Spanish CV",
     downloadEnglish: "Open English CV",
   },
@@ -105,7 +105,7 @@ export const copy = {
     primaryCta: "Ir al contacto",
     secondaryCta: "Abrir CV",
     panelTitle: "Areas de enfoque",
-    panelStatus: "Perfil desde references",
+    panelStatus: "Disponible para colaborar",
     modeData: "Data",
     modeDynamics: "Dinamica",
     modeTrackside: "Pista",
@@ -119,13 +119,13 @@ export const copy = {
       "Trabajo en Formula Student en refrigeracion, CAD de transmision, torque vectoring, simulacion y validacion.",
     serviceThreeTitle: "Areas de trabajo",
     serviceThreeText:
-      "Areas principales del CV: Data, Performance, Systems, Vehicle Dynamics y Software.",
+      "Data, Performance, Systems, Vehicle Dynamics y Software.",
     experienceLabel: "Experiencia",
     experienceTitle: "Experiencia entre soporte de sede, trabajo en pista y desarrollo de ingenieria.",
     experienceLead:
       "Soporte de sede para F2 y F3, con experiencia en pista en Eurocup-3 y F4.",
     experienceBody:
-      "El CV combina herramientas de software, trabajo de vehiculo y exposicion a entorno de carrera.",
+      "Combinando herramientas de software, trabajo de vehiculo y exposicion a entorno de carrera.",
     experienceCardOneLabel: "Campos Racing",
     experienceCardOneText:
       "Reports, soporte de performance y herramientas de ingenieria.",
@@ -138,7 +138,7 @@ export const copy = {
     toolsLabel: "Herramientas",
     toolsTitle: "Un ejemplo sencillo del tipo de herramientas de ingenieria que puedo desarrollar.",
     toolsLead:
-      "Demo simplificada de analisis de caja de cambios y potencia adaptada de una herramienta anterior.",
+      "Demo simplificada de analisis de caja de cambios y potencia.",
     toolsBody:
       "Esta version deja solo las partes mas claras: seleccion de motor, transmision fija, curvas principales y simulacion manual de cambio.",
     toolsCardTitle: "Analizador de caja y potencia",
