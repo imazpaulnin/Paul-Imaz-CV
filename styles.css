@@ -142,7 +142,6 @@ a:focus-visible {
   left: -8%;
   width: 26rem;
   height: 26rem;
-  animation: floatOrbOne 20s ease-in-out infinite alternate, morphOrbOne 13s ease-in-out infinite;
 }
 
 .bg-orb-2 {
@@ -153,7 +152,6 @@ a:focus-visible {
   background:
     radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0) 36%),
     radial-gradient(circle, rgba(13, 108, 95, 0.22) 0%, rgba(13, 108, 95, 0.14) 44%, rgba(13, 108, 95, 0.02) 76%, transparent 100%);
-  animation: floatOrbTwo 24s ease-in-out infinite alternate, morphOrbTwo 15s ease-in-out infinite;
 }
 
 .bg-orb-3 {
@@ -161,7 +159,6 @@ a:focus-visible {
   left: 18%;
   width: 18rem;
   height: 18rem;
-  animation: floatOrbThree 18s ease-in-out infinite alternate, morphOrbThree 11s ease-in-out infinite;
 }
 
 .bg-orb-4 {
@@ -172,7 +169,6 @@ a:focus-visible {
   background:
     radial-gradient(circle at 34% 34%, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 36%),
     radial-gradient(circle, rgba(13, 108, 95, 0.2) 0%, rgba(13, 108, 95, 0.14) 48%, rgba(13, 108, 95, 0.02) 78%, transparent 100%);
-  animation: floatOrbFour 22s ease-in-out infinite alternate, morphOrbFour 14s ease-in-out infinite;
 }
 
 .bg-orb-5 {
@@ -180,7 +176,6 @@ a:focus-visible {
   left: -4%;
   width: 22rem;
   height: 22rem;
-  animation: floatOrbFive 26s ease-in-out infinite alternate, morphOrbFive 16s ease-in-out infinite;
 }
 
 .bg-orb-6 {
@@ -191,7 +186,6 @@ a:focus-visible {
   background:
     radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 32%),
     radial-gradient(circle, rgba(13, 108, 95, 0.24) 0%, rgba(13, 108, 95, 0.16) 42%, rgba(13, 108, 95, 0.02) 76%, transparent 100%);
-  animation: floatOrbSix 23s ease-in-out infinite alternate, morphOrbSix 12s ease-in-out infinite;
 }
 
 .bg-wave-1 {
@@ -199,7 +193,6 @@ a:focus-visible {
   left: 28%;
   width: 42rem;
   height: 42rem;
-  animation: driftWaveOne 30s linear infinite, morphWaveOne 18s ease-in-out infinite;
 }
 
 .bg-wave-2 {
@@ -207,7 +200,6 @@ a:focus-visible {
   right: 22%;
   width: 38rem;
   height: 38rem;
-  animation: driftWaveTwo 34s linear infinite, morphWaveTwo 20s ease-in-out infinite;
 }
 
 .topbar,
