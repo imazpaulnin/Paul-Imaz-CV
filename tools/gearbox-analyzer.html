@@ -244,6 +244,20 @@
         margin-top: 14px;
       }
 
+      .chart-shell {
+        position: relative;
+        height: 320px;
+        margin-top: 14px;
+      }
+
+      .chart-shell canvas {
+        margin-top: 0;
+      }
+
+      .chart-shell.chart-shell-compact {
+        height: 260px;
+      }
+
       table {
         width: 100%;
         border-collapse: collapse;
@@ -411,12 +425,16 @@
         <article class="chart-card">
           <h2>Motor power curve</h2>
           <p>Power in kW across the RPM range for the selected motor.</p>
-          <canvas id="powerChart" height="280"></canvas>
+          <div class="chart-shell">
+            <canvas id="powerChart"></canvas>
+          </div>
         </article>
         <article class="chart-card">
           <h2>Optimal force curve</h2>
           <p>Maximum available wheel force across speed using the best gear at each point.</p>
-          <canvas id="optimalChart" height="280"></canvas>
+          <div class="chart-shell">
+            <canvas id="optimalChart"></canvas>
+          </div>
         </article>
         <article class="table-card">
           <h2>Shift table</h2>
@@ -429,7 +447,9 @@
           <div id="simResult" class="sim-result">
             <p>Run the main calculation first, then simulate a shift.</p>
           </div>
-          <canvas id="simChart" height="250"></canvas>
+          <div class="chart-shell chart-shell-compact">
+            <canvas id="simChart"></canvas>
+          </div>
         </article>
       </section>
     </div>
