@@ -37,35 +37,35 @@ export const modes = {
   es: {
     remote: {
       label: "DATA",
-      heading: "Analisis de driving, timing, datos de carrera y rendimiento.",
+      heading: "Análisis de conducción, timing, datos de carrera y rendimiento.",
       description:
-        "Las referencias describen desarrollo de herramientas de analisis de datos junto con preparacion de reports y soporte de performance para F2 y F3.",
+        "Desarrollo de herramientas de análisis de datos, preparación de informes y soporte de rendimiento para F2 y F3.",
       items: [
-        "Herramientas de driving analysis",
+        "Herramientas de análisis de conducción",
         "Flujos de timing y datos de carrera",
-        "Reports y soporte de performance desde sede",
+        "Informes y soporte de rendimiento desde fábrica",
       ],
     },
     factory: {
-      label: "DINAMICA",
-      heading: "Estudios de suspension, lap time e ingenieria orientada a control.",
+      label: "DINÁMICA",
+      heading: "Estudios de suspensión, lap time e ingeniería orientada al control.",
       description:
-        "Las referencias agrupan simulacion de dinamica de suspension, virtual seven-post rig, lap time, control de traccion y desarrollo de aerodinamica activa.",
+        "Simulación de dinámica de suspensión, banco virtual de siete postes, lap time, control de tracción y desarrollo de aerodinámica activa.",
       items: [
-        "Herramientas de simulacion de dinamica de suspension",
-        "Virtual seven-post rig y simulador de lap time",
-        "Control de traccion por slip ratio y aerodinamica activa",
+        "Herramientas de simulación de dinámica de suspensión",
+        "Banco virtual de siete postes y simulación de lap time",
+        "Control de tracción por slip ratio y aerodinámica activa",
       ],
     },
     trackside: {
       label: "PISTA",
       heading: "Experiencia en pista en entornos de Eurocup-3 y F4.",
       description:
-        "Las referencias incluyen apoyo en carrera y test de Eurocup-3 en Portimao y MotorLand, un test de F4 como Data / Systems Engineer y un test completo de Eurocup-3 en Ricardo Tormo.",
+        "Apoyo en carreras y test de Eurocup-3 en Portimão y MotorLand, un test de F4 como Data / Systems Engineer y un test completo de Eurocup-3 en Ricardo Tormo.",
       items: [
         "Trabajo como Support Engineer en Eurocup-3",
         "Rol de Data / Systems Engineer en test de F4",
-        "Operacion de pre-event, circuito y post-event",
+        "Operación previa al evento, en circuito y posterior al evento",
       ],
     },
   },
